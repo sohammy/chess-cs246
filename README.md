@@ -1,2 +1,2 @@
-# chess-final-project
+# Chess Final Project
 CS246 Final Project - Hudson, Soham, &amp; Krish
