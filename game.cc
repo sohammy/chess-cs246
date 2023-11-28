@@ -94,14 +94,11 @@ void Game::play(string whitePlayer, string blackPlayer) { // Should play take in
     }
 
     while (!hasWon()) { // Switches Turns Back and Forth between Black + White
-        if (whoseTurn == 0) {
-            string userInput;
-            cin >> userInput;
+        if (!whoseTurn) {
             white->getMove(); // getMove() should take in user input, only does move once 'move' is given as input (as per instructions)
-            whoseTurn == 1;
-        } if (whoseTurn == 1) {
+        } if (whoseTurn) {
             black->getMove(); // getMove() should take in user input, only does move once 'move' is given as input (as per instructions)
-            whoseTurn == 0;
         }
+        whoseTurn = !whoseTurn;
     }
 }

@@ -1,6 +1,8 @@
+#ifndef GAME_H
+#define GAME_H
+
 //#include "player.h"
 //#include "board.h"
-
 
 #include <iostream>
 #include <string>
@@ -22,3 +24,4 @@ class Game {
 
 };
 
+#endif
