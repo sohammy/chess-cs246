@@ -1,40 +1,48 @@
+#include "game.h"
 #include <iostream>
 #include <string>
-#include <unistd.h>
-
-#include "game.h"
 
 using namespace std;
 
 int main() {
     string input;
 
-    cout << "Welcome to Chess!" << endl;
-    cout << "By Hudson, Soham, and Krish" << endl;
+    cout << "Chess." << endl;
+    cout << "By Hudson, Soham, & Krish" << endl;
     cout << endl;
 
+    cin >> input;
+
     for (unsigned i = 0; i < input.size(); ++i) {
-        input[i] = tolower(input[i]);
+        input[i] = tolower(input[i]); // takes all input and makes it lowercase
     }
 
     if (input == "game") {
-        cout << "Starting Game" << endl;
-        sleep(1);
-        Game myGame;
 
-        myGame.play();
+        string playerWhite = "";
+        string playerBlack = "";
+
+        cin >> playerWhite >> playerBlack;
+
+        Game myGame;
+        myGame.play(playerWhite, playerBlack);
     } 
     
     if (input == "setup") {
         cout << "Entering Setup Mode..." << endl;
-        sleep(1);
         cout << endl;
         cout << "You are in Setup Mode, type 'done' to leave" << endl;
         cout << "What piece would you like to add?" << endl;
 
-        while (cin) {
-            cout << "What piece would you like to add?" << endl;
+        while (cin >> input) {
+
+            if (input == "done") {
+                break;
+            }
+
             // Enter Setup Instructions
+
+            cout << "What piece would you like to add?" << endl;
         }
     }
 }
