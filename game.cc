@@ -97,10 +97,6 @@ void Game::play(string whitePlayer, string blackPlayer) { // Should play take in
         if (whoseTurn == 0) {
             string userInput;
             cin >> userInput;
-            if (userInput == "resign") {
-                cout << "Black Wins!";
-            }
-
             white->getMove(); // getMove() should take in user input, only does move once 'move' is given as input (as per instructions)
             whoseTurn == 1;
         } if (whoseTurn == 1) {
