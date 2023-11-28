@@ -61,7 +61,6 @@ bool Game::hasWon() {
 }
 
 void Game::play(string whitePlayer, string blackPlayer) { // Should play take in a board config???
-
     unique_ptr<Player> white;
     unique_ptr<Player> black;
 
@@ -102,3 +101,8 @@ void Game::play(string whitePlayer, string blackPlayer) { // Should play take in
         whoseTurn = !whoseTurn;
     }
 }
+
+void Game::setup() {
+    
+}
+

@@ -17,6 +17,8 @@ int main() {
         input[i] = tolower(input[i]); // takes all input and makes it lowercase
     }
 
+    Game myGame;
+
     if (input == "game") {
 
         string playerWhite = "";
@@ -24,26 +26,11 @@ int main() {
 
         cin >> playerWhite >> playerBlack;
 
-        Game myGame;
         myGame.play(playerWhite, playerBlack);
     } 
     
     if (input == "setup") {
-        cout << "Entering Setup Mode..." << endl;
-        cout << endl;
-        cout << "You are in Setup Mode, type 'done' to leave" << endl;
-        cout << "What piece would you like to add?" << endl;
-
-        while (cin >> input) {
-
-            if (input == "done") {
-                break;
-            }
-
-            // Enter Setup Instructions
-
-            cout << "What piece would you like to add?" << endl;
-        }
+        myGame.setup();
     }
 }
 
