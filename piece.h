@@ -7,9 +7,9 @@
 #include "moves.h"
 using namespace std;
 
-enum Color {white, black};
-
 class Piece {
+
+    enum Color {white, black};
 
 private:
     Color piece_color;
