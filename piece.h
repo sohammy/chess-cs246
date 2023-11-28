@@ -20,7 +20,8 @@ public:
     virtual vector<Moves> getMoves() = 0;
 
     void setColour(char);
-}
+
+};
 
 
 #endif
