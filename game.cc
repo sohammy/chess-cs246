@@ -51,18 +51,17 @@ bool Game::hasWon() {
         // If White has No Valid Moves + Black Does -> White Loses
         // If Black has No Valid Moves + White Does -> Black Loses
         // Else Stalemate
-    
-    if (testCounter == 5) {
-        return true;
-    } 
-    ++testCounter;
-    cout << "Test Counter is at " << testCounter << endl;
-    return false; 
 }
 
-void Game::play(string whitePlayer, string blackPlayer) { // Should play take in a board config???
+void Game::play(Board& myBoard) {
+    
     unique_ptr<Player> white;
     unique_ptr<Player> black;
+
+    string whitePlayer;
+    string blackPlayer;
+
+    cin >> whitePlayer >> blackPlayer;
 
     if (whitePlayer == "human") {
         white = make_unique<Human>();
@@ -100,9 +99,24 @@ void Game::play(string whitePlayer, string blackPlayer) { // Should play take in
         }
         whoseTurn = !whoseTurn;
     }
+
+
 }
 
-void Game::setup() {
-    
-}
+void Game::gameStart() { // Should play take in a board config???
 
+    Board myBoard;
+
+    string input;
+    cin >> input;
+
+    if (input == "play") {
+        myBoard.initializeBoard();
+        play(myBoard);
+
+    } if (input == "setup") {
+        myBoard.setup();
+        play(myBoard);
+    }
+
+}

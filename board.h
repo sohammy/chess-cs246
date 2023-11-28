@@ -1,19 +1,21 @@
 #ifndef BOARD_H
 #define BOARD_H
 
+#include "square.h"
 #include <vector>
 
 using namespace std;
-// #include "square.h"
+
 
 class Board {
-    vector<vector<char>> theBoard;
-    vector<char> aliveBlacks;
-    vector<char> aliveWhites;
+    vector<vector<unique_ptr<Square>>> theBoard;
+    // vector<Piece*> availableWhites;
+    // vector<Piece*> availableBlacks;
 
 public:
     void clearBoard();
     void initializeBoard();
+    void setup();
 };
 
 
