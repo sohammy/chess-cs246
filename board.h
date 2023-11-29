@@ -15,6 +15,9 @@ class Board {
     vector<Piece*> capturedBlacks;
 
 public:
+    bool containsBlackKing();
+    bool containsWhiteKing();
+
     void clearBoard();
     void initializeBoard();
     void setup();

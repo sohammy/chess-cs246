@@ -1,5 +1,23 @@
 #include "board.h"
 
+bool Board::containsWhiteKing() {
+    for (Piece p : availableWhites) {
+        if (King* king = dynamic_cast<King*>(p)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Board::containsBlackKing() {
+    for (Piece p : availableBlacks) {
+        if (King* king = dynamic_cast<King*>(p)) {
+            return true;
+        }
+    }
+    return false;
+}
+
 void Board::clearBoard() {
     theBoard.clear();
 }
@@ -60,11 +78,20 @@ void Board::setup() {
 
     string input;
     while (cin >> input) {
-        if (cin == "done") {
-            // Check if Board has a Black and White King
-            break;
-        } else {
-            // Insert Piece in ONE OF THE SQUARES in the BOARD
+        if (input == "done") {
+            if (containsBlackKing() && containsWhiteKing()) {
+                break;
+            }
+        } else if (input == "+") {
+            string piece, place;
+            cin >> piece >> place;
+            Move placement = Move(place, place);
+            theBoard[placement.getInitX()][placement.getInitY()].addPiece(piece);
+        } else if (input == "-") {
+            string place;
+            cin >> place;
+            Move placement = Move(place, place);
+            theBoard[placement.getInitX()][placement.getInitY()].removePiece();
         }
     }
 }
