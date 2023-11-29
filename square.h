@@ -28,7 +28,6 @@ public:
     bool canPromote();
     void addObservers();
     void notifyObservers();
-
 };
 
 
