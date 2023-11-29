@@ -1,3 +1,6 @@
+#ifndef BOARD_H
+#define BOARD_H
+
 #include <memory>
 #include <iostream>
 
@@ -20,3 +23,5 @@ public:
     void setTurn(char c);
     int whoWon();
 };
+
+#endif

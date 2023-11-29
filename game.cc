@@ -71,7 +71,6 @@ void Game::play(Board& myBoard) {
 }
 
 void Game::gameStart() {
-
     Board myBoard;
 
     string input;
