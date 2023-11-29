@@ -2,68 +2,33 @@
 
 using namespace std;
 
-// For Testing Purposes //
-
-class Player {
-    public:
-        virtual void getMove() = 0;
-};
-
-class Human : public Player {
-    public:
-        void getMove() {
-            cout << "Human Made Move" << endl;
-        }
-};
-
-class StageOne : public Player {
-    public:
-        void getMove() {
-            cout << "StageOne Made Move" << endl;
-        }
-};
-
-class StageTwo : public Player {
-    public:
-        void getMove() {
-            cout << "StageTwo Made Move" << endl;
-        }
-};
-
-class StageThree : public Player {
-    public:
-        void getMove() {
-            cout << "StageThree Made Move" << endl;
-        }
-};
-
-class StageFour : public Player {
-    public:
-        void getMove() {
-            cout << "StageFour Made Move" << endl;
-        }
-};
-
-// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ //
-
-bool Game::hasWon() {
-    // Checks if Either Player has Won
-        // If White has No Valid Moves + Black Does -> White Loses
-        // If Black has No Valid Moves + White Does -> Black Loses
-        // Else Stalemate
-    
-    if (testCounter == 5) {
-        return true;
+void Game::setTurn(char c) {
+    if (c == 'b') {
+        whoseTurn = 1;
+    } else if (c == 'w') {
+        whoseTurn = 0;
     } 
-    ++testCounter;
-    cout << "Test Counter is at " << testCounter << endl;
-    return false; 
+    return;
 }
 
-void Game::play(string whitePlayer, string blackPlayer) { // Should play take in a board config???
 
-    unique_ptr<Player> white;
-    unique_ptr<Player> black;
+int Game::whoWon() {
+    if (white.possibleMoves.size() == 0 && black.possibleMoves.size() == 1) { // possibleMoves is a Vector of ALL POSSIBLE MOVES where the King remains safe
+        ++blackScore;
+        return 1;
+    } else if (white.possibleMoves.size() == 1 && black.possibleMoves.size() == 0) {
+        ++whiteScore;
+        return 0;
+    } else {
+        return -1;
+    }
+}
+
+void Game::play(Board& myBoard) {
+    string whitePlayer;
+    string blackPlayer;
+
+    cin >> whitePlayer >> blackPlayer;
 
     if (whitePlayer == "human") {
         white = make_unique<Human>();
@@ -73,7 +38,7 @@ void Game::play(string whitePlayer, string blackPlayer) { // Should play take in
         white = make_unique<StageTwo>();
     } else if (whitePlayer == "computer[3]") {
         white = make_unique<StageThree>();
-    } else if (blackPlayer == "computer[4]") {
+    } else if (whitePlayer == "computer[4]") {
         white = make_unique<StageFour>();
     } else {
         // ERROR MESSAGE //
@@ -93,15 +58,29 @@ void Game::play(string whitePlayer, string blackPlayer) { // Should play take in
         // ERROR MESSAGE //
     }
 
-    while (!hasWon()) { // Switches Turns Back and Forth between Black + White
-        if (whoseTurn == 0) {
-            string userInput;
-            cin >> userInput;
+    while (whoWon() == -1) { // Switches Turns Back and Forth between Black + White
+        if (!whoseTurn) {
             white->getMove(); // getMove() should take in user input, only does move once 'move' is given as input (as per instructions)
-            whoseTurn == 1;
-        } if (whoseTurn == 1) {
+        } if (whoseTurn) {
             black->getMove(); // getMove() should take in user input, only does move once 'move' is given as input (as per instructions)
-            whoseTurn == 0;
         }
+        whoseTurn = !whoseTurn;
+    }
+
+}
+
+void Game::gameStart() {
+    Board myBoard;
+
+    string input;
+    cin >> input;
+
+    if (input == "play") {
+        myBoard.initializeBoard();
+        play(myBoard);
+
+    } else if (input == "setup") {
+        myBoard.setup();
+        play(myBoard);
     }
 }
