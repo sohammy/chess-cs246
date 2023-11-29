@@ -5,7 +5,7 @@
 class Human : public Player {
 public:
     Human();
-    void getMove() override;
+    void getMove(Board& gameBoard) override;
     ~Human() override;
 };
 
