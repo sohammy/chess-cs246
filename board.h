@@ -9,8 +9,10 @@ using namespace std;
 
 class Board {
     vector<vector<unique_ptr<Square>>> theBoard;
-    // vector<Piece*> availableWhites;
-    // vector<Piece*> availableBlacks;
+    vector<Piece*> availableWhites;
+    vector<Piece*> availableBlacks;
+    vector<Piece*> capturedWhites;
+    vector<Piece*> capturedBlacks;
 
 public:
     void clearBoard();

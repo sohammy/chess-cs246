@@ -25,7 +25,6 @@ int Game::whoWon() {
 }
 
 void Game::play(Board& myBoard) {
-
     string whitePlayer;
     string blackPlayer;
 
@@ -39,7 +38,7 @@ void Game::play(Board& myBoard) {
         white = make_unique<StageTwo>();
     } else if (whitePlayer == "computer[3]") {
         white = make_unique<StageThree>();
-    } else if (blackPlayer == "computer[4]") {
+    } else if (whitePlayer == "computer[4]") {
         white = make_unique<StageFour>();
     } else {
         // ERROR MESSAGE //
@@ -80,7 +79,7 @@ void Game::gameStart() {
         myBoard.initializeBoard();
         play(myBoard);
 
-    } if (input == "setup") {
+    } else if (input == "setup") {
         myBoard.setup();
         play(myBoard);
     }

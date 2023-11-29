@@ -18,8 +18,8 @@ class Game {
     int blackScore;
 
 public:
-    void play(Board& myBoard);
     void gameStart();
+    void play(Board& myBoard);
     void setTurn(char c);
     int whoWon();
 };

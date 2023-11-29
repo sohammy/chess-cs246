@@ -57,4 +57,14 @@ void Board::setup() {
     for (int i = 0; i < boardSize; ++i) {
         theBoard[i].resize(boardSize);
     }
+
+    string input;
+    while (cin >> input) {
+        if (cin == "done") {
+            
+            break;
+        } else {
+            // Insert Piece in ONE OF THE SQUARES in the BOARD
+        }
+    }
 }
