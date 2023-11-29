@@ -9,6 +9,7 @@ class Move {
     int destinationX;
     int destinationY;
     int letterToInt(char c);
+    int pointsForMove = 0;
 
     public:
         Move(int x, int y, int destX, int destY);
@@ -18,8 +19,6 @@ class Move {
         int getInitY() { return initialY; }
         int getDestX() { return destinationX; }
         int getDestY() { return destinationY; }
-
-
 };
 
 #endif

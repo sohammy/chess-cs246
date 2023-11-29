@@ -1,11 +1,12 @@
-#ifndef HUMAN_H
-#define HUMAN_H
+#ifndef COMPUTER_H
+#define COMPUTER_H
 #include "player.h"
 
-class Human : public Player {
+class Computer : public Player {
     public:
-        Human();
+        Computer();
         void makeMove(Board& gameBoard) override;
 };
+
 
 #endif

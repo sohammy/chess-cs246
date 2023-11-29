@@ -5,8 +5,7 @@
 class Player {
     public:
         Player();
-        virtual void getMove(Board& gameBoard) = 0;
-        virtual ~Player();
-};
+        virtual void makeMove(Board& gameBoard) = 0;
+ };
 
 #endif

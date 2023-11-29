@@ -1,12 +1,13 @@
 #include "human.h"
 #include <iostream>
-
-using namespace std;
+#include <vector>
 #include "move.h"
+using namespace std;
+
 
 Human::Human() {}
 
-void Human::getMove(Board& gameBoard) {
+void Human::makeMove(Board& gameBoard) {
     string pieceSelected, destination;
     bool foundMove = false;
 
@@ -30,8 +31,8 @@ void Human::getMove(Board& gameBoard) {
                 gameBoard.theBoard[moveAttempted.getInitX()][moveAttempted.getInitY()].getCurrPiece()
             );
             gameBoard.theBoard[moveAttempted.getInitX()][moveAttempted.getInitY()].removePiece();
+        } else {
+            cout << "Please a valid move" << endl;
         }
     }
 }
-
-Human::~Human() {}
