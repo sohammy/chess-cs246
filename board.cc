@@ -61,7 +61,7 @@ void Board::setup() {
     string input;
     while (cin >> input) {
         if (cin == "done") {
-            
+            // Check if Board has a Black and White King
             break;
         } else {
             // Insert Piece in ONE OF THE SQUARES in the BOARD
