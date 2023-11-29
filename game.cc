@@ -85,5 +85,4 @@ void Game::gameStart() {
         myBoard.setup();
         play(myBoard);
     }
-
 }
