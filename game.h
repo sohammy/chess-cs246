@@ -2,8 +2,14 @@
 #include <iostream>
 
 #include "board.h"
+#include "player.h"
+#include "textdisplay.h"
 
 class Game {
+
+    unique_ptr<Player> white;
+    unique_ptr<Player> black;
+
     bool whoseTurn;
     int whiteScore;
     int blackScore;
@@ -11,5 +17,6 @@ class Game {
 public:
     void play(Board& myBoard);
     void gameStart();
-    bool hasWon();
+    void setTurn(char c);
+    int whoWon();
 };

@@ -23,7 +23,7 @@ void Board::initializeBoard() {
     theBoard[0][7]->curpiece = make_unique<Rook>();
 
     for (int i = 0; i < boardSize; ++i) {
-        theBoard[0][i]->curpiece.piece_colour = "BLACK";
+        theBoard[0][i]->curpiece.setColour('b')
     }
 
     theBoard[7][0]->curpiece = make_unique<Rook>();
@@ -36,14 +36,14 @@ void Board::initializeBoard() {
     theBoard[7][7]->curpiece = make_unique<Rook>();
 
     for (int i = 0; i < boardSize; ++i) {
-        theBoard[7][i]->curpiece.piece_colour = "WHITE";
+        theBoard[7][i]->curpiece.setColour('w');
     }
 
     for (int i = 0; i < 7; ++i) {
         theBoard[1][i]->curpiece = make_unique<Pawn>();
-        theBoard[1][i]->curpiece.piece_colour = "BLACK";
+        theBoard[1][i]->curpiece.setColour('b');
         theBoard[6][i]->curpiece = make_unique<Pawn>()
-        theBoard[6][i]->curpiece.piece_colour = WHITE;
+        theBoard[6][i]->curpiece.setColour('w');
     }
 
 
