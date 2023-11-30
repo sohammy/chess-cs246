@@ -8,18 +8,19 @@
 using namespace std;
 
 class Piece {
-
-    enum Color {white, black};
+    enum Colour {white, black};
 
 private:
-    Color piece_color;
-
+    Colour pieceColour;
+    int xCoord;
+    int yCoord;
 
 public:
-    virtual bool canMove(Square) = 0;
-    virtual vector<Moves> getMoves() = 0;
-
-    void setColour(char);
+    virtual vector<Move> getMoves() = 0;
+    void setColour(char c);
+    int getX() { return xCoord; }
+    int getY() { return yCoord; }
+    Colour getColour() { return pieceColour; }
 
 };
 
