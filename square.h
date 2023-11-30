@@ -22,6 +22,8 @@ private:
     // The current piece sitting on the square
     Piece *currPiece;
 
+    bool enPassant;
+
 public:
     Square(int x = 0, int y = 0, Piece *currPiece = nullptr);
     ~Square();
@@ -33,9 +35,10 @@ public:
     bool canPromote();
     void addDisplayObservers(Observer *o);
     void addPieceObservers(Observer *o);
+    void removePieceObservers(Observer *o);
     void notifyPieceObservers();
     void notifyDisplayObservers();
-
+    bool canEnPassant();
 };
 
 #endif
