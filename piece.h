@@ -1,10 +1,10 @@
-#ifndef __piece_H__
-#define __piece_H__
+#ifndef PIECE_H
+#define PIECE_H__
 #include <memory>
 #include <vector>
 #include <iostream>
 #include <string>
-#include "moves.h"
+#include "move.h"
 using namespace std;
 
 class Piece {
