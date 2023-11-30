@@ -11,18 +11,18 @@ using namespace std;
 class Square {
 
 private:
-    // vector of observers (TextDisplay & GraphicsDisplay)
-    vector<observers*> displays;
+    // Vector of observers (TextDisplay & GraphicsDisplay)
+    vector<Observer*> displays;
 
     // x & y coordinates of the square
     int x;
     int y;
 
-    // the current piece sitting on the square
-    Piece *curpiece;
+    // The current piece sitting on the square
+    Piece *currPiece;
 
 public:
-    Square(int x = 0, int y = 0, Piece *curpiece = nullptr);
+    Square(int x = 0, int y = 0, Piece *currPiece = nullptr);
     ~Square();
     int getX();
     int getY();
@@ -30,7 +30,7 @@ public:
     void removePiece();
     void addPiece(Piece *piece);
     bool canPromote();
-    void addObservers(observer *o);
+    void addObservers(Observer *o);
     void notifyObservers() const;
 
 };

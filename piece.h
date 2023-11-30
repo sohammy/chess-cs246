@@ -12,14 +12,13 @@ class Piece {
 
 private:
     Colour pieceColour;
-    int xCoord;
-    int yCoord;
+    Square* position;
 
 public:
     virtual vector<Move> getMoves() = 0;
     void setColour(char c);
-    int getX() { return xCoord; }
-    int getY() { return yCoord; }
+    int getX() { return position->getX(); }
+    int getY() { return position->getY(); }
     Colour getColour() { return pieceColour; }
 
 };
