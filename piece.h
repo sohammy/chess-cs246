@@ -29,7 +29,6 @@ class Piece : public Observer{
         int getY() { return position->getY(); }
         vector<Move> getMoves() { return possibleMoves; } 
         Colour getColour() { return pieceColour; }
-
 };
 
 
