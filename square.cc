@@ -24,11 +24,13 @@ Piece* Square::getPiece() {
 // Removes the Piece from the square (DOES NOT MANAGE MEMORY)
 void Square::removePiece() {
     currPiece = nullptr;
+    notifyDisplayObservers();
 }
 
 // Adds piece to the Square 
 void Square::addPiece(Piece *piece) {
     currPiece = piece;
+    notifyDisplayObservers();
 }
 
 // If the square is the first or last row, then it has the ability to promote a piece on it
