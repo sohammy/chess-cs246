@@ -15,7 +15,7 @@
 using namespace std;
 
 class Board {
-    vector<vector<shared_ptr<Square>>> theBoard;
+    vector<vector<Square>> theBoard;
     vector<Piece*> availableWhites;
     vector<Piece*> availableBlacks;
     vector<Piece*> capturedWhites;
@@ -28,7 +28,7 @@ public:
     bool containsWhiteKing();
 
     void incrMoveCounter();
-    vector<vector<shared_ptr<Square>>> getBoard();
+    vector<vector<Square>> getBoard();
 
     void clearBoard();
     void initializeBoard();
