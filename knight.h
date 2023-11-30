@@ -2,7 +2,8 @@
 #define KNIGHT_H
 
 class Knight {
-    
+    public:
+        calculateMoves();
 };
 
 
