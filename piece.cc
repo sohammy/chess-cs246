@@ -151,7 +151,7 @@ void Piece::movesInDir(Direction d) {
     }
 }
 
-void Piece::notify(shared_ptr<Square> s) {
+void Piece::notify(Square* s) {
     bool isInPossibleMoves = true;
     Direction d;
     for(Move m : blockedMoves) {
