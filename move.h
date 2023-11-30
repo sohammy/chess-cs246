@@ -18,7 +18,7 @@ class Move {
     int letterToInt(char c);
 
     public:
-        Move(int x, int y, int destX, int destY);
+        Move(int x, int y, int destX, int destY, Direction d, Square* dest);
         Move(string s, string d);
         bool isEqual(const Move& other);
         int getInitX() { return initialX; }

@@ -15,6 +15,7 @@ class Piece : public Observer{
 
         Colour pieceColour;
         Board* theBoard;
+        char pieceName;
         Square* position;
         vector<Move> possibleMoves; // All legal moves
         vector<Move> blockedMoves; // All blocked moves
