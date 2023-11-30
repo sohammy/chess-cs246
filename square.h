@@ -35,7 +35,7 @@ public:
     bool canPromote();
     void addDisplayObservers(Observer *o);
     void addPieceObservers(Observer *o);
-    void removePieceObservers(Observer *o);
+    void removePieceObserver(Observer *o);
     void notifyPieceObservers();
     void notifyDisplayObservers();
     bool canEnPassant();
