@@ -5,6 +5,7 @@
 #include <iostream>
 #include <string>
 #include "square.h"
+#include "board.h"
 #include "move.h"
 using namespace std;
 
@@ -13,6 +14,7 @@ class Piece : public Observer{
         enum Colour {WHITE, BLACK};
 
         Colour pieceColour;
+        Board* theBoard;
         Square* position;
         vector<Move> possibleMoves; // All legal moves
         vector<Move> blockedMoves; // All blocked moves

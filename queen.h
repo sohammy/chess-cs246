@@ -3,6 +3,9 @@
 
 class Queen {
 
+public:
+    void calculateMoves();
+
 };
 
 #endif
