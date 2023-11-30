@@ -1,10 +1,14 @@
-#ifndef BISHOP_H
-#define BISHOP_H
-#include "piece.h"
-   
-class Bishop : public Piece{
-    public:
-        void calculateMoves() override;
+#ifndef __BISHOP_H__
+#define __BISHOP_H__
+#include <vector>
+#include "square.h"
+using namespace std;
+
+class Bishop: public Piece {
+
+public:
+    void calculateMoves();
+    
 };
 
 #endif
