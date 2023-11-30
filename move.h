@@ -12,13 +12,13 @@ class Move {
     int initialY;
     int destinationX;
     int destinationY;
-    shared_ptr<Square> destSquare;
+    Square* destSquare;
     Direction d;
 
     int letterToInt(char c);
 
     public:
-        Move(int x, int y, int destX, int destY, Direction d, shared_ptr<Square> dest);
+        Move(int x, int y, int destX, int destY, Direction d, Square* dest);
         Move(string s, string d);
         bool isEqual(const Move& other);
         int getInitX() { return initialX; }
@@ -26,8 +26,7 @@ class Move {
         int getDestX() { return destinationX; }
         int getDestY() { return destinationY; }
         Direction getDirection() { return d; }
-        shared_ptr<Square> getSquare() { return destSquare; }
-
+        Square* getSquare() { return destSquare; }
 
 };
 

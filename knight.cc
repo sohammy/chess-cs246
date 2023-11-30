@@ -75,7 +75,7 @@ void Knight:: calculateMoves () {
             possibleMoves.emplace_back(Move(curX, curY, curX - 2, curY - 1, W, theBoard->getBoard()[curX - 2][curY - 1]));
             theBoard->getBoard()[curX - 2][curY - 1]->addPieceObservers(this);
         } else {
-            blockedMoves.emplace_back(Move(curX, curY, curX, curY - 1, W, theBoard->getBoard()[curX - 2][curY - 1]));
+            blockedMoves.emplace_back(Move(curX, curY, curX - 2, curY - 1, W, theBoard->getBoard()[curX - 2][curY - 1]));
             theBoard->getBoard()[curX][curY-1]->addPieceObservers(this);
         }
     }

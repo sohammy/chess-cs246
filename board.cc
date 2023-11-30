@@ -1,4 +1,6 @@
 #include "board.h"
+#include <memory>
+using namespace std;
 
 bool Board::containsWhiteKing() {
     for (Piece* p : availableWhites) {
@@ -31,17 +33,17 @@ void Board::initializeBoard() {
         theBoard[i].resize(boardSize);
     }
 
-    theBoard[0][0]->currPiece = make_unique<Rook>();
-    theBoard[0][1]->currPiece = make_unique<Knight>();
-    theBoard[0][2]->currPiece = make_unique<Bishop>();
-    theBoard[0][3]->currPiece = make_unique<Queen>();
-    theBoard[0][4]->currPiece = make_unique<King>();
-    theBoard[0][5]->currPiece = make_unique<Bishop>();
-    theBoard[0][6]->currPiece = make_unique<Knight>();
-    theBoard[0][7]->currPiece = make_unique<Rook>();
+    theBoard[0][0]->addPiece (make_unique<Rook>().get());
+    theBoard[0][1]->addPiece (make_unique<Knight>().get());
+    theBoard[0][2]->addPiece (make_unique<Bishop>().get());
+    theBoard[0][3]->addPiece (make_unique<Queen>().get());
+    theBoard[0][4]->addPiece (make_unique<King>().get());
+    theBoard[0][5]->addPiece (make_unique<Bishop>().get());
+    theBoard[0][6]->addPiece (make_unique<Knight>().get());
+    theBoard[0][7]->addPiece (make_unique<Rook>().get());
 
     for (int i = 0; i < boardSize; ++i) {
-        theBoard[0][i]->currPiece.setColour('b')
+        theBoard[0][i]->getPiece()->setColour('b');
     }
 
     theBoard[7][0]->currPiece = make_unique<Rook>();
