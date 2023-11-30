@@ -12,6 +12,7 @@ using namespace std;
 class Piece : public Observer{
     protected:
         enum Colour {WHITE, BLACK};
+        bool hasMoved = false; 
 
         Colour pieceColour;
         Board* theBoard;
@@ -29,6 +30,7 @@ class Piece : public Observer{
         int getY() { return position->getY(); }
         vector<Move> getMoves() { return possibleMoves; } 
         Colour getColour() { return pieceColour; }
+        void pieceMoved() {hasMoved = true;}
 };
 
 

@@ -3,9 +3,11 @@
 #include "piece.h"
 
 class Pawn : public Piece {
-    public:
-        
+    bool doubleStep = true;
 
+    public:
+        void calculateMoves();
+        bool canDoubleStep();
 };
 
 #endif
