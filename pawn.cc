@@ -69,10 +69,18 @@ void Pawn::calculateMoves() {
                     Move s1 = Move(position->getX(), position->getY(), position->getX() + 1, 
                     position->getY() + 1, S, theBoard->getBoard()[position->getX() + 1][position->getY() + 1]);
                     possibleMoves.emplace_back(s1);
+                } else if (theBoard->getBoard()[position->getX() + 1][position->getY() + 1]->canEnPassant()) {
+                    Move s1 = Move(position->getX(), position->getY(), position->getX() + 1, 
+                    position->getY() + 1, S, theBoard->getBoard()[position->getX() + 1][position->getY() + 1]);
+                    possibleMoves.emplace_back(s1);
                 }
             } else if (position->getX() > 0) {
                 if (theBoard->getBoard()[position->getX() - 1][position->getY() + 1]->getPiece() != nullptr && 
                 theBoard->getBoard()[position->getX() - 1][position->getY() + 1]->getPiece()->getColour() != pieceColour) {
+                    Move s1 = Move(position->getX(), position->getY(), position->getX() - 1, 
+                    position->getY() + 1, S, theBoard->getBoard()[position->getX() - 1][position->getY() + 1]);
+                    possibleMoves.emplace_back(s1);
+                } else if(theBoard->getBoard()[position->getX() - 1][position->getY() + 1]->canEnPassant()) {
                     Move s1 = Move(position->getX(), position->getY(), position->getX() - 1, 
                     position->getY() + 1, S, theBoard->getBoard()[position->getX() - 1][position->getY() + 1]);
                     possibleMoves.emplace_back(s1);
