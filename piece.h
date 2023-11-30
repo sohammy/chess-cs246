@@ -22,6 +22,7 @@ class Piece : public Observer{
 
     public:
         virtual void calculateMoves() = 0;
+        void movesInDir(Direction d);
         void notify(Square& s) override;
         void setColour(char c);
         int getX() { return position->getX(); }
