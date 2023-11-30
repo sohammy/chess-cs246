@@ -13,6 +13,7 @@ class Piece : public Observer{
         enum Colour {WHITE, BLACK};
 
         Colour pieceColour;
+        char pieceName;
         Square* position;
         vector<Move> possibleMoves; // All legal moves
         vector<Move> blockedMoves; // All blocked moves
