@@ -4,7 +4,7 @@
 Square::Square(int x, int y, Piece *currPiece): 
     x{x}, y{y}, currPiece{currPiece} {}
 
-Square::~Square()
+Square::~Square() {}
 
 // Returns x value from 0 - 7
 int Square::getX() {
@@ -17,7 +17,7 @@ int Square::getY() {
 }
 
 // Returns the Piece on the Square
-Piece Square::getPiece() {
+Piece* Square::getPiece() {
     return currPiece;
 }
 
@@ -41,14 +41,26 @@ bool Square::canPromote() {
     }
 }
 
+// Adds any observers to the vector of observers 
+void Square::addPieceObservers(Observer *o) {
+    possiblePieces.emplace_back(o);
+}
+
 // Adds any observers to the vector of observers (namely TextDisplay & GraphicsDisplay)
-void Square::addObservers(Observer *o) {
+void Square::addDisplayObservers(Observer *o) {
     displays.emplace_back(o);
+}
+
+// Notifies piece observers, should be called whenever the contents of the square changes!
+void Square::notifyPieceObservers() {
+    for (auto p: possiblePieces) {
+        p->notify(*this);
+    }
 }
 
 // Notifies observers (TextDisplay & GraphicsDisplay)
 // should be called whenever the contents of the square changes!
-void Square::notifyObservers() const {
+void Square::notifyDisplayObservers() {
     for (auto p: displays) {
         p->notify(*this);
     }

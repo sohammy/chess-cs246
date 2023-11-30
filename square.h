@@ -13,6 +13,7 @@ class Square {
 private:
     // Vector of observers (TextDisplay & GraphicsDisplay)
     vector<Observer*> displays;
+    vector<Observer*> possiblePieces;
 
     // x & y coordinates of the square
     int x;
@@ -26,12 +27,14 @@ public:
     ~Square();
     int getX();
     int getY();
-    Piece getPiece();
+    Piece* getPiece();
     void removePiece();
     void addPiece(Piece *piece);
     bool canPromote();
-    void addObservers(Observer *o);
-    void notifyObservers() const;
+    void addDisplayObservers(Observer *o);
+    void addPieceObservers(Observer *o);
+    void notifyPieceObservers();
+    void notifyDisplayObservers();
 
 };
 

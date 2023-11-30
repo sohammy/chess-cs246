@@ -4,22 +4,27 @@
 #include <vector>
 #include <iostream>
 #include <string>
+#include "square.h"
 #include "move.h"
 using namespace std;
 
-class Piece {
-    enum Colour {white, black};
+class Piece : public Observer{
+    protected:
+        enum Colour {WHITE, BLACK};
 
-private:
-    Colour pieceColour;
-    Square* position;
+        Colour pieceColour;
+        Square* position;
+        vector<Move> possibleMoves; // All legal moves
+        vector<Move> blockedMoves; // All blocked moves
 
-public:
-    virtual vector<Move> getMoves() = 0;
-    void setColour(char c);
-    int getX() { return position->getX(); }
-    int getY() { return position->getY(); }
-    Colour getColour() { return pieceColour; }
+    public:
+        virtual void calculateMoves() = 0;
+        void notify(Square& s) override;
+        void setColour(char c);
+        int getX() { return position->getX(); }
+        int getY() { return position->getY(); }
+        vector<Move> getMoves() { return possibleMoves; } 
+        Colour getColour() { return pieceColour; }
 
 };
 
