@@ -1,26 +1,34 @@
-#ifndef __piece_H__
-#define __piece_H__
+#ifndef PIECE_H
+#define PIECE_H__
 #include <memory>
 #include <vector>
 #include <iostream>
 #include <string>
-#include "moves.h"
+#include "square.h"
+#include "board.h"
+#include "move.h"
 using namespace std;
 
-class Piece {
+class Piece : public Observer{
+    protected:
+        enum Colour {WHITE, BLACK};
 
-    enum Color {white, black};
+        Colour pieceColour;
+        Board* theBoard;
+        char pieceName;
+        Square* position;
+        vector<Move> possibleMoves; // All legal moves
+        vector<Move> blockedMoves; // All blocked moves
 
-private:
-    Color piece_color;
-
-
-public:
-    virtual bool canMove(Square) = 0;
-    virtual vector<Moves> getMoves() = 0;
-
-    void setColour(char);
-
+    public:
+        virtual void calculateMoves() = 0;
+        void movesInDir(Direction d);
+        void notify(Square& s) override;
+        void setColour(char c);
+        int getX() { return position->getX(); }
+        int getY() { return position->getY(); }
+        vector<Move> getMoves() { return possibleMoves; } 
+        Colour getColour() { return pieceColour; }
 };
 
 

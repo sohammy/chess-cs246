@@ -1,5 +1,5 @@
-#ifndef __SQUARE_H__
-#define __SQUARE_H__
+#ifndef SQUARE_H
+#define SQUARE_H
 #include "observer.h"
 #include "piece.h"
 #include <memory>
@@ -11,24 +11,34 @@ using namespace std;
 class Square {
 
 private:
-    // vector of observers (TextDisplay & GraphicsDisplay)
-    vector<observers*>;
+    // Vector of observers (TextDisplay & GraphicsDisplay)
+    vector<Observer*> displays;
+    vector<Observer*> possiblePieces;
 
     // x & y coordinates of the square
     int x;
     int y;
 
-    // the current piece sitting on the square
-    Piece *curpiece;
+    // The current piece sitting on the square
+    Piece *currPiece;
+
+    bool enPassant;
 
 public:
+    Square(int x = 0, int y = 0, Piece *currPiece = nullptr);
+    ~Square();
     int getX();
     int getY();
-    Piece getPiece();
+    Piece* getPiece();
+    void removePiece();
+    void addPiece(Piece *piece);
     bool canPromote();
-    void addObservers();
-    void notifyObservers();
+    void addDisplayObservers(Observer *o);
+    void addPieceObservers(Observer *o);
+    void removePieceObservers(Observer *o);
+    void notifyPieceObservers();
+    void notifyDisplayObservers();
+    bool canEnPassant();
 };
-
 
 #endif
