@@ -1,8 +1,11 @@
 #ifndef KNIGHT_H
 #define KNIGHT_H
 
-class Knight {
-    
+#include "piece.h"
+
+class Knight : public Piece {
+    public:
+        void calculateMoves();
 };
 
 
