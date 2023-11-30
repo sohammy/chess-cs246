@@ -1,6 +1,9 @@
 #include "queen.h"
 
 void Queen:: calculateMoves() {
+    possibleMoves.clear();
+    blockedMoves.clear();
+   
     movesInDir(N);
     movesInDir(E);
     movesInDir(S);
