@@ -2,6 +2,25 @@
 #include <memory>
 using namespace std;
 
+unique_ptr<Piece> makePiece (char pieceChar) {
+    pieceChar = toupper(pieceChar);
+    if (pieceChar == 'K') {
+        return make_unique<King>();
+    } else if (pieceChar == 'Q') {
+        return make_unique<Queen>();
+    } else if (pieceChar == 'R') {
+        return make_unique<Rook>();
+    } else if (pieceChar == 'B') {
+        return make_unique<Bishop>();
+    } else if (pieceChar == 'N') {
+        return make_unique<Knight>();
+    } else if (pieceChar == 'P') {
+        return make_unique<Pawn>();
+    }
+    return nullptr;
+}
+
+
 bool Board::containsWhiteKing() {
     for (Piece* p : availableWhites) {
         if (King* king = dynamic_cast<King*>(p)) {
@@ -33,39 +52,38 @@ void Board::initializeBoard() {
         theBoard[i].resize(boardSize);
     }
 
-    theBoard[0][0]->addPiece (make_unique<Rook>().get());
-    theBoard[0][1]->addPiece (make_unique<Knight>().get());
-    theBoard[0][2]->addPiece (make_unique<Bishop>().get());
-    theBoard[0][3]->addPiece (make_unique<Queen>().get());
-    theBoard[0][4]->addPiece (make_unique<King>().get());
-    theBoard[0][5]->addPiece (make_unique<Bishop>().get());
-    theBoard[0][6]->addPiece (make_unique<Knight>().get());
-    theBoard[0][7]->addPiece (make_unique<Rook>().get());
+    theBoard[0][0].addPiece (make_unique<Rook>().get());
+    theBoard[0][1].addPiece (make_unique<Knight>().get());
+    theBoard[0][2].addPiece (make_unique<Bishop>().get());
+    theBoard[0][3].addPiece (make_unique<Queen>().get());
+    theBoard[0][4].addPiece (make_unique<King>().get());
+    theBoard[0][5].addPiece (make_unique<Bishop>().get());
+    theBoard[0][6].addPiece (make_unique<Knight>().get());
+    theBoard[0][7].addPiece (make_unique<Rook>().get());
 
     for (int i = 0; i < boardSize; ++i) {
-        theBoard[0][i]->getPiece()->setColour('b');
+        theBoard[0][i].getPiece()->setColour('b');
     }
 
-    theBoard[7][0]->currPiece = make_unique<Rook>();
-    theBoard[7][1]->currPiece = make_unique<Knight>();
-    theBoard[7][2]->currPiece = make_unique<Bishop>();
-    theBoard[7][3]->currPiece = make_unique<Queen>();
-    theBoard[7][4]->currPiece = make_unique<King>();
-    theBoard[7][5]->currPiece = make_unique<Bishop>();
-    theBoard[7][6]->currPiece = make_unique<Knight>();
-    theBoard[7][7]->currPiece = make_unique<Rook>();
+    theBoard[7][0].addPiece (make_unique<Rook>().get());
+    theBoard[7][1].addPiece (make_unique<Knight>().get());
+    theBoard[7][2].addPiece (make_unique<Bishop>().get());
+    theBoard[7][3].addPiece (make_unique<Queen>().get());
+    theBoard[7][4].addPiece (make_unique<King>().get());
+    theBoard[7][5].addPiece (make_unique<Bishop>().get());
+    theBoard[7][6].addPiece (make_unique<Knight>().get());
+    theBoard[7][7].addPiece (make_unique<Rook>().get());
 
     for (int i = 0; i < boardSize; ++i) {
-        theBoard[7][i]->curpiece.setColour('w');
+        theBoard[7][i].getPiece()->setColour('w');
     }
 
     for (int i = 0; i < 7; ++i) {
-        theBoard[1][i]->currPiece = make_unique<Pawn>();
-        theBoard[1][i]->currPiece.setColour('b');
-        theBoard[6][i]->currPiece = make_unique<Pawn>()
-        theBoard[6][i]->currPiece.setColour('w');
+        theBoard[1][i].addPiece(make_unique<Pawn>().get());
+        theBoard[1][i].getPiece()->setColour('b');
+        theBoard[6][i].addPiece(make_unique<Pawn>().get());
+        theBoard[6][i].getPiece()->setColour('w');
     }
-
 
 }
 
@@ -85,15 +103,29 @@ void Board::setup() {
                 break;
             }
         } else if (input == "+") {
-            string piece, place;
+            char piece;
+            string place;
             cin >> piece >> place;
             Move placement = Move(place, place);
-            theBoard[placement.getInitX()][placement.getInitY()]->addPiece(piece);
+
+            bool white = false;
+            if (65 <= piece <= 90) {
+                white = true;
+            }
+
+            theBoard[placement.getInitX()][placement.getInitY()].addPiece(makePiece(piece).get());
+            
+            if (white) {
+                theBoard[placement.getInitX()][placement.getInitY()].getPiece()->setColour('w');
+            } else {
+                theBoard[placement.getInitX()][placement.getInitY()].getPiece()->setColour('b');
+            }
+
         } else if (input == "-") {
             string place;
             cin >> place;
             Move placement = Move(place, place);
-            theBoard[placement.getInitX()][placement.getInitY()]->removePiece();
+            theBoard[placement.getInitX()][placement.getInitY()].removePiece();
         }
     }
 }
@@ -102,6 +134,6 @@ void Board::incrMoveCounter() {
     ++moveCounter;
 }
 
-vector<vector<shared_ptr<Square>>> Board::getBoard() {
+vector<vector<Square>> Board::getBoard() {
     return theBoard;
 }
