@@ -15,7 +15,7 @@ bool Move::isEqual(const Move& other) {
     return false;
 }
 
-Move::Move(int x, int y, int destX, int destY, Direction d, unique_ptr<Square> dest): 
+Move::Move(int x, int y, int destX, int destY, Direction d, shared_ptr<Square> dest): 
     initialX{x}, initialY{y}, destinationX{destX}, destinationY{destY}, d{d}, destSquare{dest} {
         
     }
