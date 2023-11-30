@@ -11,7 +11,19 @@ void Piece::movesInDir(Direction d) {
     if (d == N) {
         while(y > 0) {
             --y;
-            
+            Move m = Move(position->getX(), position->getY(), x, y, d, theBoard->getBoard()[x][y]);
+            if(theBoard->getBoard()[x][y]->getPiece() == nullptr) {
+                possibleMoves.emplace_back(m);
+                theBoard->getBoard()[x][y]->addPieceObservers(this);
+            } else if (theBoard->getBoard()[x][y]->getPiece()->getColour() == pieceColour) {
+                blockedMoves.emplace_back(m);
+                theBoard->getBoard()[x][y]->addPieceObservers(this);
+                break;
+            } else {
+                possibleMoves.emplace_back(m);
+                theBoard->getBoard()[x][y]->addPieceObservers(this);
+                break;
+            }
         }
     } else if (d == E) {
 

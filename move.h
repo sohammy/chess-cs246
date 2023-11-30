@@ -12,13 +12,13 @@ class Move {
     int initialY;
     int destinationX;
     int destinationY;
-    Square* destSquare;
+    unique_ptr<Square> destSquare;
     Direction d;
 
     int letterToInt(char c);
 
     public:
-        Move(int x, int y, int destX, int destY, Direction d, Square* dest);
+        Move(int x, int y, int destX, int destY, Direction d, unique_ptr<Square> dest);
         Move(string s, string d);
         bool isEqual(const Move& other);
         int getInitX() { return initialX; }
