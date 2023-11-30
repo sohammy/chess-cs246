@@ -4,7 +4,7 @@
    
 class Bishop : public Piece{
     public:
-        vector<Move> getMoves() override;
+        void calculateMoves() override;
 };
 
 #endif

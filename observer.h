@@ -4,7 +4,7 @@ class Square;
 
 class Observer {
     public:
-        virtual void notify(Square& s) = 0;
+        virtual void notify(shared_ptr<Square> s) = 0;
         virtual ~Observer() = default;
 };
 
