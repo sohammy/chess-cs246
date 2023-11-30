@@ -317,6 +317,8 @@ void Piece::notify(shared_ptr<Square> s) {
 
     } else {
         if(pieceName == 'p' || pieceName == 'P') calculateMoves();
+        else if(pieceName == 'n' || pieceName == 'N') calculateMoves();
+        else if(pieceName == 'k' || pieceName == 'K') calculateMoves();
         else if(s->getPiece() != nullptr && s->getPiece()->getColour() != pieceColour) {
             if(d == N) {
                 for(int i = 0; i < possibleMoves.size(); ++i) {

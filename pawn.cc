@@ -1,92 +1,102 @@
 #include "pawn.h"
 
 void Pawn::calculateMoves() {
-
     possibleMoves.clear();
     blockedMoves.clear();
 
-    Colour pawnColour = getColour();
-    int curX = getX();
-    int curY = getY();
+    bool doubleStep = canDoubleStep();
 
-    if (hasMoved) {
-        doubleStep = false;
-    }
-
-    if (pawnColour == WHITE) {
-
-        bool canMoveOne = false;
-
-        if ((curY - 1) >= 0) {
-            
-                
+    if(doubleStep) {
+        if(pieceColour == WHITE) {
+            Move s1 = Move(position->getX(), position->getY(), position->getX(), 
+            position->getY() - 1, N, theBoard->getBoard()[position->getX()][position->getY() - 1]);
+            Move s2 = Move(position->getX(), position->getY(), position->getX(), 
+            position->getY() - 2, N, theBoard->getBoard()[position->getX()][position->getY() - 2]);
+            possibleMoves.emplace_back(s1);
+            possibleMoves.emplace_back(s2);
+        } else if (pieceColour == BLACK) {
+            Move s1 = Move(position->getX(), position->getY(), position->getX(), 
+            position->getY() + 1, S, theBoard->getBoard()[position->getX()][position->getY() + 1]);
+            Move s2 = Move(position->getX(), position->getY(), position->getX(), 
+            position->getY() + 2, S, theBoard->getBoard()[position->getX()][position->getY() + 2]);
+            possibleMoves.emplace_back(s1);
+            possibleMoves.emplace_back(s2);
         }
-
-        if ((curY - 1) >= 0 && (curX - 1) >= 0) {
-
-        }
-
-        if ((curY - 1) >= 0 && (curX + 1) <= 7) {
-
-        }
-
-        if (doubleStep && ) {
-            if ((curY - 2) >= 0) { // Checks if In Range
-                if (theBoard->getBoard()[curX][curY - 1]->getPiece() == nullptr) { // Checks if Pawn can move UP by ONE MOVE
-                    possibleMoves.emplace_back(Move(curX, curY, curX, curY - 1, N, theBoard->getBoard()[curX][curY-1]));
-                    theBoard->getBoard()[curX][curY-1]->addPieceObservers(this);
-
-                    if (theBoard->getBoard()[curX][curY - 2]->getPiece() == nullptr) { // Checks if Pawn can move UP by TWO MOVES
-                        possibleMoves.emplace_back(Move(curX, curY, curX, curY - 2, N, theBoard->getBoard()[curX][curY-2]));
-                        theBoard->getBoard()[curX][curY-2]->addPieceObservers(this);
-                    } else {
-                        blockedMoves.emplace_back(Move(curX, curY, curX, curY - 2, N, theBoard->getBoard()[curX][curY-2]));
-                        theBoard->getBoard()[curX][curY-2]->addPieceObservers(this);
-                    }
-                } else {
-                    blockedMoves.emplace_back(Move(curX, curY, curX, curY - 1, N, theBoard->getBoard()[curX][curY-1]));
-                    theBoard->getBoard()[curX][curY-1]->addPieceObservers(this);
+    } else {
+        if(pieceColour == WHITE) {
+            if (position->getY() > 0) {
+                if(theBoard->getBoard()[position->getX()][position->getY() - 1]->getPiece() == nullptr) {
+                    Move s1 = Move(position->getX(), position->getY(), position->getX(), 
+                    position->getY() - 1, N, theBoard->getBoard()[position->getX()][position->getY() - 1]);
+                    possibleMoves.emplace_back(s1);
+                }
+            }
+        } else if(pieceColour == BLACK) {
+            if (position->getY() < 7) {
+                if(theBoard->getBoard()[position->getX()][position->getY() + 1]->getPiece() == nullptr) {
+                    Move s1 = Move(position->getX(), position->getY(), position->getX(), 
+                    position->getY() + 1, S, theBoard->getBoard()[position->getX()][position->getY() + 1]);
+                    possibleMoves.emplace_back(s1);
                 }
             }
         }
+    }
 
-    } else if (pawnColour == BLACK) {
+    if(pieceColour == WHITE) {
+        if (position->getY() > 0) {
+            if (position->getX() < 7) {
+                if (theBoard->getBoard()[position->getX() + 1][position->getY() - 1]->getPiece() != nullptr && 
+                theBoard->getBoard()[position->getX() + 1][position->getY() - 1]->getPiece()->getColour() != pieceColour) {
+                    Move s1 = Move(position->getX(), position->getY(), position->getX() + 1, 
+                    position->getY() - 1, N, theBoard->getBoard()[position->getX() + 1][position->getY() - 1]);
+                    possibleMoves.emplace_back(s1);
+                }
+            } else if (position->getX() > 0) {
+                if (theBoard->getBoard()[position->getX() - 1][position->getY() - 1]->getPiece() != nullptr && 
+                theBoard->getBoard()[position->getX() - 1][position->getY() - 1]->getPiece()->getColour() != pieceColour) {
+                    Move s1 = Move(position->getX(), position->getY(), position->getX() - 1, 
+                    position->getY() - 1, N, theBoard->getBoard()[position->getX() - 1][position->getY() - 1]);
+                    possibleMoves.emplace_back(s1);
+                }
+            }
+        } 
+    }
+    if(pieceColour == BLACK) {
+        if (position->getY() < 7) {
+            if (position->getX() < 7) {
+                if (theBoard->getBoard()[position->getX() + 1][position->getY() + 1]->getPiece() != nullptr && 
+                theBoard->getBoard()[position->getX() + 1][position->getY() + 1]->getPiece()->getColour() != pieceColour) {
+                    Move s1 = Move(position->getX(), position->getY(), position->getX() + 1, 
+                    position->getY() + 1, S, theBoard->getBoard()[position->getX() + 1][position->getY() + 1]);
+                    possibleMoves.emplace_back(s1);
+                }
+            } else if (position->getX() > 0) {
+                if (theBoard->getBoard()[position->getX() - 1][position->getY() + 1]->getPiece() != nullptr && 
+                theBoard->getBoard()[position->getX() - 1][position->getY() + 1]->getPiece()->getColour() != pieceColour) {
+                    Move s1 = Move(position->getX(), position->getY(), position->getX() - 1, 
+                    position->getY() + 1, S, theBoard->getBoard()[position->getX() - 1][position->getY() + 1]);
+                    possibleMoves.emplace_back(s1);
+                }
+            }
+        } 
+    }
+}
 
-        if ((curY + 1) <= 0) {
-            
-        }
-
-        if ((curY + 1) <= 0 && (curX - 1) >= 0) {
-
-        }
-
-        if ((curY + 1) <= 0 && (curX + 1) <= 7) {
-
-        }
-
-        if (doubleStep) {
-            if ((curY + 2) <= 7) { // Checks if In Range
-                if (theBoard->getBoard()[curX][curY + 1]->getPiece() == nullptr) { // Checks if Pawn can move UP by ONE MOVE
-                    possibleMoves.emplace_back(Move(curX, curY, curX, curY + 1, N, theBoard->getBoard()[curX][curY+1]));
-                    theBoard->getBoard()[curX][curY+1]->addPieceObservers(this);
-                    if (theBoard->getBoard()[curX][curY + 2]->getPiece() == nullptr) { // Checks if Pawn can move UP by TWO MOVES
-                        possibleMoves.emplace_back(Move(curX, curY, curX, curY + 2, N, theBoard->getBoard()[curX][curY+2]));
-                        theBoard->getBoard()[curX][curY+2]->addPieceObservers(this);
-                    } else {
-                        blockedMoves.emplace_back(Move(curX, curY, curX, curY + 2, N, theBoard->getBoard()[curX][curY+2]));
-                        theBoard->getBoard()[curX][curY+2]->addPieceObservers(this);
-                    }
-                } else {
-                    blockedMoves.emplace_back(Move(curX, curY, curX, curY + 1, N, theBoard->getBoard()[curX][curY+1]));
-                    theBoard->getBoard()[curX][curY+1]->addPieceObservers(this);
+bool Pawn::canDoubleStep() {
+    if(!hasMoved) { 
+        if(pieceColour == WHITE) {
+            if(theBoard->getBoard()[position->getX()][position->getY() - 1]->getPiece() == nullptr) {
+                if(theBoard->getBoard()[position->getX()][position->getY() - 2]->getPiece() == nullptr) {
+                    return true;
+                }
+            }
+        } else if ( pieceColour == BLACK) {
+            if(theBoard->getBoard()[position->getX()][position->getY() + 1]->getPiece() == nullptr) {
+                if(theBoard->getBoard()[position->getX()][position->getY() + 2]->getPiece() == nullptr) {
+                    return true;
                 }
             }
         }
-
-        }
-
-
-
-
     }
+    return false;
 }

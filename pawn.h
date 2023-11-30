@@ -3,8 +3,6 @@
 #include "piece.h"
 
 class Pawn : public Piece {
-    bool doubleStep = true;
-
     public:
         void calculateMoves();
         bool canDoubleStep();
