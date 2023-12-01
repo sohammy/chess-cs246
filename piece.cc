@@ -5,6 +5,7 @@ Piece::Piece(vector<vector<Square>>& board) : theBoard{board} {}
 Piece* Piece::setColour(char c) {
     if (c == 'w') pieceColour = WHITE;
     if (c == 'b') pieceColour = BLACK;
+    return this;
 }
 
 Piece* Piece::setPieceName(char c) {
@@ -14,8 +15,8 @@ Piece* Piece::setPieceName(char c) {
 
 vector<Piece*> Piece::getTeamOfColour(Colour c) {
     vector<Piece*> pieces;
-    for(int i = 0; i < theBoard.size(); ++i) {
-        for(int j = 0; j < theBoard.size(); ++j) {
+    for(unsigned int i = 0; i < theBoard.size(); ++i) {
+        for(unsigned int j = 0; j < theBoard.size(); ++j) {
             if(theBoard[i][j].getPiece() != nullptr) {
                 if(theBoard[i][j].getPiece()->getColour() == c) {
                     pieces.emplace_back(theBoard[i][j].getPiece());
@@ -37,6 +38,8 @@ vector<Move> Piece::getTeamsMoves(Colour c) {
     }
     return allMoves;
 }
+
+// MOVESINDIR FUNCTION //
 
 void Piece::movesInDir(Direction d) {
     int x = position->getX();
@@ -184,6 +187,8 @@ void Piece::movesInDir(Direction d) {
     }
 }
 
+// NOTIFY FUNCTION //
+
 void Piece::notify(Square* s) {
     bool isInPossibleMoves = true;
     Direction d;
@@ -206,14 +211,14 @@ void Piece::notify(Square* s) {
 
     if(isInPossibleMoves) {
         if(d == N) {
-            for (int i = 0; i < possibleMoves.size(); ++i) {
+            for (unsigned int i = 0; i < possibleMoves.size(); ++i) {
                 if(possibleMoves[i].getDirection() == N 
                 && possibleMoves[i].getDestY() <= s->getY()) {
                     possibleMoves[i].getSquare()->removePieceObserver(this);
                     possibleMoves.erase(possibleMoves.begin() + i);
                 }
             }
-            for (int i = 0; i < blockedMoves.size(); ++i) {
+            for (unsigned int i = 0; i < blockedMoves.size(); ++i) {
                 if(blockedMoves[i].getDirection() == N 
                 && blockedMoves[i].getDestY() <= s->getY()) {
                     blockedMoves[i].getSquare()->removePieceObserver(this);
@@ -221,14 +226,14 @@ void Piece::notify(Square* s) {
                 }
             }
         } else if (d == E) {
-           for (int i = 0; i < possibleMoves.size(); ++i) {
+           for (unsigned int i = 0; i < possibleMoves.size(); ++i) {
                 if(possibleMoves[i].getDirection() == E 
                 && possibleMoves[i].getDestX() >= s->getX()) {
                     possibleMoves[i].getSquare()->removePieceObserver(this);
                     possibleMoves.erase(possibleMoves.begin() + i);
                 }
             }
-            for (int i = 0; i < blockedMoves.size(); ++i) {
+            for (unsigned int i = 0; i < blockedMoves.size(); ++i) {
                 if(blockedMoves[i].getDirection() == E 
                 && blockedMoves[i].getDestX() >= s->getX()) {
                     blockedMoves[i].getSquare()->removePieceObserver(this);
@@ -236,14 +241,14 @@ void Piece::notify(Square* s) {
                 }
             } 
         } else if (d == S) {
-            for (int i = 0; i < possibleMoves.size(); ++i) {
+            for (unsigned int i = 0; i < possibleMoves.size(); ++i) {
                 if(possibleMoves[i].getDirection() == S 
                 && possibleMoves[i].getDestY() >= s->getY()) {
                     possibleMoves[i].getSquare()->removePieceObserver(this);
                     possibleMoves.erase(possibleMoves.begin() + i);
                 }
             }
-            for (int i = 0; i < blockedMoves.size(); ++i) {
+            for (unsigned int i = 0; i < blockedMoves.size(); ++i) {
                 if(blockedMoves[i].getDirection() == S 
                 && blockedMoves[i].getDestY() >= s->getY()) {
                     blockedMoves[i].getSquare()->removePieceObserver(this);
@@ -251,14 +256,14 @@ void Piece::notify(Square* s) {
                 }
             }
         } else if (d == W) {
-            for (int i = 0; i < possibleMoves.size(); ++i) {
+            for (unsigned int i = 0; i < possibleMoves.size(); ++i) {
                 if(possibleMoves[i].getDirection() == W 
                 && possibleMoves[i].getDestX() <= s->getX()) {
                     possibleMoves[i].getSquare()->removePieceObserver(this);
                     possibleMoves.erase(possibleMoves.begin() + i);
                 }
             }
-            for (int i = 0; i < blockedMoves.size(); ++i) {
+            for (unsigned int i = 0; i < blockedMoves.size(); ++i) {
                 if(blockedMoves[i].getDirection() == W 
                 && blockedMoves[i].getDestX() <= s->getX()) {
                     blockedMoves[i].getSquare()->removePieceObserver(this);
@@ -266,7 +271,7 @@ void Piece::notify(Square* s) {
                 }
             }
         } else if (d == NE) {
-            for (int i = 0; i < possibleMoves.size(); ++i) {
+            for (unsigned int i = 0; i < possibleMoves.size(); ++i) {
                 if(possibleMoves[i].getDirection() == NE 
                 && possibleMoves[i].getDestY() <= s->getY()
                 && possibleMoves[i].getDestX() >= s->getX()) {
@@ -274,7 +279,7 @@ void Piece::notify(Square* s) {
                     possibleMoves.erase(possibleMoves.begin() + i);
                 }
             }
-            for (int i = 0; i < blockedMoves.size(); ++i) {
+            for (unsigned int i = 0; i < blockedMoves.size(); ++i) {
                 if(blockedMoves[i].getDirection() == NE 
                 && blockedMoves[i].getDestY() <= s->getY()
                 && blockedMoves[i].getDestX() >= s->getX()) {
@@ -283,7 +288,7 @@ void Piece::notify(Square* s) {
                 }
             }
         } else if (d == NW) {
-            for (int i = 0; i < possibleMoves.size(); ++i) {
+            for (unsigned int i = 0; i < possibleMoves.size(); ++i) {
                 if(possibleMoves[i].getDirection() == NW 
                 && possibleMoves[i].getDestY() <= s->getY()
                 && possibleMoves[i].getDestX() <= s->getX()) {
@@ -291,7 +296,7 @@ void Piece::notify(Square* s) {
                     possibleMoves.erase(possibleMoves.begin() + i);
                 }
             }
-            for (int i = 0; i < blockedMoves.size(); ++i) {
+            for (unsigned int i = 0; i < blockedMoves.size(); ++i) {
                 if(blockedMoves[i].getDirection() == NW 
                 && blockedMoves[i].getDestY() <= s->getY()
                 && blockedMoves[i].getDestX() <= s->getX()) {
@@ -300,7 +305,7 @@ void Piece::notify(Square* s) {
                 }
             }
         } else if (d == SE) {
-            for (int i = 0; i < possibleMoves.size(); ++i) {
+            for (unsigned int i = 0; i < possibleMoves.size(); ++i) {
                 if(possibleMoves[i].getDirection() == SE 
                 && possibleMoves[i].getDestY() >= s->getY()
                 && possibleMoves[i].getDestX() >= s->getX()) {
@@ -308,7 +313,7 @@ void Piece::notify(Square* s) {
                     possibleMoves.erase(possibleMoves.begin() + i);
                 }
             }
-            for (int i = 0; i < blockedMoves.size(); ++i) {
+            for (unsigned int i = 0; i < blockedMoves.size(); ++i) {
                 if(blockedMoves[i].getDirection() == SE 
                 && blockedMoves[i].getDestY() >= s->getY()
                 && blockedMoves[i].getDestX() >= s->getX()) {
@@ -317,7 +322,7 @@ void Piece::notify(Square* s) {
                 }
             }
         } else if (d == SW) {
-            for (int i = 0; i < possibleMoves.size(); ++i) {
+            for (unsigned int i = 0; i < possibleMoves.size(); ++i) {
                 if(possibleMoves[i].getDirection() == SW 
                 && possibleMoves[i].getDestY() >= s->getY()
                 && possibleMoves[i].getDestX() <= s->getX()) {
@@ -325,7 +330,7 @@ void Piece::notify(Square* s) {
                     possibleMoves.erase(possibleMoves.begin() + i);
                 }
             }
-            for (int i = 0; i < blockedMoves.size(); ++i) {
+            for (unsigned int i = 0; i < blockedMoves.size(); ++i) {
                 if(blockedMoves[i].getDirection() == SW 
                 && blockedMoves[i].getDestY() >= s->getY()
                 && blockedMoves[i].getDestX() <= s->getX()) {
@@ -354,56 +359,56 @@ void Piece::notify(Square* s) {
         else if(pieceName == 'k' || pieceName == 'K') calculateMoves();
         else if(s->getPiece() != nullptr && s->getPiece()->getColour() != pieceColour) {
             if(d == N) {
-                for(int i = 0; i < possibleMoves.size(); ++i) {
+                for(unsigned int i = 0; i < possibleMoves.size(); ++i) {
                     if (possibleMoves[i].getDirection() == N) {
                         possibleMoves.erase(possibleMoves.begin() + i); 
                     }
                 }
                 movesInDir(N);
             } else if (d == E) {
-                for(int i = 0; i < possibleMoves.size(); ++i) {
+                for(unsigned int i = 0; i < possibleMoves.size(); ++i) {
                     if (possibleMoves[i].getDirection() == E) {
                         possibleMoves.erase(possibleMoves.begin() + i); 
                     }
                 }
                 movesInDir(E); 
             } else if (d == S) {
-                for(int i = 0; i < possibleMoves.size(); ++i) {
+                for(unsigned int i = 0; i < possibleMoves.size(); ++i) {
                     if (possibleMoves[i].getDirection() == S) {
                         possibleMoves.erase(possibleMoves.begin() + i); 
                     }
                 }
                 movesInDir(S);
             } else if (d == W) {
-                for(int i = 0; i < possibleMoves.size(); ++i) {
+                for(unsigned int i = 0; i < possibleMoves.size(); ++i) {
                     if (possibleMoves[i].getDirection() == W) {
                         possibleMoves.erase(possibleMoves.begin() + i); 
                     }
                 }
                 movesInDir(W);
             } else if (d == NE) {
-                for(int i = 0; i < possibleMoves.size(); ++i) {
+                for(unsigned int i = 0; i < possibleMoves.size(); ++i) {
                     if (possibleMoves[i].getDirection() == NE) {
                         possibleMoves.erase(possibleMoves.begin() + i); 
                     }
                 }
                 movesInDir(NE);
             } else if (d == NW) {
-                for(int i = 0; i < possibleMoves.size(); ++i) {
+                for(unsigned int i = 0; i < possibleMoves.size(); ++i) {
                     if (possibleMoves[i].getDirection() == NW) {
                         possibleMoves.erase(possibleMoves.begin() + i); 
                     }
                 }
                 movesInDir(NW);
             } else if (d == SE) {
-                for(int i = 0; i < possibleMoves.size(); ++i) {
+                for(unsigned int i = 0; i < possibleMoves.size(); ++i) {
                     if (possibleMoves[i].getDirection() == SE) {
                         possibleMoves.erase(possibleMoves.begin() + i); 
                     }
                 }
                 movesInDir(SE);
             } else if (d == SW) {
-                for(int i = 0; i < possibleMoves.size(); ++i) {
+                for(unsigned int i = 0; i < possibleMoves.size(); ++i) {
                     if (possibleMoves[i].getDirection() == SW) {
                         possibleMoves.erase(possibleMoves.begin() + i); 
                     }

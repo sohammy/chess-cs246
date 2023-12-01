@@ -72,7 +72,7 @@ void Square::notifyDisplayObservers() {
 // should be called whenever a square no longer being observed 
 
 void Square::removePieceObserver(Observer *o) {
-    for (int i = 0; i < possiblePieces.size(); ++i) { 
+    for (unsigned int i = 0; i < possiblePieces.size(); ++i) { 
         if (possiblePieces[i] == o) {
             possiblePieces.erase(possiblePieces.begin() + i);
         }
