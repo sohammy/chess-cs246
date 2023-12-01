@@ -1,12 +1,14 @@
 #ifndef SQUARE_H
 #define SQUARE_H
 #include "observer.h"
-#include "piece.h"
+// #include "piece.h"
 #include <memory>
 #include <vector>
 #include <iostream>
 #include <string>
 using namespace std;
+
+class Piece;
 
 class Square {
 

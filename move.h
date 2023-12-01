@@ -4,7 +4,6 @@
 #include "square.h"
 using namespace std;
 
-
 enum Direction{N, E, S, W, NE, SE, SW, NW, NONE};
 
 class Move {
