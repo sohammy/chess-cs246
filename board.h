@@ -2,6 +2,7 @@
 #define BOARD_H
 
 #include "square.h"
+#include "piece.h"
 
 #include <vector>
 
@@ -20,6 +21,9 @@ class Board {
 public:
     bool containsBlackKing();
     bool containsWhiteKing();
+
+    vector<Piece*> availableWhites() { return availableWhites; }
+    vector<Piece*> availableBlacks() { return availableBlacks; }
 
     void incrMoveCounter();
 
