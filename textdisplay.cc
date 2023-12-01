@@ -19,7 +19,7 @@ TextDisplay::TextDisplay() {
 }
 
 void TextDisplay::notify(Square* s) {
-
+  
     if (s->getPiece() == nullptr) { // When the square does not have a piece on it
 
       if (s->getX() == 0) {
@@ -30,7 +30,7 @@ void TextDisplay::notify(Square* s) {
 
     } else {
 
-      theDisplay[s->getY()][s->getX() + 2] = s->getPiece()->getpieceName();
+      theDisplay[s->getY()][s->getX() + 2] = s->getPiece()->getPieceName();
 
     }
     

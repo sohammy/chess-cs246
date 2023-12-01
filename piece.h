@@ -6,6 +6,7 @@
 #include <string>
 #include "square.h"
 #include "move.h"
+
 using namespace std;
 
 class Board;
@@ -29,6 +30,7 @@ class Piece : public Observer{
         void setColour(char c);
         int getX() { return position->getX(); }
         int getY() { return position->getY(); }
+        char getPieceName() { return pieceName; }
         vector<Move> getMoves() { return possibleMoves; } 
         Colour getColour() { return pieceColour; }
         void pieceMoved() {hasMoved = true;}
