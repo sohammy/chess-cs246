@@ -19,9 +19,8 @@ int Game::whoWon() {
     } else if (white.possibleMoves.size() == 1 && black.possibleMoves.size() == 0) {
         ++whiteScore;
         return 0;
-    } else {
-        return -1;
     }
+    return -1;
 }
 
 void Game::play(Board& myBoard) {
@@ -61,6 +60,7 @@ void Game::play(Board& myBoard) {
     while (whoWon() == -1) { // Switches Turns Back and Forth between Black + White
         if (!whoseTurn) {
             white->getMove(); // getMove() should take in user input, only does move once 'move' is given as input (as per instructions)
+
         } if (whoseTurn) {
             black->getMove(); // getMove() should take in user input, only does move once 'move' is given as input (as per instructions)
         }
