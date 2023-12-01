@@ -61,21 +61,21 @@ void Board::initializeBoard(TextDisplay *td) {
 
     unique_ptr<Rook> blackR1 = make_unique<Rook>(theBoard, 'r');
     unique_ptr<Rook> blackR2 = make_unique<Rook>(theBoard, 'r');
-    unique_ptr<Rook> blackB1 = make_unique<Rook>(theBoard, 'b');
-    unique_ptr<Rook> blackB2 = make_unique<Rook>(theBoard, 'b');
-    unique_ptr<Rook> blackN1 = make_unique<Rook>(theBoard, 'n');
-    unique_ptr<Rook> blackN2 = make_unique<Rook>(theBoard, 'n');
-    unique_ptr<Rook> blackK1 = make_unique<Rook>(theBoard, 'k');
-    unique_ptr<Rook> blackQ1 = make_unique<Rook>(theBoard, 'q');
+    unique_ptr<Bishop> blackB1 = make_unique<Bishop>(theBoard, 'b');
+    unique_ptr<Bishop> blackB2 = make_unique<Bishop>(theBoard, 'b');
+    unique_ptr<Knight> blackN1 = make_unique<Knight>(theBoard, 'n');
+    unique_ptr<Knight> blackN2 = make_unique<Knight>(theBoard, 'n');
+    unique_ptr<King> blackK1 = make_unique<King>(theBoard, 'k');
+    unique_ptr<Queen> blackQ1 = make_unique<Queen>(theBoard, 'q');
 
     unique_ptr<Rook> whiteR1 = make_unique<Rook>(theBoard, 'R');
     unique_ptr<Rook> whiteR2 = make_unique<Rook>(theBoard, 'R');
-    unique_ptr<Rook> whiteB1 = make_unique<Rook>(theBoard, 'B');
-    unique_ptr<Rook> whiteB2 = make_unique<Rook>(theBoard, 'B');
-    unique_ptr<Rook> whiteN1 = make_unique<Rook>(theBoard, 'N');
-    unique_ptr<Rook> whiteN2 = make_unique<Rook>(theBoard, 'N');
-    unique_ptr<Rook> whiteK1 = make_unique<Rook>(theBoard, 'K');
-    unique_ptr<Rook> whiteQ1 = make_unique<Rook>(theBoard, 'Q');
+    unique_ptr<Bishop> whiteB1 = make_unique<Bishop>(theBoard, 'B');
+    unique_ptr<Bishop> whiteB2 = make_unique<Bishop>(theBoard, 'B');
+    unique_ptr<Knight> whiteN1 = make_unique<Knight>(theBoard, 'N');
+    unique_ptr<Knight> whiteN2 = make_unique<Knight>(theBoard, 'N');
+    unique_ptr<King> whiteK1 = make_unique<King>(theBoard, 'K');
+    unique_ptr<Queen> whiteQ1 = make_unique<Queen>(theBoard, 'Q');
 
     theBoard[0][0].addPiece (blackR1.get());
     theBoard[0][1].addPiece (blackN1.get());
