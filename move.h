@@ -23,6 +23,7 @@ class Move {
         Move(int x, int y, int destX, int destY, Direction d, Square* dest);
         Move(string s, string d, Board& gameBoard);
         bool isEqual(Move& other);
+        bool isSameDestination(Move& other);
         int getInitX() { return initialX; }
         int getInitY() { return initialY; }
         int getDestX() { return destinationX; }
