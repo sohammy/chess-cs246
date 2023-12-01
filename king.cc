@@ -1,6 +1,6 @@
 #include "king.h"
 
-King::King (vector<vector<Square>>& board) : Piece(board) {}
+King::King (vector<vector<Square>>& board, char pieceType) : Piece(board, pieceType) {}
 
 vector<Move> King::movesIncludingNonLegal(int x, int y) {
     vector<Move> maybeMoves;

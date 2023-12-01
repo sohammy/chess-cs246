@@ -1,6 +1,6 @@
 #include "piece.h"
 
-Piece::Piece(vector<vector<Square>>& board) : theBoard{board} {}
+Piece::Piece(vector<vector<Square>>& board, char pieceName) : theBoard{board}, pieceName{pieceName} {}
 
 Piece* Piece::setColour(char c) {
     if (c == 'w') pieceColour = WHITE;

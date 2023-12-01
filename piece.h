@@ -28,7 +28,7 @@ class Piece : public Observer{
 
     public:
         
-        Piece(vector<vector<Square>>& board);
+        Piece(vector<vector<Square>>& board, char pieceName);
 
         virtual void calculateMoves() = 0;
         

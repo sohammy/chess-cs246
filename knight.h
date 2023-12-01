@@ -5,7 +5,7 @@
 
 class Knight : public Piece {
     public:
-        Knight (vector<vector<Square>>& board);
+        Knight (vector<vector<Square>>& board, char pieceType);
         void calculateMoves() override;
 };
 

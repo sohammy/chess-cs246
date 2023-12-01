@@ -1,6 +1,6 @@
 #include "queen.h"
 
-Queen::Queen (vector<vector<Square>>& board) : Piece(board) {}
+Queen::Queen (vector<vector<Square>>& board, char pieceType) : Piece(board, pieceType) {}
 
 void Queen:: calculateMoves() {
     possibleMoves.clear();

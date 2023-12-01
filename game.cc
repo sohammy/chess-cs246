@@ -133,7 +133,6 @@ void Game::gameStart() {
     if (input == "play") {
         myBoard.initializeBoard(td.get());
         play(myBoard);
-
     } else if (input == "setup") {
         myBoard.setup();
         play(myBoard);

@@ -72,7 +72,7 @@ void Board::initializeBoard(TextDisplay *td) {
     }
 
     theBoard[7][0].addPiece (make_unique<Rook>(theBoard).get()->setPieceName('r'));
-    theBoard[7][1].addPiece (make_unique<Knight>(theBoard).get()->setPieceName('k'));
+    theBoard[7][1].addPiece (make_unique<Knight>(theBoard).get()->setPieceName('n'));
     theBoard[7][2].addPiece (make_unique<Bishop>(theBoard).get()->setPieceName('b'));
     theBoard[7][3].addPiece (make_unique<Queen>(theBoard).get()->setPieceName('q'));
     theBoard[7][4].addPiece (make_unique<King>(theBoard).get()->setPieceName('k'));

@@ -1,6 +1,6 @@
 #include "pawn.h"
 
-Pawn::Pawn(vector<vector<Square>>& board): Piece(board) {}
+Pawn::Pawn(vector<vector<Square>>& board, char pieceType): Piece(board, pieceType) {}
 
 void Pawn::calculateMoves() {
     possibleMoves.clear();

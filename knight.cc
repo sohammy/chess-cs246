@@ -1,6 +1,6 @@
 #include "knight.h"
 
- Knight :: Knight (vector<vector<Square>>& board) : Piece(board) {}
+ Knight :: Knight (vector<vector<Square>>& board, char pieceType) : Piece(board, pieceType) {}
 
 void Knight:: calculateMoves () {
 

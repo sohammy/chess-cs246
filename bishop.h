@@ -8,7 +8,7 @@ using namespace std;
 class Bishop: public Piece {
 
 public:
-    Bishop (vector<vector<Square>>& board);
+    Bishop (vector<vector<Square>>& board, char pieceType);
     void calculateMoves() override;
 };
 
