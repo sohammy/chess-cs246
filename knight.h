@@ -5,7 +5,6 @@
 
 class Knight : public Piece {
     public:
-        char getPiece() const override;
         void calculateMoves();
 };
 

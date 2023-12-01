@@ -4,7 +4,6 @@
 
 class Pawn : public Piece {
     public:
-        char getPiece() const override;
         void calculateMoves();
         bool canDoubleStep();
 };

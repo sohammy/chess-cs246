@@ -23,7 +23,7 @@ unique_ptr<Piece> makePiece (char pieceChar) {
 
 bool Board::containsWhiteKing() {
     for (Piece* p : availableWhites) {
-        if (King* king = dynamic_cast<King*>(p)) {
+        if (dynamic_cast<King*>(p) != nullptr) {
             return true;
         }
     }
@@ -32,7 +32,7 @@ bool Board::containsWhiteKing() {
 
 bool Board::containsBlackKing() {
     for (Piece* p : availableBlacks) {
-        if (King* king = dynamic_cast<King*>(p)) {
+        if (dynamic_cast<King*>(p) != nullptr) {
             return true;
         }
     }
@@ -106,10 +106,10 @@ void Board::setup() {
             char piece;
             string place;
             cin >> piece >> place;
-            Move placement = Move(place, place);
+            Move placement = Move(place, place, *this);
 
             bool white = false;
-            if (65 <= piece <= 90) {
+            if (65 <= piece && piece <= 90) {
                 white = true;
             }
 
@@ -124,7 +124,7 @@ void Board::setup() {
         } else if (input == "-") {
             string place;
             cin >> place;
-            Move placement = Move(place, place);
+            Move placement = Move(place, place, *this);
             theBoard[placement.getInitX()][placement.getInitY()].removePiece();
         }
     }

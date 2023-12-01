@@ -6,7 +6,6 @@
 class Queen : public Piece {
 
 public:
-    char getPiece() const override;
     void calculateMoves();
 };
 

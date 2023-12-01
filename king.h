@@ -4,7 +4,8 @@
 #include "piece.h"
 
 class King : public Piece {
-
+    public:
+        void calculateMoves();
 };
 
 #endif
