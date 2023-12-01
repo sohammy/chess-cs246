@@ -31,11 +31,13 @@ public:
     ~Square();
     int getX();
     int getY();
+    Square* setX(int x);
+    Square* setY(int y);
     Piece* getPiece();
     void removePiece();
     void addPiece(Piece *piece);
     bool canPromote();
-    void addDisplayObservers(Observer *o);
+    void addDisplayObservers(Observer* o);
     void addPieceObservers(Observer *o);
     void removePieceObserver(Observer *o);
     void notifyPieceObservers();

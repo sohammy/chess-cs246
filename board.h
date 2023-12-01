@@ -10,6 +10,8 @@
 #include "bishop.h"
 #include "pawn.h"
 
+#include "textdisplay.h"
+
 #include <vector>
 
 using namespace std;

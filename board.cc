@@ -2,6 +2,8 @@
 #include <memory>
 using namespace std;
 
+const int BOARDSIZE = 8;
+
 unique_ptr<Piece> makePiece (char pieceChar, vector<vector<Square>>& board) {
     pieceChar = toupper(pieceChar);
     if (pieceChar == 'K') {
@@ -45,55 +47,63 @@ void Board::clearBoard() {
 
 void Board::initializeBoard() {
     clearBoard();
-    int boardSize = 8;
-
-    theBoard.resize(boardSize); // Resizes the Board to be an 8x8 Grid
-    for (int i = 0; i < boardSize; ++i) {
-        theBoard[i].resize(boardSize);
+    theBoard.resize(BOARDSIZE); // Resizes the Board to be an 8x8 Grid
+    for (int i = 0; i < BOARDSIZE; ++i) {
+        theBoard[i].resize(BOARDSIZE);
     }
 
-    theBoard[0][0].addPiece (make_unique<Rook>(theBoard).get());
-    theBoard[0][1].addPiece (make_unique<Knight>(theBoard).get());
-    theBoard[0][2].addPiece (make_unique<Bishop>(theBoard).get());
-    theBoard[0][3].addPiece (make_unique<Queen>(theBoard).get());
-    theBoard[0][4].addPiece (make_unique<King>(theBoard).get());
-    theBoard[0][5].addPiece (make_unique<Bishop>(theBoard).get());
-    theBoard[0][6].addPiece (make_unique<Knight>(theBoard).get());
-    theBoard[0][7].addPiece (make_unique<Rook>(theBoard).get());
+    for(int i = 0; i < BOARDSIZE; ++i) {
+        for(int j = 0; j < BOARDSIZE; ++j) {
+            theBoard[i][j].setX(i)->setY(j);
+        }
+    }
 
-    for (int i = 0; i < boardSize; ++i) {
+    theBoard[0][0].addPiece (make_unique<Rook>(theBoard).get()->setPieceName('R'));
+    theBoard[0][1].addPiece (make_unique<Knight>(theBoard).get()->setPieceName('N'));
+    theBoard[0][2].addPiece (make_unique<Bishop>(theBoard).get()->setPieceName('B'));
+    theBoard[0][3].addPiece (make_unique<Queen>(theBoard).get()->setPieceName('Q'));
+    theBoard[0][4].addPiece (make_unique<King>(theBoard).get()->setPieceName('K'));
+    theBoard[0][5].addPiece (make_unique<Bishop>(theBoard).get()->setPieceName('B'));
+    theBoard[0][6].addPiece (make_unique<Knight>(theBoard).get()->setPieceName('N'));
+    theBoard[0][7].addPiece (make_unique<Rook>(theBoard).get()->setPieceName('R'));
+
+    for (int i = 0; i < BOARDSIZE; ++i) {
         theBoard[0][i].getPiece()->setColour('b');
     }
 
-    theBoard[7][0].addPiece (make_unique<Rook>(theBoard).get());
-    theBoard[7][1].addPiece (make_unique<Knight>(theBoard).get());
-    theBoard[7][2].addPiece (make_unique<Bishop>(theBoard).get());
-    theBoard[7][3].addPiece (make_unique<Queen>(theBoard).get());
-    theBoard[7][4].addPiece (make_unique<King>(theBoard).get());
-    theBoard[7][5].addPiece (make_unique<Bishop>(theBoard).get());
-    theBoard[7][6].addPiece (make_unique<Knight>(theBoard).get());
-    theBoard[7][7].addPiece (make_unique<Rook>(theBoard).get());
+    theBoard[7][0].addPiece (make_unique<Rook>(theBoard).get()->setPieceName('r'));
+    theBoard[7][1].addPiece (make_unique<Knight>(theBoard).get()->setPieceName('k'));
+    theBoard[7][2].addPiece (make_unique<Bishop>(theBoard).get()->setPieceName('b'));
+    theBoard[7][3].addPiece (make_unique<Queen>(theBoard).get()->setPieceName('q'));
+    theBoard[7][4].addPiece (make_unique<King>(theBoard).get()->setPieceName('k'));
+    theBoard[7][5].addPiece (make_unique<Bishop>(theBoard).get()->setPieceName('b'));
+    theBoard[7][6].addPiece (make_unique<Knight>(theBoard).get()->setPieceName('n'));
+    theBoard[7][7].addPiece (make_unique<Rook>(theBoard).get()->setPieceName('r'));
 
-    for (int i = 0; i < boardSize; ++i) {
+    for (int i = 0; i < BOARDSIZE; ++i) {
         theBoard[7][i].getPiece()->setColour('w');
     }
 
-    for (int i = 0; i < 7; ++i) {
+    for (int i = 0; i < BOARDSIZE; ++i) {
         theBoard[1][i].addPiece(make_unique<Pawn>(theBoard).get());
-        theBoard[1][i].getPiece()->setColour('b');
+        theBoard[1][i].getPiece()->setColour('b')->setPieceName('p');
         theBoard[6][i].addPiece(make_unique<Pawn>(theBoard).get());
-        theBoard[6][i].getPiece()->setColour('w');
+        theBoard[6][i].getPiece()->setColour('w')->setPieceName('P');
     }
-
 }
 
 void Board::setup() {
     clearBoard();
-    int boardSize = 8;
 
-    theBoard.resize(boardSize); // Resizes the Board to be an 8x8 Grid
-    for (int i = 0; i < boardSize; ++i) {
-        theBoard[i].resize(boardSize);
+    theBoard.resize(BOARDSIZE); // Resizes the Board to be an 8x8 Grid
+    for (int i = 0; i < BOARDSIZE; ++i) {
+        theBoard[i].resize(BOARDSIZE);
+    }
+
+    for(int i = 0; i < BOARDSIZE; ++i) {
+        for(int j = 0; j < BOARDSIZE; ++j) {
+            theBoard[i][j].setX(i)->setY(j);
+        }
     }
 
     string input;
@@ -116,9 +126,9 @@ void Board::setup() {
             theBoard[placement.getInitX()][placement.getInitY()].addPiece(makePiece(piece, theBoard).get());
             
             if (white) {
-                theBoard[placement.getInitX()][placement.getInitY()].getPiece()->setColour('w');
+                theBoard[placement.getInitX()][placement.getInitY()].getPiece()->setColour('w')->setPieceName(piece);
             } else {
-                theBoard[placement.getInitX()][placement.getInitY()].getPiece()->setColour('b');
+                theBoard[placement.getInitX()][placement.getInitY()].getPiece()->setColour('b')->setPieceName(piece);
             }
 
         } else if (input == "-") {

@@ -12,4 +12,3 @@ void Rook::calculateMoves() {
     movesInDir(W);
     // Add Castling Functionality
 }
-

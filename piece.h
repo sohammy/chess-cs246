@@ -11,15 +11,14 @@ using namespace std;
 
 class Piece : public Observer{
     protected:
-
-        Piece(vector<vector<Square>>& board);
         enum Colour {WHITE, BLACK};
+
         bool hasMoved = false; 
-        
         Colour pieceColour;
         vector<vector<Square>>& theBoard;
         char pieceName;
         Square* position;
+
         vector<Move> possibleMoves; // All legal moves
         vector<Move> blockedMoves; // All blocked moves
         
@@ -28,13 +27,18 @@ class Piece : public Observer{
 
     public:
         
+        Piece(vector<vector<Square>>& board);
+
         virtual void calculateMoves() = 0;
+        
         void movesInDir(Direction d);
         void notify(Square* s) override;
-        void setColour(char c);
+        Piece* setColour(char c);
+        Piece* setPieceName(char c = ' ');
+
+        char getPieceName() { return pieceName; }
         int getX() { return position->getX(); }
         int getY() { return position->getY(); }
-        char getPieceName() { return pieceName; }
         vector<Move> getMoves() { return possibleMoves; }
         Colour getColour() { return pieceColour; }
         void pieceMoved() { hasMoved = true; }

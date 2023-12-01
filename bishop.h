@@ -9,7 +9,7 @@ class Bishop: public Piece {
 
 public:
     Bishop (vector<vector<Square>>& board);
-    void calculateMoves();
+    void calculateMoves() override;
 };
 
 #endif
