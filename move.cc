@@ -32,6 +32,7 @@ bool Move::isSameDestination(Move& other) {
     if(destinationX == other.getDestX() && destinationY == other.getDestY()) {
         return true;
     }
+    return false;
 }
 
 Move::Move(int x, int y, int destX, int destY, Direction d, Square* dest): 
