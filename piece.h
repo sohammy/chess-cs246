@@ -32,9 +32,9 @@ class Piece : public Observer{
         int getX() { return position->getX(); }
         int getY() { return position->getY(); }
         char getPieceName() { return pieceName; }
-        vector<Move> getMoves() { return possibleMoves; } 
+        vector<Move> getMoves() { return possibleMoves; }
         Colour getColour() { return pieceColour; }
-        void pieceMoved() {hasMoved = true;}
+        void pieceMoved() { hasMoved = true; }
 };
 
 
