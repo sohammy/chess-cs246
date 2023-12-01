@@ -59,9 +59,9 @@ void Game::play(Board& myBoard) {
 
     while (whoWon() == -1) { // Switches Turns Back and Forth between Black + White
         if (!whoseTurn) {
-            white->makeMove(); // getMove() should take in user input, only does move once 'move' is given as input (as per instructions)
+            white->makeMove(myBoard); // getMove() should take in user input, only does move once 'move' is given as input (as per instructions)
         } if (whoseTurn) {
-            black->makeMove(); // getMove() should take in user input, only does move once 'move' is given as input (as per instructions)
+            black->makeMove(myBoard); // getMove() should take in user input, only does move once 'move' is given as input (as per instructions)
         }
         whoseTurn = !whoseTurn;
     }
