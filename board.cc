@@ -58,37 +58,37 @@ void Board::initializeBoard(TextDisplay *td) {
         }
     }
 
-    theBoard[0][0].addPiece (make_unique<Rook>(theBoard).get()->setPieceName('R'));
-    theBoard[0][1].addPiece (make_unique<Knight>(theBoard).get()->setPieceName('N'));
-    theBoard[0][2].addPiece (make_unique<Bishop>(theBoard).get()->setPieceName('B'));
-    theBoard[0][3].addPiece (make_unique<Queen>(theBoard).get()->setPieceName('Q'));
-    theBoard[0][4].addPiece (make_unique<King>(theBoard).get()->setPieceName('K'));
-    theBoard[0][5].addPiece (make_unique<Bishop>(theBoard).get()->setPieceName('B'));
-    theBoard[0][6].addPiece (make_unique<Knight>(theBoard).get()->setPieceName('N'));
-    theBoard[0][7].addPiece (make_unique<Rook>(theBoard).get()->setPieceName('R'));
+    theBoard[0][0].addPiece (make_unique<Rook>(theBoard, 'R').get());
+    theBoard[0][1].addPiece (make_unique<Knight>(theBoard, 'N').get());
+    theBoard[0][2].addPiece (make_unique<Bishop>(theBoard, 'B').get());
+    theBoard[0][3].addPiece (make_unique<Queen>(theBoard, 'Q').get());
+    theBoard[0][4].addPiece (make_unique<King>(theBoard, 'K').get());
+    theBoard[0][5].addPiece (make_unique<Bishop>(theBoard, 'B').get());
+    theBoard[0][6].addPiece (make_unique<Knight>(theBoard, 'N').get());
+    theBoard[0][7].addPiece (make_unique<Rook>(theBoard, 'R').get());
 
     for (int i = 0; i < BOARDSIZE; ++i) {
         theBoard[0][i].getPiece()->setColour('b');
     }
 
-    theBoard[7][0].addPiece (make_unique<Rook>(theBoard).get()->setPieceName('r'));
-    theBoard[7][1].addPiece (make_unique<Knight>(theBoard).get()->setPieceName('k'));
-    theBoard[7][2].addPiece (make_unique<Bishop>(theBoard).get()->setPieceName('b'));
-    theBoard[7][3].addPiece (make_unique<Queen>(theBoard).get()->setPieceName('q'));
-    theBoard[7][4].addPiece (make_unique<King>(theBoard).get()->setPieceName('k'));
-    theBoard[7][5].addPiece (make_unique<Bishop>(theBoard).get()->setPieceName('b'));
-    theBoard[7][6].addPiece (make_unique<Knight>(theBoard).get()->setPieceName('n'));
-    theBoard[7][7].addPiece (make_unique<Rook>(theBoard).get()->setPieceName('r'));
+    theBoard[7][0].addPiece (make_unique<Rook>(theBoard, 'r').get());
+    theBoard[7][1].addPiece (make_unique<Knight>(theBoard, 'n').get());
+    theBoard[7][2].addPiece (make_unique<Bishop>(theBoard, 'b').get());
+    theBoard[7][3].addPiece (make_unique<Queen>(theBoard, 'q').get());
+    theBoard[7][4].addPiece (make_unique<King>(theBoard, 'k').get());
+    theBoard[7][5].addPiece (make_unique<Bishop>(theBoard, 'b').get());
+    theBoard[7][6].addPiece (make_unique<Knight>(theBoard, 'n').get());
+    theBoard[7][7].addPiece (make_unique<Rook>(theBoard, 'r').get());
 
     for (int i = 0; i < BOARDSIZE; ++i) {
         theBoard[7][i].getPiece()->setColour('w');
     }
 
     for (int i = 0; i < BOARDSIZE; ++i) {
-        theBoard[1][i].addPiece(make_unique<Pawn>(theBoard).get());
-        theBoard[1][i].getPiece()->setColour('b')->setPieceName('p');
-        theBoard[6][i].addPiece(make_unique<Pawn>(theBoard).get());
-        theBoard[6][i].getPiece()->setColour('w')->setPieceName('P');
+        theBoard[1][i].addPiece(make_unique<Pawn>(theBoard, 'p').get());
+        theBoard[1][i].getPiece()->setColour('b');
+        theBoard[6][i].addPiece(make_unique<Pawn>(theBoard, 'P').get());
+        theBoard[6][i].getPiece()->setColour('w');
     }
 
 }
