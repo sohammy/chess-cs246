@@ -6,12 +6,19 @@
 
 #include "board.h"
 #include "player.h"
+#include "human.h"
+#include "computer.h"
+#include "stageone.h"
+#include "stagetwo.h"
+#include "stagethree.h"
+#include "stagefour.h"
 #include "textdisplay.h"
 
 class Game {
-
     unique_ptr<Player> white;
     unique_ptr<Player> black;
+
+    TextDisplay td;
 
     bool whoseTurn;
     int whiteScore;

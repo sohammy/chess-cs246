@@ -13,13 +13,15 @@ void Game::setTurn(char c) {
 
 
 int Game::whoWon() {
-    if (white.possibleMoves.size() == 0 && black.possibleMoves.size() == 1) { // possibleMoves is a Vector of ALL POSSIBLE MOVES where the King remains safe
-        ++blackScore;
-        return 1;
-    } else if (white.possibleMoves.size() == 1 && black.possibleMoves.size() == 0) {
-        ++whiteScore;
-        return 0;
-    } 
+    // if (white.checkMate) { // Checks if White has been Checkmated
+    //     ++blackScore;
+    //     return 1;
+    // } else if (black.checkMate) { // Checks if Black has been Checkmated
+    //     ++whiteScore;
+    //     return 0;
+    // } 
+    // return -1;
+
     return -1;
 }
 
@@ -60,8 +62,10 @@ void Game::play(Board& myBoard) {
     while (whoWon() == -1) { // Switches Turns Back and Forth between Black + White
         if (!whoseTurn) {
             white->makeMove(myBoard); // getMove() should take in user input, only does move once 'move' is given as input (as per instructions)
+            myBoard.incrMoveCounter();
         } if (whoseTurn) {
             black->makeMove(myBoard); // getMove() should take in user input, only does move once 'move' is given as input (as per instructions)
+            myBoard.incrMoveCounter();
         }
         whoseTurn = !whoseTurn;
     }
