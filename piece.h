@@ -1,5 +1,6 @@
 #ifndef PIECE_H
 #define PIECE_H
+
 #include <memory>
 #include <vector>
 #include <iostream>

@@ -5,6 +5,7 @@ Piece::Piece(vector<vector<Square>>& board) : theBoard{board} {}
 Piece* Piece::setColour(char c) {
     if (c == 'w') pieceColour = WHITE;
     if (c == 'b') pieceColour = BLACK;
+    return this;
 }
 
 Piece* Piece::setPieceName(char c) {
