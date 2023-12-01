@@ -1,13 +1,14 @@
 #ifndef PIECE_H
-#define PIECE_H__
+#define PIECE_H
 #include <memory>
 #include <vector>
 #include <iostream>
 #include <string>
 #include "square.h"
-#include "board.h"
 #include "move.h"
 using namespace std;
+
+class Board;
 
 class Piece : public Observer{
     protected:
