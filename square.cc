@@ -76,3 +76,7 @@ void Square::removePieceObserver(Observer *o) {
         }
     }
 }
+
+bool Square::canEnPassant() {
+    return enPassant;
+}
