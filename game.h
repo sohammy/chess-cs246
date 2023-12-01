@@ -1,5 +1,5 @@
-#ifndef BOARD_H
-#define BOARD_H
+#ifndef GAME_H
+#define GAME_H
 
 #include <memory>
 #include <iostream>

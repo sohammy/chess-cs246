@@ -19,9 +19,8 @@ int Game::whoWon() {
     } else if (white.possibleMoves.size() == 1 && black.possibleMoves.size() == 0) {
         ++whiteScore;
         return 0;
-    } else {
-        return -1;
-    }
+    } 
+    return -1;
 }
 
 void Game::play(Board& myBoard) {
