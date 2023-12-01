@@ -15,5 +15,11 @@ int main() {
 
     Game myGame;
 
+    cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
+    cout << " -- Type 'play' to Get Started!" << endl;
+    cout << " -- Type 'setup' to enter Setup Mode!" << endl;
+    cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
+    cout << endl;
+
     myGame.gameStart();
 }

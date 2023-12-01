@@ -45,7 +45,7 @@ void Board::clearBoard() {
     theBoard.clear();
 }
 
-void Board::initializeBoard() {
+void Board::initializeBoard(TextDisplay *td) {
     clearBoard();
     theBoard.resize(BOARDSIZE); // Resizes the Board to be an 8x8 Grid
     for (int i = 0; i < BOARDSIZE; ++i) {
@@ -90,6 +90,7 @@ void Board::initializeBoard() {
         theBoard[6][i].addPiece(make_unique<Pawn>(theBoard).get());
         theBoard[6][i].getPiece()->setColour('w')->setPieceName('P');
     }
+
 }
 
 void Board::setup() {

@@ -2,6 +2,12 @@
 
 using namespace std;
 
+void stringUpper (string& s) {
+    for (unsigned int i = 0; i < s.length(); ++i) {
+        s[i] = toupper(s[i]); 
+    }
+}
+
 void Game::setTurn(char c) {
     if (c == 'b') {
         whoseTurn = 1;
@@ -26,40 +32,76 @@ int Game::whoWon() {
 }
 
 void Game::play(Board& myBoard) {
+    td = make_shared<TextDisplay>();
+    
     string whitePlayer;
     string blackPlayer;
 
-    td = std::make_shared<TextDisplay>();
+    bool validWhite = false;
+    bool validBlack = false;
 
-    cin >> whitePlayer >> blackPlayer;
+    do {
+        validWhite = false;
+        validBlack = false;
 
-    if (whitePlayer == "human") {
-        white = make_unique<Human>();
-    } else if (whitePlayer == "computer[1]") {
-        white = make_unique<StageOne>();
-    } else if (whitePlayer == "computer[2]") {
-        white = make_unique<StageTwo>();
-    } else if (whitePlayer == "computer[3]") {
-        white = make_unique<StageThree>();
-    } else if (whitePlayer == "computer[4]") {
-        white = make_unique<StageFour>();
-    } else {
-        // ERROR MESSAGE //
-    }
+        cin >> whitePlayer >> blackPlayer;
 
-    if (blackPlayer == "human") {
-        black = make_unique<Human>();
-    } else if (blackPlayer == "computer[1]") {
-        black = make_unique<StageOne>();
-    } else if (blackPlayer == "computer[2]") {
-        black = make_unique<StageTwo>();
-    } else if (blackPlayer == "computer[3]") {
-        black = make_unique<StageThree>();
-    } else if (blackPlayer == "computer[4]") {
-        black = make_unique<StageFour>();
-    } else {
-        // ERROR MESSAGE //
-    }
+        stringUpper(whitePlayer);
+        stringUpper(blackPlayer);
+
+        if (whitePlayer == "HUMAN") {
+            white = make_unique<Human>();
+            validWhite = true;
+        } else if (whitePlayer == "COMPUTER[1]") {
+            white = make_unique<StageOne>();
+            validWhite = true;
+        } else if (whitePlayer == "COMPUTER[2]") {
+            white = make_unique<StageTwo>();
+            validWhite = true;
+        } else if (whitePlayer == "COMPUTER[3]") {
+            white = make_unique<StageThree>();
+            validWhite = true;
+        } else if (whitePlayer == "COMPUTER[4]") {
+            white = make_unique<StageFour>();
+            validWhite = true;
+        }
+
+        if (blackPlayer == "HUMAN") {
+            black = make_unique<Human>();
+            validBlack = true;
+        } else if (blackPlayer == "COMPUTER[1]") {
+            black = make_unique<StageOne>();
+            validBlack = true;
+        } else if (blackPlayer == "COMPUTER[2]") {
+            black = make_unique<StageTwo>();
+            validBlack = true;
+        } else if (blackPlayer == "COMPUTER[3]") {
+            black = make_unique<StageThree>();
+            validBlack = true;
+        } else if (blackPlayer == "COMPUTER[4]") {
+            black = make_unique<StageFour>();
+            validBlack = true;
+        }
+
+        if (!validWhite && !validBlack) {
+            cout << "Not Valid Players! Please Enter 'human' or 'computer[x], 1 < x < 4" << endl;
+        } if (!validWhite && validBlack) {
+            cout << "Not a Valid White Player! Please Enter 'human' or 'computer[x], 1 <= x <= 4" << endl;
+            cout << "You will have to reinput both Players Again." << endl;
+        } if (!validBlack && validWhite) {
+            cout << "Not a Valid Black Player! Please Enter 'human' or 'computer[x], 1 <= x <= 4" << endl;
+            cout << "You will have to reinput both Players Again." << endl;
+        }
+
+    } while (!validWhite || !validBlack);
+
+    cout << endl;
+    cout << "Current Game: " << endl;
+    cout << "Player #1 (WHITE): " << whitePlayer << endl;
+    cout << "Player #2 (BLACK): " << blackPlayer << endl;
+    cout << endl;
+
+    cout << *td;
 
     int boardSize = myBoard.getBoard().size();
     for(int x = 0; x < boardSize; ++x) {
@@ -80,7 +122,6 @@ void Game::play(Board& myBoard) {
         }
         whoseTurn = !whoseTurn;
     }
-
 }
 
 void Game::gameStart() {
@@ -90,11 +131,15 @@ void Game::gameStart() {
     cin >> input;
 
     if (input == "play") {
-        myBoard.initializeBoard();
+        myBoard.initializeBoard(td.get());
         play(myBoard);
 
     } else if (input == "setup") {
         myBoard.setup();
         play(myBoard);
+    } else {
+        cout << "Thanks for Playing!" << endl;
+        cout << "White Score: " << whiteScore << endl;
+        cout << "Black Score: " << blackScore << endl;
     }
 }
