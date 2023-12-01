@@ -86,10 +86,6 @@ void Board::initializeBoard(TextDisplay *td) {
     theBoard[0][6].addPiece (blackN2.get());
     theBoard[0][7].addPiece (blackR2.get());
 
-    for (int i = 0; i < BOARDSIZE; ++i) {
-        theBoard[0][i].getPiece()->setColour('b');
-    }
-
     theBoard[7][0].addPiece (whiteR1.get());
     theBoard[7][1].addPiece (whiteN1.get());
     theBoard[7][2].addPiece (whiteB1.get());
@@ -99,15 +95,46 @@ void Board::initializeBoard(TextDisplay *td) {
     theBoard[7][6].addPiece (whiteN2.get());
     theBoard[7][7].addPiece (whiteR2.get());
 
-    for (int i = 0; i < BOARDSIZE; ++i) {
-        theBoard[7][i].getPiece()->setColour('w');
-    }
+    unique_ptr<Pawn> whiteP1 = make_unique<Pawn>(theBoard, 'P');
+    unique_ptr<Pawn> whiteP2 = make_unique<Pawn>(theBoard, 'P');
+    unique_ptr<Pawn> whiteP3 = make_unique<Pawn>(theBoard, 'P');
+    unique_ptr<Pawn> whiteP4 = make_unique<Pawn>(theBoard, 'P');
+    unique_ptr<Pawn> whiteP5 = make_unique<Pawn>(theBoard, 'P');
+    unique_ptr<Pawn> whiteP6 = make_unique<Pawn>(theBoard, 'P');
+    unique_ptr<Pawn> whiteP7 = make_unique<Pawn>(theBoard, 'P');
+    unique_ptr<Pawn> whiteP8 = make_unique<Pawn>(theBoard, 'P');
+    unique_ptr<Pawn> blackP1 = make_unique<Pawn>(theBoard, 'p');
+    unique_ptr<Pawn> blackP2 = make_unique<Pawn>(theBoard, 'p');
+    unique_ptr<Pawn> blackP3 = make_unique<Pawn>(theBoard, 'p');
+    unique_ptr<Pawn> blackP4 = make_unique<Pawn>(theBoard, 'p');
+    unique_ptr<Pawn> blackP5 = make_unique<Pawn>(theBoard, 'p');
+    unique_ptr<Pawn> blackP6 = make_unique<Pawn>(theBoard, 'p');
+    unique_ptr<Pawn> blackP7 = make_unique<Pawn>(theBoard, 'p');
+    unique_ptr<Pawn> blackP8 = make_unique<Pawn>(theBoard, 'p');
+
+   theBoard[1][0].addPiece(whiteP1.get());
+   theBoard[1][1].addPiece(whiteP2.get()); 
+   theBoard[1][2].addPiece(whiteP3.get()); 
+   theBoard[1][3].addPiece(whiteP4.get());  
+   theBoard[1][4].addPiece(whiteP5.get()); 
+   theBoard[1][5].addPiece(whiteP6.get()); 
+   theBoard[1][6].addPiece(whiteP7.get()); 
+   theBoard[1][7].addPiece(whiteP8.get());
+
+   theBoard[6][0].addPiece(blackP1.get());
+   theBoard[6][1].addPiece(blackP2.get());
+   theBoard[6][2].addPiece(blackP3.get());
+   theBoard[6][3].addPiece(blackP4.get()); 
+   theBoard[6][4].addPiece(blackP5.get());
+   theBoard[6][5].addPiece(blackP6.get());
+   theBoard[6][6].addPiece(blackP7.get());
+   theBoard[6][7].addPiece(blackP8.get());
 
     for (int i = 0; i < BOARDSIZE; ++i) {
-        // theBoard[1][i].addPiece(make_unique<Pawn>(theBoard, 'p').get());
-        // theBoard[1][i].getPiece()->setColour('b');
-        // theBoard[6][i].addPiece(make_unique<Pawn>(theBoard, 'P').get());
-        // theBoard[6][i].getPiece()->setColour('w');
+        theBoard[1][i].getPiece()->setColour('b');
+        theBoard[6][i].getPiece()->setColour('w');
+        theBoard[7][i].getPiece()->setColour('w');
+        theBoard[0][i].getPiece()->setColour('b');
     }
 
 }
