@@ -28,9 +28,8 @@ public:
     bool containsWhiteKing();
 
     void incrMoveCounter();
-    vector<vector<Square>> getBoard();
-    vector<Piece*> getAvailableWhites() { return availableWhites; }
-    vector<Piece*> getAvailableBlacks() { return availableBlacks; }
+    vector<vector<Square>>& getBoard();
+
     void clearBoard();
     void initializeBoard();
     void setup();

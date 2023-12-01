@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include "square.h"
+#include "piece.h"
 #include "observer.h"
 using namespace std;
 class Square;

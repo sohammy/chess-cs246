@@ -29,9 +29,7 @@ void TextDisplay::notify(Square* s) {
       }
 
     } else {
-
       theDisplay[s->getY()][s->getX() + 2] = s->getPiece()->getPieceName();
-
     }
     
 }

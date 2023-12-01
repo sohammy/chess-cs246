@@ -1,5 +1,7 @@
 #include "queen.h"
 
+Queen::Queen (vector<vector<Square>>& board) : Piece(board) {}
+
 void Queen:: calculateMoves() {
     possibleMoves.clear();
     blockedMoves.clear();

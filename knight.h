@@ -5,6 +5,7 @@
 
 class Knight : public Piece {
     public:
+        Knight (vector<vector<Square>>& board);
         void calculateMoves();
 };
 

@@ -1,5 +1,7 @@
 #include "piece.h"
 
+Piece::Piece(vector<vector<Square>>& board) : theBoard{board} {}
+
 void Piece::setColour(char c) {
     if (c == 'w') pieceColour = WHITE;
     if (c == 'b') pieceColour = BLACK;
@@ -11,68 +13,68 @@ void Piece::movesInDir(Direction d) {
     if (d == N) {
         while(y > 0) {
             --y;
-            Move m = Move(position->getX(), position->getY(), x, y, d, &theBoard->getBoard()[x][y]);
-            if(theBoard->getBoard()[x][y].getPiece() == nullptr) {
+            Move m = Move(position->getX(), position->getY(), x, y, d, &theBoard[x][y]);
+            if(theBoard[x][y].getPiece() == nullptr) {
                 possibleMoves.emplace_back(m);
-                theBoard->getBoard()[x][y].addPieceObservers(this);
-            } else if (theBoard->getBoard()[x][y].getPiece()->getColour() == pieceColour) {
+                theBoard[x][y].addPieceObservers(this);
+            } else if (theBoard[x][y].getPiece()->getColour() == pieceColour) {
                 blockedMoves.emplace_back(m);
-                theBoard->getBoard()[x][y].addPieceObservers(this);
+                theBoard[x][y].addPieceObservers(this);
                 break;
             } else {
                 possibleMoves.emplace_back(m);
-                theBoard->getBoard()[x][y].addPieceObservers(this);
+                theBoard[x][y].addPieceObservers(this);
                 break;
             }
         }
     } else if (d == E) {
         while(x < 7) {
             ++x;
-            Move m = Move(position->getX(), position->getY(), x, y, d, &theBoard->getBoard()[x][y]);
-            if(theBoard->getBoard()[x][y].getPiece() == nullptr) {
+            Move m = Move(position->getX(), position->getY(), x, y, d, &theBoard[x][y]);
+            if(theBoard[x][y].getPiece() == nullptr) {
                 possibleMoves.emplace_back(m);
-                theBoard->getBoard()[x][y].addPieceObservers(this);
-            } else if (theBoard->getBoard()[x][y].getPiece()->getColour() == pieceColour) {
+                theBoard[x][y].addPieceObservers(this);
+            } else if (theBoard[x][y].getPiece()->getColour() == pieceColour) {
                 blockedMoves.emplace_back(m);
-                theBoard->getBoard()[x][y].addPieceObservers(this);
+                theBoard[x][y].addPieceObservers(this);
                 break;
             } else {
                 possibleMoves.emplace_back(m);
-                theBoard->getBoard()[x][y].addPieceObservers(this);
+                theBoard[x][y].addPieceObservers(this);
                 break;
             }
         }
     } else if (d == S) {
         while(y < 7) {
             ++y;
-            Move m = Move(position->getX(), position->getY(), x, y, d, &theBoard->getBoard()[x][y]);
-            if(theBoard->getBoard()[x][y].getPiece() == nullptr) {
+            Move m = Move(position->getX(), position->getY(), x, y, d, &theBoard[x][y]);
+            if(theBoard[x][y].getPiece() == nullptr) {
                 possibleMoves.emplace_back(m);
-                theBoard->getBoard()[x][y].addPieceObservers(this);
-            } else if (theBoard->getBoard()[x][y].getPiece()->getColour() == pieceColour) {
+                theBoard[x][y].addPieceObservers(this);
+            } else if (theBoard[x][y].getPiece()->getColour() == pieceColour) {
                 blockedMoves.emplace_back(m);
-                theBoard->getBoard()[x][y].addPieceObservers(this);
+                theBoard[x][y].addPieceObservers(this);
                 break;
             } else {
                 possibleMoves.emplace_back(m);
-                theBoard->getBoard()[x][y].addPieceObservers(this);
+                theBoard[x][y].addPieceObservers(this);
                 break;
             }
         }
     } else if (d == W) {
         while(x > 0) {
             --x;
-            Move m = Move(position->getX(), position->getY(), x, y, d, &theBoard->getBoard()[x][y]);
-            if(theBoard->getBoard()[x][y].getPiece() == nullptr) {
+            Move m = Move(position->getX(), position->getY(), x, y, d, &theBoard[x][y]);
+            if(theBoard[x][y].getPiece() == nullptr) {
                 possibleMoves.emplace_back(m);
-                theBoard->getBoard()[x][y].addPieceObservers(this);
-            } else if (theBoard->getBoard()[x][y].getPiece()->getColour() == pieceColour) {
+                theBoard[x][y].addPieceObservers(this);
+            } else if (theBoard[x][y].getPiece()->getColour() == pieceColour) {
                 blockedMoves.emplace_back(m);
-                theBoard->getBoard()[x][y].addPieceObservers(this);
+                theBoard[x][y].addPieceObservers(this);
                 break;
             } else {
                 possibleMoves.emplace_back(m);
-                theBoard->getBoard()[x][y].addPieceObservers(this);
+                theBoard[x][y].addPieceObservers(this);
                 break;
             }
         }
@@ -80,17 +82,17 @@ void Piece::movesInDir(Direction d) {
         while(y > 0 && x < 7) {
             --y;
             ++x;
-            Move m = Move(position->getX(), position->getY(), x, y, d, &theBoard->getBoard()[x][y]);
-            if(theBoard->getBoard()[x][y].getPiece() == nullptr) {
+            Move m = Move(position->getX(), position->getY(), x, y, d, &theBoard[x][y]);
+            if(theBoard[x][y].getPiece() == nullptr) {
                 possibleMoves.emplace_back(m);
-                theBoard->getBoard()[x][y].addPieceObservers(this);
-            } else if (theBoard->getBoard()[x][y].getPiece()->getColour() == pieceColour) {
+                theBoard[x][y].addPieceObservers(this);
+            } else if (theBoard[x][y].getPiece()->getColour() == pieceColour) {
                 blockedMoves.emplace_back(m);
-                theBoard->getBoard()[x][y].addPieceObservers(this);
+                theBoard[x][y].addPieceObservers(this);
                 break;
             } else {
                 possibleMoves.emplace_back(m);
-                theBoard->getBoard()[x][y].addPieceObservers(this);
+                theBoard[x][y].addPieceObservers(this);
                 break;
             }
         }
@@ -98,17 +100,17 @@ void Piece::movesInDir(Direction d) {
         while(y > 0 && x > 0) {
             --y;
             --x;
-            Move m = Move(position->getX(), position->getY(), x, y, d, &theBoard->getBoard()[x][y]);
-            if(theBoard->getBoard()[x][y].getPiece() == nullptr) {
+            Move m = Move(position->getX(), position->getY(), x, y, d, &theBoard[x][y]);
+            if(theBoard[x][y].getPiece() == nullptr) {
                 possibleMoves.emplace_back(m);
-                theBoard->getBoard()[x][y].addPieceObservers(this);
-            } else if (theBoard->getBoard()[x][y].getPiece()->getColour() == pieceColour) {
+                theBoard[x][y].addPieceObservers(this);
+            } else if (theBoard[x][y].getPiece()->getColour() == pieceColour) {
                 blockedMoves.emplace_back(m);
-                theBoard->getBoard()[x][y].addPieceObservers(this);
+                theBoard[x][y].addPieceObservers(this);
                 break;
             } else {
                 possibleMoves.emplace_back(m);
-                theBoard->getBoard()[x][y].addPieceObservers(this);
+                theBoard[x][y].addPieceObservers(this);
                 break;
             }
         }
@@ -116,17 +118,17 @@ void Piece::movesInDir(Direction d) {
         while(y < 7 && x < 7) {
             ++y;
             ++x;
-            Move m = Move(position->getX(), position->getY(), x, y, d, &theBoard->getBoard()[x][y]);
-            if(theBoard->getBoard()[x][y].getPiece() == nullptr) {
+            Move m = Move(position->getX(), position->getY(), x, y, d, &theBoard[x][y]);
+            if(theBoard[x][y].getPiece() == nullptr) {
                 possibleMoves.emplace_back(m);
-                theBoard->getBoard()[x][y].addPieceObservers(this);
-            } else if (theBoard->getBoard()[x][y].getPiece()->getColour() == pieceColour) {
+                theBoard[x][y].addPieceObservers(this);
+            } else if (theBoard[x][y].getPiece()->getColour() == pieceColour) {
                 blockedMoves.emplace_back(m);
-                theBoard->getBoard()[x][y].addPieceObservers(this);
+                theBoard[x][y].addPieceObservers(this);
                 break;
             } else {
                 possibleMoves.emplace_back(m);
-                theBoard->getBoard()[x][y].addPieceObservers(this);
+                theBoard[x][y].addPieceObservers(this);
                 break;
             }
         }
@@ -134,17 +136,17 @@ void Piece::movesInDir(Direction d) {
         while(y < 7 && x > 0) {
             ++y;
             --x;
-            Move m = Move(position->getX(), position->getY(), x, y, d, &theBoard->getBoard()[x][y]);
-            if(theBoard->getBoard()[x][y].getPiece() == nullptr) {
+            Move m = Move(position->getX(), position->getY(), x, y, d, &theBoard[x][y]);
+            if(theBoard[x][y].getPiece() == nullptr) {
                 possibleMoves.emplace_back(m);
-                theBoard->getBoard()[x][y].addPieceObservers(this);
-            } else if (theBoard->getBoard()[x][y].getPiece()->getColour() == pieceColour) {
+                theBoard[x][y].addPieceObservers(this);
+            } else if (theBoard[x][y].getPiece()->getColour() == pieceColour) {
                 blockedMoves.emplace_back(m);
-                theBoard->getBoard()[x][y].addPieceObservers(this);
+                theBoard[x][y].addPieceObservers(this);
                 break;
             } else {
                 possibleMoves.emplace_back(m);
-                theBoard->getBoard()[x][y].addPieceObservers(this);
+                theBoard[x][y].addPieceObservers(this);
                 break;
             }
         }

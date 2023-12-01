@@ -54,7 +54,7 @@ void Square::addDisplayObservers(Observer *o) {
 // Notifies piece observers, should be called whenever the contents of the square changes!
 void Square::notifyPieceObservers() {
     for (auto p: possiblePieces) {
-        p->notify(*this);
+        p->notify(this);
     }
 }
 
@@ -62,7 +62,7 @@ void Square::notifyPieceObservers() {
 // should be called whenever the contents of the square changes!
 void Square::notifyDisplayObservers() {
     for (auto p: displays) {
-        p->notify(*this);
+        p->notify(this);
     }
 }
 
@@ -75,4 +75,8 @@ void Square::removePieceObserver(Observer *o) {
             possiblePieces.erase(possiblePieces.begin() + i);
         }
     }
+}
+
+bool Square::canEnPassant() {
+    return enPassant;
 }

@@ -10,7 +10,7 @@ void Human::makeMove(Board& gameBoard) {
 
     while(!foundMove){
         cin >> pieceSelected >> destination;
-        Move moveAttempted = Move(pieceSelected, destination, gameBoard);
+        Move moveAttempted = Move(pieceSelected, destination, gameBoard.getBoard());
 
         vector<Move> possibleMoves = gameBoard.getBoard()[moveAttempted.getInitX()][moveAttempted.getInitY()].getPiece()->getMoves();
         for(Move m : possibleMoves) {
