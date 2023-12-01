@@ -5,7 +5,7 @@
 using namespace std;
 
 
-enum Direction{N, E, S, W, NE, SE, SW, NW};
+enum Direction{N, E, S, W, NE, SE, SW, NW, NONE};
 
 class Move {
     int initialX;
@@ -13,19 +13,20 @@ class Move {
     int destinationX;
     int destinationY;
     Square* destSquare;
-    Direction d;
+    Direction moveDirection;
 
     int letterToInt(char c);
+    Direction coordsToDirection(int x, int y, int nextX, int nextY);
 
     public:
         Move(int x, int y, int destX, int destY, Direction d, Square* dest);
-        Move(string s, string d);
-        bool isEqual(const Move& other);
+        Move(string s, string d, Board& gameBoard);
+        bool isEqual(Move& other);
         int getInitX() { return initialX; }
         int getInitY() { return initialY; }
         int getDestX() { return destinationX; }
         int getDestY() { return destinationY; }
-        Direction getDirection() { return d; }
+        Direction getDirection() { return moveDirection; }
         Square* getSquare() { return destSquare; }
 
 };

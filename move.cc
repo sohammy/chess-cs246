@@ -2,25 +2,36 @@
 #include <string>
 using namespace std;
 
+Direction Move::coordsToDirection(int x, int y, int nextX, int nextY) {
+    if(nextX == x && nextY < y) return N;
+    if(nextX == x && nextY > y) return S;
+    if(nextX > x && nextY == y) return E;
+    if(nextX < x && nextY == y) return W;
+    if(nextX > x && nextY < y) return NE;
+    if(nextX < x && nextY < y) return NW;
+    if(nextX > x && nextY > y) return SE;
+    if(nextX < x && nextY > y) return SW;
+    return NONE;
+}
+
 int Move::letterToInt(char c) {
     if (c >= 'a' && c <= 'h') return c - 'a';
     return -1;
 }
 
-bool Move::isEqual(const Move& other) {
-    if(initialX == other.initialX &&
-    initialY == other.initialY &&
-    destinationX == other.destinationX &&
-    destinationY == other.destinationY) return true;
+bool Move::isEqual(Move& other) {
+    if(initialX == other.getInitX() &&
+    initialY == other.getInitY() &&
+    destinationX == other.getDestX() &&
+    destinationY == other.getDestY() &&
+    moveDirection == other.getDirection()) return true;
     return false;
 }
 
 Move::Move(int x, int y, int destX, int destY, Direction d, Square* dest): 
-    initialX{x}, initialY{y}, destinationX{destX}, destinationY{destY}, d{d}, destSquare{dest} {
-        
-    }
+    initialX{x}, initialY{y}, destinationX{destX}, destinationY{destY}, moveDirection{d}, destSquare{dest} {}
 
-Move::Move(string m, string d) {
+Move::Move(string m, string d, Board& gameBoard) {
     if (m.size() == 2 && d.size() == 2) {
         initialX = letterToInt(m[0]);
         initialY = 8 - (m[1] - '0');
@@ -31,4 +42,6 @@ Move::Move(string m, string d) {
         // Set default values or throw an exception, depending on your error-handling strategy
         initialX = initialY = destinationX = destinationY = -1;
     }
+    destSquare = &gameBoard.getBoard()[destinationX][destinationY];
+    moveDirection = coordsToDirection(initialX, initialY, destinationX, destinationY);
 }
