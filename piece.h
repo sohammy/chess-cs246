@@ -22,6 +22,9 @@ class Piece : public Observer{
         Square* position;
         vector<Move> possibleMoves; // All legal moves
         vector<Move> blockedMoves; // All blocked moves
+        
+        vector<Piece*> getTeamOfColour(Colour c);
+        vector<Move> getTeamsMoves(Colour c);
 
     public:
         

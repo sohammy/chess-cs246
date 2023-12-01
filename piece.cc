@@ -7,6 +7,32 @@ void Piece::setColour(char c) {
     if (c == 'b') pieceColour = BLACK;
 }
 
+vector<Piece*> Piece::getTeamOfColour(Colour c) {
+    vector<Piece*> pieces;
+    for(int i = 0; i < theBoard.size(); ++i) {
+        for(int j = 0; j < theBoard.size(); ++j) {
+            if(theBoard[i][j].getPiece() != nullptr) {
+                if(theBoard[i][j].getPiece()->getColour() == c) {
+                    pieces.emplace_back(theBoard[i][j].getPiece());
+                }
+            }
+        }
+    }
+    return pieces;
+}
+
+vector<Move> Piece::getTeamsMoves(Colour c) {
+    vector<Piece*> pieces = getTeamOfColour(c);
+    vector<Move> allMoves;
+    for(Piece* p : pieces) {
+        vector<Move> thisPiecesMoves = p->getMoves();
+        for(Move m : thisPiecesMoves) {
+            allMoves.emplace_back(m);
+        }
+    }
+    return allMoves;
+}
+
 void Piece::movesInDir(Direction d) {
     int x = position->getX();
     int y = position->getY();
