@@ -31,7 +31,7 @@ bool Move::isEqual(Move& other) {
 Move::Move(int x, int y, int destX, int destY, Direction d, Square* dest): 
     initialX{x}, initialY{y}, destinationX{destX}, destinationY{destY}, moveDirection{d}, destSquare{dest} {}
 
-Move::Move(string m, string d, Board& gameBoard) {
+Move::Move(string m, string d, vector<vector<Square>>& gameBoard) {
     if (m.size() == 2 && d.size() == 2) {
         initialX = letterToInt(m[0]);
         initialY = 8 - (m[1] - '0');
@@ -42,6 +42,6 @@ Move::Move(string m, string d, Board& gameBoard) {
         // Set default values or throw an exception, depending on your error-handling strategy
         initialX = initialY = destinationX = destinationY = -1;
     }
-    destSquare = &gameBoard.getBoard()[destinationX][destinationY];
+    destSquare = &(gameBoard[destinationX][destinationY]);
     moveDirection = coordsToDirection(initialX, initialY, destinationX, destinationY);
 }

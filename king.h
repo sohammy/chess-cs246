@@ -5,6 +5,7 @@
 
 class King : public Piece {
     public:
+        King (vector<vector<Square>>& board);
         void calculateMoves();
 };
 

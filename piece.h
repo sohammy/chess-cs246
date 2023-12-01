@@ -9,21 +9,22 @@
 
 using namespace std;
 
-class Board;
-
 class Piece : public Observer{
     protected:
+
+        Piece(vector<vector<Square>>& board);
         enum Colour {WHITE, BLACK};
         bool hasMoved = false; 
-
+        
         Colour pieceColour;
-        Board* theBoard;
+        vector<vector<Square>>& theBoard;
         char pieceName;
         Square* position;
         vector<Move> possibleMoves; // All legal moves
         vector<Move> blockedMoves; // All blocked moves
 
     public:
+        
         virtual void calculateMoves() = 0;
         void movesInDir(Direction d);
         void notify(Square* s) override;

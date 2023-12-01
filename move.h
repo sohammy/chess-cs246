@@ -4,7 +4,6 @@
 #include "square.h"
 using namespace std;
 
-class Board;
 
 enum Direction{N, E, S, W, NE, SE, SW, NW, NONE};
 
@@ -21,7 +20,7 @@ class Move {
 
     public:
         Move(int x, int y, int destX, int destY, Direction d, Square* dest);
-        Move(string s, string d, Board& gameBoard);
+        Move(string s, string d, vector<vector<Square>>& gameBoard);
         bool isEqual(Move& other);
         int getInitX() { return initialX; }
         int getInitY() { return initialY; }
