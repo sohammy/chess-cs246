@@ -14,7 +14,7 @@ class TextDisplay: public Observer {
  public:
   TextDisplay();
 
-  void notify(shared_ptr<Square>) override;
+  void notify(shared_ptr<Square> s) override;
 
   ~TextDisplay();
 
