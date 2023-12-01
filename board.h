@@ -22,8 +22,8 @@ public:
     bool containsBlackKing();
     bool containsWhiteKing();
 
-    vector<Piece*> availableWhites() { return availableWhites; }
-    vector<Piece*> availableBlacks() { return availableBlacks; }
+    vector<Piece*> getavailableWhites() { return availableWhites; }
+    vector<Piece*> getavailableBlacks() { return availableBlacks; }
 
     void incrMoveCounter();
 
