@@ -5,19 +5,20 @@ using namespace std;
 const int BOARDSIZE = 8;
 
 unique_ptr<Piece> makePiece (char pieceChar, vector<vector<Square>>& board) {
+    char initChar = pieceChar;
     pieceChar = toupper(pieceChar);
     if (pieceChar == 'K') {
-        return make_unique<King>(board);
+        return make_unique<King>(board, initChar);
     } else if (pieceChar == 'Q') {
-        return make_unique<Queen>(board);
+        return make_unique<Queen>(board, initChar);
     } else if (pieceChar == 'R') {
-        return make_unique<Rook>(board);
+        return make_unique<Rook>(board, initChar);
     } else if (pieceChar == 'B') {
-        return make_unique<Bishop>(board);
+        return make_unique<Bishop>(board, initChar);
     } else if (pieceChar == 'N') {
-        return make_unique<Knight>(board);
+        return make_unique<Knight>(board, initChar);
     } else if (pieceChar == 'P') {
-        return make_unique<Pawn>(board);
+        return make_unique<Pawn>(board, initChar);
     }
     return nullptr;
 }
@@ -128,10 +129,8 @@ void Board::setup() {
             
             if (white) {
                 theBoard[placement.getInitX()][placement.getInitY()].getPiece()->setColour('w');
-                theBoard[placement.getInitX()][placement.getInitY()].getPiece()->setPieceName(piece);
             } else {
                 theBoard[placement.getInitX()][placement.getInitY()].getPiece()->setColour('b');
-                theBoard[placement.getInitX()][placement.getInitY()].getPiece()->setPieceName(piece);
             }
 
         } else if (input == "-") {
