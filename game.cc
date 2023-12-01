@@ -101,8 +101,6 @@ void Game::play(Board& myBoard) {
     cout << "Player #2 (BLACK): " << blackPlayer << endl;
     cout << endl;
 
-    cout << *td;
-
     int boardSize = myBoard.getBoard().size();
     for(int x = 0; x < boardSize; ++x) {
         for(int y = 0; y < boardSize; ++y) {
