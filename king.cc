@@ -70,3 +70,19 @@ void King::calculateMoves() {
         }
     }
 }
+
+bool King::checkMate() {
+
+    bool KingCannotMove = false;
+    bool CanKillToSave = false;
+    bool CanBlockToSave = false;
+
+    if (getMoves().size() == 0) {
+        KingCannotMove = true;
+    }
+
+    // for each opp piece that is about to kill king, see if there is a friendly piece that can kill it
+
+    for (Piece p: )
+
+}
