@@ -2,15 +2,13 @@
 
 Piece::Piece(vector<vector<Square>>& board, char pieceName) : theBoard{board}, pieceName{pieceName} {}
 
-Piece* Piece::setColour(char c) {
+void Piece::setColour(char c) {
     if (c == 'w') pieceColour = WHITE;
     if (c == 'b') pieceColour = BLACK;
-    return this;
 }
 
-Piece* Piece::setPieceName(char c) {
+void Piece::setPieceName(char c) {
     pieceName = c;
-    return this;
 }
 
 vector<Piece*> Piece::getTeamOfColour(Colour c) {

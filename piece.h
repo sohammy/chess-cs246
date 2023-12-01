@@ -14,7 +14,8 @@ class Piece : public Observer{
     protected:
         enum Colour {WHITE, BLACK};
 
-        bool hasMoved = false; 
+        bool hasMoved = false; // Accessed within player through pieceMoved()
+
         Colour pieceColour;
         vector<vector<Square>>& theBoard;
         char pieceName;
@@ -34,8 +35,9 @@ class Piece : public Observer{
         
         void movesInDir(Direction d);
         void notify(Square* s) override;
-        Piece* setColour(char c);
-        Piece* setPieceName(char c = ' ');
+        void setColour(char c);
+        void setPieceName(char c = ' ');
+        void setSquare();
 
         char getPieceName() { return pieceName; }
         int getX() { return position->getX(); }
