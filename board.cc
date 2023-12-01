@@ -127,9 +127,11 @@ void Board::setup() {
             theBoard[placement.getInitX()][placement.getInitY()].addPiece(makePiece(piece, theBoard).get());
             
             if (white) {
-                theBoard[placement.getInitX()][placement.getInitY()].getPiece()->setColour('w')->setPieceName(piece);
+                theBoard[placement.getInitX()][placement.getInitY()].getPiece()->setColour('w');
+                theBoard[placement.getInitX()][placement.getInitY()].getPiece()->setPieceName(piece);
             } else {
-                theBoard[placement.getInitX()][placement.getInitY()].getPiece()->setColour('b')->setPieceName(piece);
+                theBoard[placement.getInitX()][placement.getInitY()].getPiece()->setColour('b');
+                theBoard[placement.getInitX()][placement.getInitY()].getPiece()->setPieceName(piece);
             }
 
         } else if (input == "-") {
