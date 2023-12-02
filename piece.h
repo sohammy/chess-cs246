@@ -38,7 +38,7 @@ class Piece : public Observer{
         void notify(Square* s) override;
         void setColour(char c);
         void setPieceName(char c = ' ');
-        void setSquare();
+        void setSquare(Square* s) {position = s;}; // ERROR
 
         char getPieceName() { return pieceName; }
         int getX() { return position->getX(); }

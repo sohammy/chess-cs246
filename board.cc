@@ -137,9 +137,6 @@ void Board::initializeBoard(TextDisplay *td) {
         theBoard[7][i].getPiece()->setColour('w');
     }
 
-
-
-
 }
 
 void Board::setup() {
@@ -174,6 +171,11 @@ void Board::setup() {
                 white = true;
             }
 
+            if (theBoard[placement.getInitX()][placement.getInitY()].getPiece() != nullptr) {
+                cout << "ERROR: A PIECE ALREADY EXISTS THERE" << endl;
+                continue;
+            }
+
             unique_ptr<Piece> p = nullptr;
             p = makePiece(piece, theBoard);
             
@@ -181,17 +183,34 @@ void Board::setup() {
                 availableWhites.push_back(move(p));
                 theBoard[placement.getInitX()][placement.getInitY()].addPiece(availableWhites.back().get());
                 theBoard[placement.getInitX()][placement.getInitY()].getPiece()->setColour('w');
+                theBoard[placement.getInitX()][placement.getInitY()].getPiece()->setSquare(&theBoard[placement.getInitX()][placement.getInitY()]);
             }
             else {
                 availableBlacks.push_back(move(p));
                 theBoard[placement.getInitX()][placement.getInitY()].addPiece(availableBlacks.back().get());
                 theBoard[placement.getInitX()][placement.getInitY()].getPiece()->setColour('b');
+                theBoard[placement.getInitX()][placement.getInitY()].getPiece()->setSquare(&theBoard[placement.getInitX()][placement.getInitY()]);
             }
 
         } else if (input == "-") {
             string place;
             cin >> place;
             Move placement = Move(place, place, theBoard);
+            int xCoord = placement.getInitX();
+            int yCoord = placement.getInitY();
+
+            for (unsigned int i = 0; i < availableWhites.size(); ++i) {
+                if (availableWhites[i]->getX() == xCoord && availableWhites[i]->getY() == yCoord) {
+                    availableWhites.erase(availableWhites.begin() + i);
+                }
+            }
+
+            for (unsigned int i = 0; i < availableBlacks.size(); ++i) {
+                if (availableBlacks[i]->getX() == xCoord && availableBlacks[i]->getY()) {
+                    availableBlacks.erase(availableBlacks.begin() + i);
+                }
+            }
+
             theBoard[placement.getInitX()][placement.getInitY()].removePiece();
         }
     }
