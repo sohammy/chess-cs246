@@ -35,7 +35,7 @@ void Human::makeMove(Board& gameBoard) {
             Move successfulMove = possibleMoves[successIndex];
             Square* dest = successfulMove.getSquare();
 
-            if(dest->getPiece() != nullptr) { // change to impl of square
+            if(dest->getPiece() != nullptr) {
                 dest->removePiece();
             }
             dest->addPiece(piece);
@@ -44,7 +44,9 @@ void Human::makeMove(Board& gameBoard) {
             piece->pieceMoved();
             dest->notifyDisplayObservers();
             start->notifyDisplayObservers();
+            cout << "error is in start->notifyPieceObservers" << endl;
             start->notifyPieceObservers();
+            cout << "nvm error is in dest->notifyPieceObservers" << endl;
             dest->notifyPieceObservers();
         } else {
             cout << "Please make a valid move" << endl;

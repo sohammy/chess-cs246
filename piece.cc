@@ -47,7 +47,7 @@ vector<Move> Piece::getTeamsMoves(Colour c) {
 void Piece::movesInDir(Direction d) {
     int x = position->getX();
     int y = position->getY();
-    if (d == N) {
+    if (d == W) {
         while(y > 0) {
             --y;
             Move m = Move(position->getX(), position->getY(), x, y, &theBoard[x][y], d);
@@ -64,7 +64,7 @@ void Piece::movesInDir(Direction d) {
                 break;
             }
         }
-    } else if (d == E) {
+    } else if (d == S) {
         while(x < 7) {
             ++x;
             Move m = Move(position->getX(), position->getY(), x, y, &theBoard[x][y], d);
@@ -81,7 +81,7 @@ void Piece::movesInDir(Direction d) {
                 break;
             }
         }
-    } else if (d == S) {
+    } else if (d == E) {
         while(y < 7) {
             ++y;
             Move m = Move(position->getX(), position->getY(), x, y, &theBoard[x][y], d);
@@ -98,7 +98,7 @@ void Piece::movesInDir(Direction d) {
                 break;
             }
         }
-    } else if (d == W) {
+    } else if (d == N) {
         while(x > 0) {
             --x;
             Move m = Move(position->getX(), position->getY(), x, y, &theBoard[x][y], d);
@@ -115,7 +115,7 @@ void Piece::movesInDir(Direction d) {
                 break;
             }
         }
-    } else if (d == NE) {
+    } else if (d == SW) {
         while(y > 0 && x < 7) {
             --y;
             ++x;
@@ -169,7 +169,7 @@ void Piece::movesInDir(Direction d) {
                 break;
             }
         }
-    } else if (d == SW) {
+    } else if (d == NE) {
         while(y < 7 && x > 0) {
             ++y;
             --x;

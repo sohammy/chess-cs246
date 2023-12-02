@@ -11,5 +11,7 @@ void Rook::calculateMoves() {
     movesInDir(E);
     movesInDir(S);
     movesInDir(W);
+
+    cout << possibleMoves.size() << endl;
     // Add Castling Functionality
 }
