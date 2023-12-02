@@ -180,15 +180,11 @@ void Board::setup() {
             if (white) {
                 availableWhites.push_back(move(p));
                 theBoard[placement.getInitX()][placement.getInitY()].addPiece(availableWhites.back().get());
+                theBoard[placement.getInitX()][placement.getInitY()].getPiece()->setColour('w');
             }
             else {
                 availableBlacks.push_back(move(p));
                 theBoard[placement.getInitX()][placement.getInitY()].addPiece(availableBlacks.back().get());
-            }
-
-            if (white) {
-                theBoard[placement.getInitX()][placement.getInitY()].getPiece()->setColour('w');
-            } else {
                 theBoard[placement.getInitX()][placement.getInitY()].getPiece()->setColour('b');
             }
 
