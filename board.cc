@@ -102,7 +102,7 @@ void Board::initializeBoard(TextDisplay *td) {
 
 }
 
-void Board::setup(TextDisplay *td) {
+void Board::setup(TextDisplay *td, bool& whoseTurn) {
     clearBoard();
 
     theBoard.resize(BOARDSIZE); // Resizes the Board to be an 8x8 Grid
@@ -118,10 +118,17 @@ void Board::setup(TextDisplay *td) {
 
     string input;
     while (cin >> input) {
-        if (input == "done") {
+
+        for (int i = 0; i < input.length(); ++i) {
+            input[i] = toupper(input[i]);
+        }
+
+        if (input == "DONE") {
             if (containsBlackKing() && containsWhiteKing()) {
                 cout << "You have met requirements" << endl;
                 break;
+            } else {
+                cout << "You have not met requirements" << endl;
             }
         } else if (input == "+") {
             char piece;
@@ -181,6 +188,10 @@ void Board::setup(TextDisplay *td) {
             theBoard[placement.getInitX()][placement.getInitY()].removePiece();
 
             //cout << *td; 
+        } else if (input == "WHITE" ) {
+            whoseTurn = 0;
+        } else if (input == "BLACK") {
+            whoseTurn = 1;
         }
     }
 }
