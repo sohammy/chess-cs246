@@ -34,8 +34,7 @@ public:
 
     void clearBoard();
     void initializeBoard(TextDisplay *td);
-    void setup();
+    void setup(TextDisplay *td);
 };
-
 
 #endif

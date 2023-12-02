@@ -98,7 +98,7 @@ void Board::initializeBoard(TextDisplay *td) {
 
 }
 
-void Board::setup() {
+void Board::setup(TextDisplay *td) {
     clearBoard();
 
     theBoard.resize(BOARDSIZE); // Resizes the Board to be an 8x8 Grid
@@ -151,6 +151,8 @@ void Board::setup() {
                 theBoard[placement.getInitX()][placement.getInitY()].getPiece()->setSquare(&theBoard[placement.getInitX()][placement.getInitY()]);
             }
 
+            //cout << *td;
+
         } else if (input == "-") {
             string place;
             cin >> place;
@@ -171,6 +173,8 @@ void Board::setup() {
             }
 
             theBoard[placement.getInitX()][placement.getInitY()].removePiece();
+
+            //cout << *td; 
         }
     }
 }

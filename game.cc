@@ -134,7 +134,7 @@ void Game::gameStart() {
         myBoard.initializeBoard(td.get());
         play(myBoard);
     } else if (input == "setup") {
-        myBoard.setup();
+        myBoard.setup(td.get());
         play(myBoard);
     } else {
         cout << "Thanks for Playing!" << endl;
