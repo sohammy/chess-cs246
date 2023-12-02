@@ -5,8 +5,8 @@
 
 class Rook : public Piece {
     public:
-        Rook(vector<vector<Square>>& board);
-        void calculateMoves();
+        Rook(vector<vector<Square>>& board, char pieceType);
+        void calculateMoves() override;
 };
 
 #endif

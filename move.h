@@ -19,7 +19,7 @@ class Move {
     Direction coordsToDirection(int x, int y, int nextX, int nextY);
 
     public:
-        Move(int x, int y, int destX, int destY, Direction d, Square* dest);
+        Move(int x, int y, int destX, int destY, Square* dest, Direction d);
         Move(string s, string d, vector<vector<Square>>& gameBoard);
         bool isEqual(Move& other);
         bool isSameDestination(Move& other);

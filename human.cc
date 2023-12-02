@@ -12,28 +12,42 @@ void Human::makeMove(Board& gameBoard) {
         cin >> pieceSelected >> destination;
         Move moveAttempted = Move(pieceSelected, destination, gameBoard.getBoard());
 
-        vector<Move> possibleMoves = gameBoard.getBoard()[moveAttempted.getInitX()][moveAttempted.getInitY()].getPiece()->getMoves();
+        // cout << moveAttempted.getInitX() << moveAttempted.getInitY() << moveAttempted.getDestX() << moveAttempted.getDestY() << endl;
+
+        Square* start = &gameBoard.getBoard()[moveAttempted.getInitX()][moveAttempted.getInitY()]; 
+        Piece* piece = start->getPiece();
+        piece->calculateMoves();
+
+        int successIndex = 0;
+        vector<Move> possibleMoves = piece->getMoves();
         for(Move m : possibleMoves) {
             if (moveAttempted.isEqual(m)) { 
-                foundMove = true; 
+                cout << "WE MADE IT" << endl;
+                foundMove = true;
                 break;
             }
+            ++successIndex;
         }
-
+        
+        
         if(foundMove) {
-            if(gameBoard.getBoard()[moveAttempted.getDestX()][moveAttempted.getDestY()].getPiece() != nullptr) { // change to impl of square
-                gameBoard.getBoard()[moveAttempted.getDestX()][moveAttempted.getDestY()].removePiece();
-            }
-            gameBoard.getBoard()[moveAttempted.getDestX()][moveAttempted.getDestY()].addPiece(
-                gameBoard.getBoard()[moveAttempted.getInitX()][moveAttempted.getInitY()].getPiece()
-            );
+            cout << "FOUND MOVE!!" << endl;
+            Move successfulMove = possibleMoves[successIndex];
+            Square* dest = successfulMove.getSquare();
 
-            gameBoard.getBoard()[moveAttempted.getInitX()][moveAttempted.getInitY()].removePiece();
-            gameBoard.getBoard()[moveAttempted.getDestX()][moveAttempted.getDestY()].getPiece()->pieceMoved();
-            gameBoard.getBoard()[moveAttempted.getDestX()][moveAttempted.getDestY()].notifyDisplayObservers();
-            gameBoard.getBoard()[moveAttempted.getInitX()][moveAttempted.getInitY()].notifyDisplayObservers();
-            gameBoard.getBoard()[moveAttempted.getInitX()][moveAttempted.getInitY()].notifyPieceObservers();
-            gameBoard.getBoard()[moveAttempted.getDestX()][moveAttempted.getDestY()].notifyPieceObservers();
+            if(dest->getPiece() != nullptr) {
+                dest->removePiece();
+            }
+            dest->addPiece(piece);
+            piece->setSquare(dest);
+            start->removePiece();
+            piece->pieceMoved();
+            dest->notifyDisplayObservers();
+            start->notifyDisplayObservers();
+            cout << "error is in start->notifyPieceObservers" << endl;
+            start->notifyPieceObservers();
+            cout << "nvm error is in dest->notifyPieceObservers" << endl;
+            dest->notifyPieceObservers();
         } else {
             cout << "Please make a valid move" << endl;
         }

@@ -24,11 +24,14 @@ Piece* Square::getPiece() {
 // Removes the Piece from the square (DOES NOT MANAGE MEMORY)
 void Square::removePiece() {
     currPiece = nullptr;
+    notifyDisplayObservers();
 }
 
 // Adds piece to the Square 
 void Square::addPiece(Piece *piece) {
-    currPiece = piece;
+    currPiece = move(piece);
+    
+    notifyDisplayObservers();
 }
 
 // If the square is the first or last row, then it has the ability to promote a piece on it
@@ -47,7 +50,7 @@ void Square::addPieceObservers(Observer *o) {
 }
 
 // Adds any observers to the vector of observers (namely TextDisplay & GraphicsDisplay)
-void Square::addDisplayObservers(Observer *o) {
+void Square::addDisplayObservers(Observer* o) {
     displays.emplace_back(o);
 }
 
@@ -62,7 +65,7 @@ void Square::notifyPieceObservers() {
 // should be called whenever the contents of the square changes!
 void Square::notifyDisplayObservers() {
     for (auto p: displays) {
-        p->notify(this);
+         p->notify(this);
     }
 }
 
@@ -70,11 +73,21 @@ void Square::notifyDisplayObservers() {
 // should be called whenever a square no longer being observed 
 
 void Square::removePieceObserver(Observer *o) {
-    for (int i = 0; i < possiblePieces.size(); ++i) { 
+    for (unsigned int i = 0; i < possiblePieces.size(); ++i) { 
         if (possiblePieces[i] == o) {
             possiblePieces.erase(possiblePieces.begin() + i);
         }
     }
+}
+
+Square* Square::setX(int x) {
+    this->x = x;
+    return this;
+}
+
+Square* Square::setY(int y) {
+    this->y = y;
+    return this;
 }
 
 bool Square::canEnPassant() {

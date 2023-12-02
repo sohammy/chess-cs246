@@ -1,8 +1,11 @@
 #include "pawn.h"
 
-Pawn::Pawn(vector<vector<Square>>& board): Piece(board) {}
+Pawn::Pawn(vector<vector<Square>>& board, char pieceType): Piece(board, pieceType) {}
 
 void Pawn::calculateMoves() {
+    int x = position->getX();
+    int y = position->getY();
+
     possibleMoves.clear();
     blockedMoves.clear();
 
@@ -10,34 +13,28 @@ void Pawn::calculateMoves() {
 
     if(doubleStep) {
         if(pieceColour == WHITE) {
-            Move s1 = Move(position->getX(), position->getY(), position->getX(), 
-            position->getY() - 1, N, &theBoard[position->getX()][position->getY() - 1]);
-            Move s2 = Move(position->getX(), position->getY(), position->getX(), 
-            position->getY() - 2, N, &theBoard[position->getX()][position->getY() - 2]);
+            Move s1 = Move(x, y, x - 1, y, &theBoard[x - 1][y], N);
+            Move s2 = Move(x, y, x - 2, y, &theBoard[x - 2][y], N);
             possibleMoves.emplace_back(s1);
             possibleMoves.emplace_back(s2);
         } else if (pieceColour == BLACK) {
-            Move s1 = Move(position->getX(), position->getY(), position->getX(), 
-            position->getY() + 1, S, &theBoard[position->getX()][position->getY() + 1]);
-            Move s2 = Move(position->getX(), position->getY(), position->getX(), 
-            position->getY() + 2, S, &theBoard[position->getX()][position->getY() + 2]);
+            Move s1 = Move(x, y, x + 1, y, &theBoard[x + 1][y], S);
+            Move s2 = Move(x, y, x + 2, y, &theBoard[x + 2][y], S);
             possibleMoves.emplace_back(s1);
             possibleMoves.emplace_back(s2);
         }
     } else {
         if(pieceColour == WHITE) {
-            if (position->getY() > 0) {
-                if(theBoard[position->getX()][position->getY() - 1].getPiece() == nullptr) {
-                    Move s1 = Move(position->getX(), position->getY(), position->getX(), 
-                    position->getY() - 1, N, &theBoard[position->getX()][position->getY() - 1]);
+            if (y > 0) {
+                if(theBoard[x][y - 1].getPiece() == nullptr) {
+                    Move s1 = Move(x, y, x - 1, y, &theBoard[x - 1][y], N);
                     possibleMoves.emplace_back(s1);
                 }
             }
         } else if(pieceColour == BLACK) {
-            if (position->getY() < 7) {
-                if(theBoard[position->getX()][position->getY() + 1].getPiece() == nullptr) {
-                    Move s1 = Move(position->getX(), position->getY(), position->getX(), 
-                    position->getY() + 1, S, &theBoard[position->getX()][position->getY() + 1]);
+            if (y < 7) {
+                if(theBoard[x][y + 1].getPiece() == nullptr) {
+                    Move s1 = Move(x, y, x + 1, y, &theBoard[x + 1][y], S);
                     possibleMoves.emplace_back(s1);
                 }
             }
@@ -45,46 +42,38 @@ void Pawn::calculateMoves() {
     }
 
     if(pieceColour == WHITE) {
-        if (position->getY() > 0) {
-            if (position->getX() < 7) {
-                if (theBoard[position->getX() + 1][position->getY() - 1].getPiece() != nullptr && 
-                theBoard[position->getX() + 1][position->getY() - 1].getPiece()->getColour() != pieceColour) {
-                    Move s1 = Move(position->getX(), position->getY(), position->getX() + 1, 
-                    position->getY() - 1, N, &theBoard[position->getX() + 1][position->getY() - 1]);
+        if (x > 0) {
+            if (y < 7) {
+                if (theBoard[x - 1][y + 1].getPiece() != nullptr && theBoard[x - 1][y + 1].getPiece()->getColour() != pieceColour) {
+                    Move s1 = Move(x, y, x - 1, y + 1, &theBoard[x - 1][y + 1], NE);
                     possibleMoves.emplace_back(s1);
                 }
-            } else if (position->getX() > 0) {
-                if (theBoard[position->getX() - 1][position->getY() - 1].getPiece() != nullptr && 
-                theBoard[position->getX() - 1][position->getY() - 1].getPiece()->getColour() != pieceColour) {
-                    Move s1 = Move(position->getX(), position->getY(), position->getX() - 1, 
-                    position->getY() - 1, N, &theBoard[position->getX() - 1][position->getY() - 1]);
+            } 
+            if (y > 0) {
+                if (theBoard[x - 1][y - 1].getPiece() != nullptr && theBoard[x - 1][y - 1].getPiece()->getColour() != pieceColour) {
+                    Move s1 = Move(x, y, x - 1, y - 1, &theBoard[x - 1][y - 1], NW);
                     possibleMoves.emplace_back(s1);
                 }
             }
         } 
     }
     if(pieceColour == BLACK) {
-        if (position->getY() < 7) {
-            if (position->getX() < 7) {
-                if (theBoard[position->getX() + 1][position->getY() + 1].getPiece() != nullptr && 
-                theBoard[position->getX() + 1][position->getY() + 1].getPiece()->getColour() != pieceColour) {
-                    Move s1 = Move(position->getX(), position->getY(), position->getX() + 1, 
-                    position->getY() + 1, S, &theBoard[position->getX() + 1][position->getY() + 1]);
+        if (x < 7) {
+            if (y < 7) {
+                if (theBoard[x + 1][y + 1].getPiece() != nullptr && theBoard[x + 1][y + 1].getPiece()->getColour() != pieceColour) {
+                    Move s1 = Move(x, y, x + 1, y + 1, &theBoard[x + 1][y + 1], SE);
                     possibleMoves.emplace_back(s1);
-                } else if (theBoard[position->getX() + 1][position->getY() + 1].canEnPassant()) {
-                    Move s1 = Move(position->getX(), position->getY(), position->getX() + 1, 
-                    position->getY() + 1, S, &theBoard[position->getX() + 1][position->getY() + 1]);
+                } else if (theBoard[x + 1][y + 1].canEnPassant()) {
+                    Move s1 = Move(x, y, x + 1, y + 1, &theBoard[x + 1][y + 1], SE);
                     possibleMoves.emplace_back(s1);
                 }
-            } else if (position->getX() > 0) {
-                if (theBoard[position->getX() - 1][position->getY() + 1].getPiece() != nullptr && 
-                theBoard[position->getX() - 1][position->getY() + 1].getPiece()->getColour() != pieceColour) {
-                    Move s1 = Move(position->getX(), position->getY(), position->getX() - 1, 
-                    position->getY() + 1, S, &theBoard[position->getX() - 1][position->getY() + 1]);
+            } 
+            if (y > 0) {
+                if (theBoard[x + 1][y - 1].getPiece() != nullptr && theBoard[x + 1][y - 1].getPiece()->getColour() != pieceColour) {
+                    Move s1 = Move(x, y, x + 1, y - 1, &theBoard[x + 1][y - 1], SW);
                     possibleMoves.emplace_back(s1);
-                } else if(theBoard[position->getX() - 1][position->getY() + 1].canEnPassant()) {
-                    Move s1 = Move(position->getX(), position->getY(), position->getX() - 1, 
-                    position->getY() + 1, S, &theBoard[position->getX() - 1][position->getY() + 1]);
+                } else if (theBoard[x + 1][y - 1].canEnPassant()) {
+                    Move s1 = Move(x, y, x + 1, y - 1, &theBoard[x + 1][y - 1], SW);
                     possibleMoves.emplace_back(s1);
                 }
             }
@@ -93,16 +82,18 @@ void Pawn::calculateMoves() {
 }
 
 bool Pawn::canDoubleStep() {
+    int x = position->getX();
+    int y = position->getY();
     if(!hasMoved) { 
         if(pieceColour == WHITE) {
-            if(theBoard[position->getX()][position->getY() - 1].getPiece() == nullptr) {
-                if(theBoard[position->getX()][position->getY() - 2].getPiece() == nullptr) {
+            if(theBoard[x - 1][y].getPiece() == nullptr) {
+                if(theBoard[x - 2][y].getPiece() == nullptr) {
                     return true;
                 }
             }
         } else if ( pieceColour == BLACK) {
-            if(theBoard[position->getX()][position->getY() + 1].getPiece() == nullptr) {
-                if(theBoard[position->getX()][position->getY() + 2].getPiece() == nullptr) {
+            if(theBoard[x + 1][y].getPiece() == nullptr) {
+                if(theBoard[x + 2][y].getPiece() == nullptr) {
                     return true;
                 }
             }

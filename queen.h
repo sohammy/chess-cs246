@@ -6,8 +6,8 @@
 class Queen : public Piece {
 
 public:
-    Queen (vector<vector<Square>>& board);
-    void calculateMoves();
+    Queen (vector<vector<Square>>& board, char pieceType);
+    void calculateMoves() override;
 };
 
 #endif

@@ -10,16 +10,18 @@
 #include "bishop.h"
 #include "pawn.h"
 
+#include "textdisplay.h"
+
 #include <vector>
 
 using namespace std;
 
 class Board {
     vector<vector<Square>> theBoard;
-    vector<Piece*> availableWhites;
-    vector<Piece*> availableBlacks;
-    vector<Piece*> capturedWhites;
-    vector<Piece*> capturedBlacks;
+    vector<unique_ptr<Piece>> availableWhites;
+    vector<unique_ptr<Piece>> availableBlacks;
+    vector<unique_ptr<Piece>> capturedWhites;
+    vector<unique_ptr<Piece>> capturedBlacks;
 
     int moveCounter;
 
@@ -31,9 +33,8 @@ public:
     vector<vector<Square>>& getBoard();
 
     void clearBoard();
-    void initializeBoard();
-    void setup();
+    void initializeBoard(TextDisplay *td);
+    void setup(TextDisplay *td, bool& whoseTurn);
 };
-
 
 #endif

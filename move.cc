@@ -3,14 +3,14 @@
 using namespace std;
 
 Direction Move::coordsToDirection(int x, int y, int nextX, int nextY) {
-    if(nextX == x && nextY < y) return N;
-    if(nextX == x && nextY > y) return S;
-    if(nextX > x && nextY == y) return E;
-    if(nextX < x && nextY == y) return W;
-    if(nextX > x && nextY < y) return NE;
+    if(nextX < x && nextY == y) return N;
+    if(nextX > x && nextY == y) return S;
+    if(nextX == x && nextY > y) return E;
+    if(nextX == x && nextY < y) return W;
+    if(nextX < x && nextY > y) return NE;
     if(nextX < x && nextY < y) return NW;
     if(nextX > x && nextY > y) return SE;
-    if(nextX < x && nextY > y) return SW;
+    if(nextX > x && nextY < y) return SW;
     return NONE;
 }
 
@@ -35,20 +35,20 @@ bool Move::isSameDestination(Move& other) {
     return false;
 }
 
-Move::Move(int x, int y, int destX, int destY, Direction d, Square* dest): 
-    initialX{x}, initialY{y}, destinationX{destX}, destinationY{destY}, moveDirection{d}, destSquare{dest} {}
+Move::Move(int x, int y, int destX, int destY, Square* dest, Direction d): 
+    initialX{x}, initialY{y}, destinationX{destX}, destinationY{destY}, destSquare{dest}, moveDirection{d} {}
 
 Move::Move(string m, string d, vector<vector<Square>>& gameBoard) {
     if (m.size() == 2 && d.size() == 2) {
-        initialX = letterToInt(m[0]);
-        initialY = 8 - (m[1] - '0');
-        destinationX = letterToInt(d[0]);
-        destinationY = 8 - (d[1] - '0');
+        initialX = 8 - (m[1] - '0');
+        initialY = letterToInt(m[0]);
+        destinationX = 8 - (d[1] - '0');
+        destinationY = letterToInt(d[0]);
+        destSquare = &(gameBoard[destinationX][destinationY]);
+        moveDirection = coordsToDirection(initialX, initialY, destinationX, destinationY);
     } else {
         // Add some error handling for invalid string formats
         // Set default values or throw an exception, depending on your error-handling strategy
         initialX = initialY = destinationX = destinationY = -1;
     }
-    destSquare = &(gameBoard[destinationX][destinationY]);
-    moveDirection = coordsToDirection(initialX, initialY, destinationX, destinationY);
 }

@@ -4,8 +4,8 @@
 
 class Pawn : public Piece {
     public:
-        Pawn(vector<vector<Square>>& board);
-        void calculateMoves();
+        Pawn(vector<vector<Square>>& board, char pieceType);
+        void calculateMoves() override;
         bool canDoubleStep();
 };
 

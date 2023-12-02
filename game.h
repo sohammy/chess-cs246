@@ -18,7 +18,7 @@ class Game {
     unique_ptr<Player> white;
     unique_ptr<Player> black;
 
-    TextDisplay td;
+    std::shared_ptr<TextDisplay> td;
 
     bool whoseTurn;
     int whiteScore;
