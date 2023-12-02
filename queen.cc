@@ -3,7 +3,8 @@
 Queen::Queen (vector<vector<Square>>& board, char pieceType) : Piece(board, pieceType) {}
 
 void Queen:: calculateMoves() {
-    cout << "in queen" << endl;
+    
+    // Clears all irrelevant possible moves, before determining new possible moves
     possibleMoves.clear();
     blockedMoves.clear();
    
