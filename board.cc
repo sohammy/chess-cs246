@@ -25,8 +25,8 @@ unique_ptr<Piece> makePiece (char pieceChar, vector<vector<Square>>& board) {
 
 
 bool Board::containsWhiteKing() {
-    for (Piece* p : availableWhites) {
-        if (dynamic_cast<King*>(p) != nullptr) {
+    for (int i = 0; i < availableWhites.size(); ++i) {
+        if (availableWhites[i]->getPieceName() == 'K') {
             return true;
         }
     }
@@ -34,8 +34,8 @@ bool Board::containsWhiteKing() {
 }
 
 bool Board::containsBlackKing() {
-    for (Piece* p : availableBlacks) {
-        if (dynamic_cast<King*>(p) != nullptr) {
+    for (int i = 0; i < availableWhites.size(); ++i) {
+        if (availableWhites[i]->getPieceName() == 'k') {
             return true;
         }
     }
@@ -165,7 +165,10 @@ void Board::setup() {
     string input;
     while (cin >> input) {
         if (input == "done") {
+            cout << theBoard[0][0].getPiece()->getPieceName();
+            cout << theBoard[1][0].getPiece()->getPieceName();
             if (containsBlackKing() && containsWhiteKing()) {
+                cout << "You have met requirements" << endl;
                 break;
             }
         } else if (input == "+") {
@@ -179,8 +182,18 @@ void Board::setup() {
                 white = true;
             }
 
-            theBoard[placement.getInitX()][placement.getInitY()].addPiece(makePiece(piece, theBoard).get());
+            unique_ptr<Piece> p = nullptr;
+            p = makePiece(piece, theBoard);
             
+            if (p->getColour() == Colour::WHITE) {
+                availableWhites.push_back(move(p));
+                theBoard[placement.getInitX()][placement.getInitY()].addPiece(availableWhites.back().get());
+            }
+            else if (p->getColour() == Colour::BLACK) {
+                availableWhites.push_back(move(p));
+                theBoard[placement.getInitX()][placement.getInitY()].addPiece(availableBlacks.back().get());
+            }
+
             if (white) {
                 theBoard[placement.getInitX()][placement.getInitY()].getPiece()->setColour('w');
             } else {

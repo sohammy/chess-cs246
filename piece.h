@@ -10,9 +10,10 @@
 
 using namespace std;
 
+enum Colour {WHITE, BLACK};
+
 class Piece : public Observer{
     protected:
-        enum Colour {WHITE, BLACK};
 
         bool hasMoved = false; // Accessed within player through pieceMoved()
 
@@ -45,6 +46,7 @@ class Piece : public Observer{
         vector<Move> getMoves() { return possibleMoves; }
         Colour getColour() { return pieceColour; }
         void pieceMoved() { hasMoved = true; }
+
 };
 
 

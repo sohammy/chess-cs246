@@ -22,7 +22,7 @@ private:
     int y;
 
     // The current piece sitting on the square
-    Piece *currPiece;
+    Piece* currPiece;
 
     bool enPassant;
 
