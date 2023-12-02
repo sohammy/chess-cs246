@@ -77,24 +77,6 @@ void Board::initializeBoard(TextDisplay *td) {
     unique_ptr<King> whiteK1 = make_unique<King>(theBoard, 'K');
     unique_ptr<Queen> whiteQ1 = make_unique<Queen>(theBoard, 'Q');
 
-    theBoard[0][0].addPiece (blackR1.get());
-    theBoard[0][1].addPiece (blackN1.get());
-    theBoard[0][2].addPiece (blackB1.get());
-    theBoard[0][3].addPiece (blackQ1.get());
-    theBoard[0][4].addPiece (blackK1.get());
-    theBoard[0][5].addPiece (blackB2.get());
-    theBoard[0][6].addPiece (blackN2.get());
-    theBoard[0][7].addPiece (blackR2.get());
-
-    theBoard[7][0].addPiece (whiteR1.get());
-    theBoard[7][1].addPiece (whiteN1.get());
-    theBoard[7][2].addPiece (whiteB1.get());
-    theBoard[7][3].addPiece (whiteQ1.get());
-    theBoard[7][4].addPiece (whiteK1.get());
-    theBoard[7][5].addPiece (whiteB2.get());
-    theBoard[7][6].addPiece (whiteN2.get());
-    theBoard[7][7].addPiece (whiteR2.get());
-
     unique_ptr<Pawn> whiteP1 = make_unique<Pawn>(theBoard, 'P');
     unique_ptr<Pawn> whiteP2 = make_unique<Pawn>(theBoard, 'P');
     unique_ptr<Pawn> whiteP3 = make_unique<Pawn>(theBoard, 'P');
@@ -112,39 +94,51 @@ void Board::initializeBoard(TextDisplay *td) {
     unique_ptr<Pawn> blackP7 = make_unique<Pawn>(theBoard, 'p');
     unique_ptr<Pawn> blackP8 = make_unique<Pawn>(theBoard, 'p');
 
-   theBoard[6][0].addPiece(whiteP1.get());
-   theBoard[6][1].addPiece(whiteP2.get()); 
-   theBoard[6][2].addPiece(whiteP3.get()); 
-   theBoard[6][3].addPiece(whiteP4.get());  
-   theBoard[6][4].addPiece(whiteP5.get()); 
-   theBoard[6][5].addPiece(whiteP6.get()); 
-   theBoard[6][6].addPiece(whiteP7.get()); 
-   theBoard[6][7].addPiece(whiteP8.get());
+    theBoard[0][0].addPiece (blackR1.get());
+    theBoard[0][1].addPiece (blackN1.get());
+    theBoard[0][2].addPiece (blackB1.get());
+    theBoard[0][3].addPiece (blackQ1.get());
+    theBoard[0][4].addPiece (blackK1.get());
+    theBoard[0][5].addPiece (blackB2.get());
+    theBoard[0][6].addPiece (blackN2.get());
+    theBoard[0][7].addPiece (blackR2.get());
 
-   theBoard[1][0].addPiece(blackP1.get());
-   theBoard[1][1].addPiece(blackP2.get());
-   theBoard[1][2].addPiece(blackP3.get());
-   theBoard[1][3].addPiece(blackP4.get()); 
-   theBoard[1][4].addPiece(blackP5.get());
-   theBoard[1][5].addPiece(blackP6.get());
-   theBoard[1][6].addPiece(blackP7.get());
-   theBoard[1][7].addPiece(blackP8.get());
+    theBoard[7][0].addPiece (whiteR1.get());
+    theBoard[7][1].addPiece (whiteN1.get());
+    theBoard[7][2].addPiece (whiteB1.get());
+    theBoard[7][3].addPiece (whiteQ1.get());
+    theBoard[7][4].addPiece (whiteK1.get());
+    theBoard[7][5].addPiece (whiteB2.get());
+    theBoard[7][6].addPiece (whiteN2.get());
+    theBoard[7][7].addPiece (whiteR2.get());
+    
+    theBoard[6][0].addPiece(whiteP1.get());
+    theBoard[6][1].addPiece(whiteP2.get()); 
+    theBoard[6][2].addPiece(whiteP3.get()); 
+    theBoard[6][3].addPiece(whiteP4.get());  
+    theBoard[6][4].addPiece(whiteP5.get()); 
+    theBoard[6][5].addPiece(whiteP6.get()); 
+    theBoard[6][6].addPiece(whiteP7.get()); 
+    theBoard[6][7].addPiece(whiteP8.get());
+
+    theBoard[1][0].addPiece(blackP1.get());
+    theBoard[1][1].addPiece(blackP2.get());
+    theBoard[1][2].addPiece(blackP3.get());
+    theBoard[1][3].addPiece(blackP4.get()); 
+    theBoard[1][4].addPiece(blackP5.get());
+    theBoard[1][5].addPiece(blackP6.get());
+    theBoard[1][6].addPiece(blackP7.get());
+    theBoard[1][7].addPiece(blackP8.get());
 
     for (int i = 0; i < BOARDSIZE; ++i) {
+        theBoard[0][i].getPiece()->setColour('b');
         theBoard[1][i].getPiece()->setColour('b');
         theBoard[6][i].getPiece()->setColour('w');
         theBoard[7][i].getPiece()->setColour('w');
-        theBoard[0][i].getPiece()->setColour('b');
     }
 
-    // availableWhites.emplace_back(whiteB1);
-    // availableWhites.emplace_back(whiteB2);
-    // availableWhites.emplace_back(whiteN1);
-    // availableWhites.emplace_back(whiteN2);
-    // availableWhites.emplace_back(whiteR1);
-    // availableWhites.emplace_back(whiteR2);
-    // availableWhites.emplace_back(whiteK1);
-    // availableWhites.emplace_back(whiteQ1);
+    
+
 
 }
 
@@ -165,8 +159,6 @@ void Board::setup() {
     string input;
     while (cin >> input) {
         if (input == "done") {
-            cout << theBoard[0][0].getPiece()->getPieceName();
-            cout << theBoard[1][0].getPiece()->getPieceName();
             if (containsBlackKing() && containsWhiteKing()) {
                 cout << "You have met requirements" << endl;
                 break;
