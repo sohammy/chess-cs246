@@ -71,10 +71,12 @@ void Board::initializeBoard(TextDisplay *td) {
             theBoard[6][index].addPiece(availableWhites.back().get());
             theBoard[6][index].getPiece()->setColour('w');
             theBoard[6][index].getPiece()->setSquare(&theBoard[6][index]);
+            theBoard[6][index].getPiece()->calculateMoves();
         } else {
             theBoard[7][index-BOARDSIZE].addPiece(availableWhites.back().get());
             theBoard[7][index-BOARDSIZE].getPiece()->setColour('w');
             theBoard[7][index-BOARDSIZE].getPiece()->setSquare(&theBoard[7][index-BOARDSIZE]);
+            theBoard[7][index-BOARDSIZE].getPiece()->calculateMoves();
         }
         ++index;
     }
@@ -88,10 +90,12 @@ void Board::initializeBoard(TextDisplay *td) {
             theBoard[1][index].addPiece(availableBlacks.back().get());
             theBoard[1][index].getPiece()->setColour('b');
             theBoard[1][index].getPiece()->setSquare(&theBoard[1][index]);
+            theBoard[1][index].getPiece()->calculateMoves();
         } else {
             theBoard[0][index-BOARDSIZE].addPiece(availableBlacks.back().get());
             theBoard[0][index-BOARDSIZE].getPiece()->setColour('b');
             theBoard[0][index-BOARDSIZE].getPiece()->setSquare(&theBoard[0][index-BOARDSIZE]);
+            theBoard[0][index-BOARDSIZE].getPiece()->calculateMoves();
         }
         ++index;
     }
@@ -143,12 +147,14 @@ void Board::setup(TextDisplay *td) {
                 theBoard[placement.getInitX()][placement.getInitY()].addPiece(availableWhites.back().get());
                 theBoard[placement.getInitX()][placement.getInitY()].getPiece()->setColour('w');
                 theBoard[placement.getInitX()][placement.getInitY()].getPiece()->setSquare(&theBoard[placement.getInitX()][placement.getInitY()]);
+                theBoard[placement.getInitX()][placement.getInitY()].getPiece()->calculateMoves();
             }
             else {
                 availableBlacks.push_back(move(p));
                 theBoard[placement.getInitX()][placement.getInitY()].addPiece(availableBlacks.back().get());
                 theBoard[placement.getInitX()][placement.getInitY()].getPiece()->setColour('b');
                 theBoard[placement.getInitX()][placement.getInitY()].getPiece()->setSquare(&theBoard[placement.getInitX()][placement.getInitY()]);
+                theBoard[placement.getInitX()][placement.getInitY()].getPiece()->calculateMoves();
             }
 
             //cout << *td;

@@ -26,6 +26,7 @@ vector<Piece*> Piece::getTeamOfColour(Colour c) {
             }
         }
     }
+    cout << pieces.size() << " other pieces" << endl;
     return pieces;
 }
 
@@ -49,7 +50,7 @@ void Piece::movesInDir(Direction d) {
     if (d == N) {
         while(y > 0) {
             --y;
-            Move m = Move(position->getX(), position->getY(), x, y, d, &theBoard[x][y]);
+            Move m = Move(position->getX(), position->getY(), x, y, &theBoard[x][y], d);
             if(theBoard[x][y].getPiece() == nullptr) {
                 possibleMoves.emplace_back(m);
                 theBoard[x][y].addPieceObservers(this);
@@ -66,7 +67,7 @@ void Piece::movesInDir(Direction d) {
     } else if (d == E) {
         while(x < 7) {
             ++x;
-            Move m = Move(position->getX(), position->getY(), x, y, d, &theBoard[x][y]);
+            Move m = Move(position->getX(), position->getY(), x, y, &theBoard[x][y], d);
             if(theBoard[x][y].getPiece() == nullptr) {
                 possibleMoves.emplace_back(m);
                 theBoard[x][y].addPieceObservers(this);
@@ -83,7 +84,7 @@ void Piece::movesInDir(Direction d) {
     } else if (d == S) {
         while(y < 7) {
             ++y;
-            Move m = Move(position->getX(), position->getY(), x, y, d, &theBoard[x][y]);
+            Move m = Move(position->getX(), position->getY(), x, y, &theBoard[x][y], d);
             if(theBoard[x][y].getPiece() == nullptr) {
                 possibleMoves.emplace_back(m);
                 theBoard[x][y].addPieceObservers(this);
@@ -100,7 +101,7 @@ void Piece::movesInDir(Direction d) {
     } else if (d == W) {
         while(x > 0) {
             --x;
-            Move m = Move(position->getX(), position->getY(), x, y, d, &theBoard[x][y]);
+            Move m = Move(position->getX(), position->getY(), x, y, &theBoard[x][y], d);
             if(theBoard[x][y].getPiece() == nullptr) {
                 possibleMoves.emplace_back(m);
                 theBoard[x][y].addPieceObservers(this);
@@ -118,7 +119,7 @@ void Piece::movesInDir(Direction d) {
         while(y > 0 && x < 7) {
             --y;
             ++x;
-            Move m = Move(position->getX(), position->getY(), x, y, d, &theBoard[x][y]);
+            Move m = Move(position->getX(), position->getY(), x, y, &theBoard[x][y], d);
             if(theBoard[x][y].getPiece() == nullptr) {
                 possibleMoves.emplace_back(m);
                 theBoard[x][y].addPieceObservers(this);
@@ -136,7 +137,7 @@ void Piece::movesInDir(Direction d) {
         while(y > 0 && x > 0) {
             --y;
             --x;
-            Move m = Move(position->getX(), position->getY(), x, y, d, &theBoard[x][y]);
+            Move m = Move(position->getX(), position->getY(), x, y, &theBoard[x][y], d);
             if(theBoard[x][y].getPiece() == nullptr) {
                 possibleMoves.emplace_back(m);
                 theBoard[x][y].addPieceObservers(this);
@@ -154,7 +155,7 @@ void Piece::movesInDir(Direction d) {
         while(y < 7 && x < 7) {
             ++y;
             ++x;
-            Move m = Move(position->getX(), position->getY(), x, y, d, &theBoard[x][y]);
+            Move m = Move(position->getX(), position->getY(), x, y, &theBoard[x][y], d);
             if(theBoard[x][y].getPiece() == nullptr) {
                 possibleMoves.emplace_back(m);
                 theBoard[x][y].addPieceObservers(this);
@@ -172,7 +173,7 @@ void Piece::movesInDir(Direction d) {
         while(y < 7 && x > 0) {
             ++y;
             --x;
-            Move m = Move(position->getX(), position->getY(), x, y, d, &theBoard[x][y]);
+            Move m = Move(position->getX(), position->getY(), x, y, &theBoard[x][y], d);
             if(theBoard[x][y].getPiece() == nullptr) {
                 possibleMoves.emplace_back(m);
                 theBoard[x][y].addPieceObservers(this);
@@ -342,7 +343,7 @@ void Piece::notify(Square* s) {
             }
         }
 
-        Move newMove = Move{position->getX(), position->getY(), s->getX(), s->getY(), d, s};
+        Move newMove = Move{position->getX(), position->getY(), s->getX(), s->getY(), s, d};
 
         if(pieceName != 'P' || pieceName != 'p') {
             if(pieceColour != s->getPiece()->getColour()) {

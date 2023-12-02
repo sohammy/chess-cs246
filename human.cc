@@ -12,15 +12,17 @@ void Human::makeMove(Board& gameBoard) {
         cin >> pieceSelected >> destination;
         Move moveAttempted = Move(pieceSelected, destination, gameBoard.getBoard());
 
+        // cout << moveAttempted.getInitX() << moveAttempted.getInitY() << moveAttempted.getDestX() << moveAttempted.getDestY() << endl;
+
         Square* start = &gameBoard.getBoard()[moveAttempted.getInitX()][moveAttempted.getInitY()]; 
         Piece* piece = start->getPiece();
-
         piece->calculateMoves();
 
         int successIndex = 0;
         vector<Move> possibleMoves = piece->getMoves();
         for(Move m : possibleMoves) {
             if (moveAttempted.isEqual(m)) { 
+                cout << "WE MADE IT" << endl;
                 foundMove = true;
                 break;
             }
@@ -37,6 +39,7 @@ void Human::makeMove(Board& gameBoard) {
                 dest->removePiece();
             }
             dest->addPiece(piece);
+            piece->setSquare(dest);
             start->removePiece();
             piece->pieceMoved();
             dest->notifyDisplayObservers();

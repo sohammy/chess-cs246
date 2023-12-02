@@ -3,7 +3,6 @@
 Pawn::Pawn(vector<vector<Square>>& board, char pieceType): Piece(board, pieceType) {}
 
 void Pawn::calculateMoves() {
-    cout << "in pawn" << endl;
     int x = position->getX();
     int y = position->getY();
 
@@ -13,31 +12,29 @@ void Pawn::calculateMoves() {
     bool doubleStep = canDoubleStep();
 
     if(doubleStep) {
-        cout << "YES" << endl;
         if(pieceColour == WHITE) {
-            Move s1 = Move(x, y, x, y - 1, N, &theBoard[x][y - 1]);
-            Move s2 = Move(x, y, x, y - 2, N, &theBoard[x][y - 2]);
+            Move s1 = Move(x, y, x - 1, y, &theBoard[x - 1][y], N);
+            Move s2 = Move(x, y, x - 2, y, &theBoard[x - 2][y], N);
             possibleMoves.emplace_back(s1);
             possibleMoves.emplace_back(s2);
         } else if (pieceColour == BLACK) {
-            Move s1 = Move(x, y, x, y + 1, S, &theBoard[x][y + 1]);
-            Move s2 = Move(x, y, x, y + 2, S, &theBoard[x][y + 2]);
+            Move s1 = Move(x, y, x + 1, y, &theBoard[x + 1][y], S);
+            Move s2 = Move(x, y, x + 2, y, &theBoard[x + 2][y], S);
             possibleMoves.emplace_back(s1);
             possibleMoves.emplace_back(s2);
         }
     } else {
-        cout << "NO" << endl;
         if(pieceColour == WHITE) {
             if (y > 0) {
                 if(theBoard[x][y - 1].getPiece() == nullptr) {
-                    Move s1 = Move(x, y, x, y - 1, N, &theBoard[x][y - 1]);
+                    Move s1 = Move(x, y, x - 1, y, &theBoard[x - 1][y], N);
                     possibleMoves.emplace_back(s1);
                 }
             }
         } else if(pieceColour == BLACK) {
             if (y < 7) {
                 if(theBoard[x][y + 1].getPiece() == nullptr) {
-                    Move s1 = Move(x, y, x, y + 1, S, &theBoard[x][y + 1]);
+                    Move s1 = Move(x, y, x + 1, y, &theBoard[x + 1][y], S);
                     possibleMoves.emplace_back(s1);
                 }
             }
@@ -45,36 +42,38 @@ void Pawn::calculateMoves() {
     }
 
     if(pieceColour == WHITE) {
-        if (y > 0) {
-            if (x < 7) {
-                if (theBoard[x + 1][y - 1].getPiece() != nullptr && theBoard[x + 1][y - 1].getPiece()->getColour() != pieceColour) {
-                    Move s1 = Move(x, y, x + 1, y - 1, N, &theBoard[x + 1][y - 1]);
+        if (x > 0) {
+            if (y < 7) {
+                if (theBoard[x - 1][y + 1].getPiece() != nullptr && theBoard[x - 1][y + 1].getPiece()->getColour() != pieceColour) {
+                    Move s1 = Move(x, y, x - 1, y + 1, &theBoard[x - 1][y + 1], NE);
                     possibleMoves.emplace_back(s1);
                 }
-            } else if (x > 0) {
+            } 
+            if (y > 0) {
                 if (theBoard[x - 1][y - 1].getPiece() != nullptr && theBoard[x - 1][y - 1].getPiece()->getColour() != pieceColour) {
-                    Move s1 = Move(x, y, x - 1, y - 1, N, &theBoard[x - 1][y - 1]);
+                    Move s1 = Move(x, y, x - 1, y - 1, &theBoard[x - 1][y - 1], NW);
                     possibleMoves.emplace_back(s1);
                 }
             }
         } 
     }
     if(pieceColour == BLACK) {
-        if (y < 7) {
-            if (x < 7) {
+        if (x < 7) {
+            if (y < 7) {
                 if (theBoard[x + 1][y + 1].getPiece() != nullptr && theBoard[x + 1][y + 1].getPiece()->getColour() != pieceColour) {
-                    Move s1 = Move(x, y, x + 1, y + 1, S, &theBoard[x + 1][y + 1]);
+                    Move s1 = Move(x, y, x + 1, y + 1, &theBoard[x + 1][y + 1], SE);
                     possibleMoves.emplace_back(s1);
                 } else if (theBoard[x + 1][y + 1].canEnPassant()) {
-                    Move s1 = Move(x, y, x + 1, y + 1, S, &theBoard[x + 1][y + 1]);
+                    Move s1 = Move(x, y, x + 1, y + 1, &theBoard[x + 1][y + 1], SE);
                     possibleMoves.emplace_back(s1);
                 }
-            } else if (x > 0) {
-                if (theBoard[x - 1][y + 1].getPiece() != nullptr && theBoard[x - 1][y + 1].getPiece()->getColour() != pieceColour) {
-                    Move s1 = Move(x, y, x - 1, y + 1, S, &theBoard[x - 1][y + 1]);
+            } 
+            if (y > 0) {
+                if (theBoard[x + 1][y - 1].getPiece() != nullptr && theBoard[x + 1][y - 1].getPiece()->getColour() != pieceColour) {
+                    Move s1 = Move(x, y, x + 1, y - 1, &theBoard[x + 1][y - 1], SW);
                     possibleMoves.emplace_back(s1);
-                } else if (theBoard[x - 1][y + 1].canEnPassant()) {
-                    Move s1 = Move(x, y, x - 1, y + 1, S, &theBoard[x - 1][y + 1]);
+                } else if (theBoard[x + 1][y - 1].canEnPassant()) {
+                    Move s1 = Move(x, y, x + 1, y - 1, &theBoard[x + 1][y - 1], SW);
                     possibleMoves.emplace_back(s1);
                 }
             }
