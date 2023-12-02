@@ -11,6 +11,10 @@ void Piece::setPieceName(char c) {
     pieceName = c;
 }
 
+void Piece::setSquare(Square* s) {
+    position = s;
+}
+
 vector<Piece*> Piece::getTeamOfColour(Colour c) {
     vector<Piece*> pieces;
     for(unsigned int i = 0; i < theBoard.size(); ++i) {

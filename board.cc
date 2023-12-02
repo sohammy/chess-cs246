@@ -59,86 +59,42 @@ void Board::initializeBoard(TextDisplay *td) {
         }
     }
 
-    unique_ptr<Rook> blackR1 = make_unique<Rook>(theBoard, 'r');
-    unique_ptr<Rook> blackR2 = make_unique<Rook>(theBoard, 'r');
-    unique_ptr<Bishop> blackB1 = make_unique<Bishop>(theBoard, 'b');
-    unique_ptr<Bishop> blackB2 = make_unique<Bishop>(theBoard, 'b');
-    unique_ptr<Knight> blackN1 = make_unique<Knight>(theBoard, 'n');
-    unique_ptr<Knight> blackN2 = make_unique<Knight>(theBoard, 'n');
-    unique_ptr<King> blackK1 = make_unique<King>(theBoard, 'k');
-    unique_ptr<Queen> blackQ1 = make_unique<Queen>(theBoard, 'q');
+    vector<char> whiteChars = {'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'R', 'N', 'B', 'K', 'Q', 'B', 'N', 'R'};
+    vector<char> blackChars = {'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p', 'r', 'n', 'b', 'k', 'q', 'b', 'n', 'r'};
 
-    unique_ptr<Rook> whiteR1 = make_unique<Rook>(theBoard, 'R');
-    unique_ptr<Rook> whiteR2 = make_unique<Rook>(theBoard, 'R');
-    unique_ptr<Bishop> whiteB1 = make_unique<Bishop>(theBoard, 'B');
-    unique_ptr<Bishop> whiteB2 = make_unique<Bishop>(theBoard, 'B');
-    unique_ptr<Knight> whiteN1 = make_unique<Knight>(theBoard, 'N');
-    unique_ptr<Knight> whiteN2 = make_unique<Knight>(theBoard, 'N');
-    unique_ptr<King> whiteK1 = make_unique<King>(theBoard, 'K');
-    unique_ptr<Queen> whiteQ1 = make_unique<Queen>(theBoard, 'Q');
-
-    unique_ptr<Pawn> whiteP1 = make_unique<Pawn>(theBoard, 'P');
-    unique_ptr<Pawn> whiteP2 = make_unique<Pawn>(theBoard, 'P');
-    unique_ptr<Pawn> whiteP3 = make_unique<Pawn>(theBoard, 'P');
-    unique_ptr<Pawn> whiteP4 = make_unique<Pawn>(theBoard, 'P');
-    unique_ptr<Pawn> whiteP5 = make_unique<Pawn>(theBoard, 'P');
-    unique_ptr<Pawn> whiteP6 = make_unique<Pawn>(theBoard, 'P');
-    unique_ptr<Pawn> whiteP7 = make_unique<Pawn>(theBoard, 'P');
-    unique_ptr<Pawn> whiteP8 = make_unique<Pawn>(theBoard, 'P');
-    unique_ptr<Pawn> blackP1 = make_unique<Pawn>(theBoard, 'p');
-    unique_ptr<Pawn> blackP2 = make_unique<Pawn>(theBoard, 'p');
-    unique_ptr<Pawn> blackP3 = make_unique<Pawn>(theBoard, 'p');
-    unique_ptr<Pawn> blackP4 = make_unique<Pawn>(theBoard, 'p');
-    unique_ptr<Pawn> blackP5 = make_unique<Pawn>(theBoard, 'p');
-    unique_ptr<Pawn> blackP6 = make_unique<Pawn>(theBoard, 'p');
-    unique_ptr<Pawn> blackP7 = make_unique<Pawn>(theBoard, 'p');
-    unique_ptr<Pawn> blackP8 = make_unique<Pawn>(theBoard, 'p');
-
-    theBoard[0][0].addPiece (blackR1.get());
-    theBoard[0][1].addPiece (blackN1.get());
-    theBoard[0][2].addPiece (blackB1.get());
-    theBoard[0][3].addPiece (blackQ1.get());
-    theBoard[0][4].addPiece (blackK1.get());
-    theBoard[0][5].addPiece (blackB2.get());
-    theBoard[0][6].addPiece (blackN2.get());
-    theBoard[0][7].addPiece (blackR2.get());
-
-    theBoard[7][0].addPiece (whiteR1.get());
-    theBoard[7][1].addPiece (whiteN1.get());
-    theBoard[7][2].addPiece (whiteB1.get());
-    theBoard[7][3].addPiece (whiteQ1.get());
-    theBoard[7][4].addPiece (whiteK1.get());
-    theBoard[7][5].addPiece (whiteB2.get());
-    theBoard[7][6].addPiece (whiteN2.get());
-    theBoard[7][7].addPiece (whiteR2.get());
-    
-    theBoard[6][0].addPiece(whiteP1.get());
-    theBoard[6][1].addPiece(whiteP2.get()); 
-    theBoard[6][2].addPiece(whiteP3.get()); 
-    theBoard[6][3].addPiece(whiteP4.get());  
-    theBoard[6][4].addPiece(whiteP5.get()); 
-    theBoard[6][5].addPiece(whiteP6.get()); 
-    theBoard[6][6].addPiece(whiteP7.get()); 
-    theBoard[6][7].addPiece(whiteP8.get());
-
-    theBoard[1][0].addPiece(blackP1.get());
-    theBoard[1][1].addPiece(blackP2.get());
-    theBoard[1][2].addPiece(blackP3.get());
-    theBoard[1][3].addPiece(blackP4.get()); 
-    theBoard[1][4].addPiece(blackP5.get());
-    theBoard[1][5].addPiece(blackP6.get());
-    theBoard[1][6].addPiece(blackP7.get());
-    theBoard[1][7].addPiece(blackP8.get());
-
-    for (int i = 0; i < BOARDSIZE; ++i) {
-        theBoard[0][i].getPiece()->setColour('b');
-        theBoard[1][i].getPiece()->setColour('b');
-        theBoard[6][i].getPiece()->setColour('w');
-        theBoard[7][i].getPiece()->setColour('w');
+    int index = 0;
+    for(char c : whiteChars) {
+        unique_ptr<Piece> p = nullptr;
+        p = makePiece(c, theBoard);
+        availableWhites.push_back(move(p));
+        if(index < BOARDSIZE) {
+            theBoard[6][index].addPiece(availableWhites.back().get());
+            theBoard[6][index].getPiece()->setColour('w');
+            theBoard[6][index].getPiece()->setSquare(&theBoard[6][index]);
+        } else {
+            theBoard[7][index-BOARDSIZE].addPiece(availableWhites.back().get());
+            theBoard[7][index-BOARDSIZE].getPiece()->setColour('w');
+            theBoard[7][index-BOARDSIZE].getPiece()->setSquare(&theBoard[7][index-BOARDSIZE]);
+        }
+        ++index;
     }
 
-
-
+    index = 0;
+    for(char c : blackChars) {
+        unique_ptr<Piece> p = nullptr;
+        p = makePiece(c, theBoard);
+        availableBlacks.push_back(move(p));
+        if(index < BOARDSIZE) {
+            theBoard[1][index].addPiece(availableBlacks.back().get());
+            theBoard[1][index].getPiece()->setColour('b');
+            theBoard[1][index].getPiece()->setSquare(&theBoard[1][index]);
+        } else {
+            theBoard[0][index-BOARDSIZE].addPiece(availableBlacks.back().get());
+            theBoard[0][index-BOARDSIZE].getPiece()->setColour('b');
+            theBoard[0][index-BOARDSIZE].getPiece()->setSquare(&theBoard[0][index-BOARDSIZE]);
+        }
+        ++index;
+    }
 
 }
 
@@ -181,11 +137,13 @@ void Board::setup() {
                 availableWhites.push_back(move(p));
                 theBoard[placement.getInitX()][placement.getInitY()].addPiece(availableWhites.back().get());
                 theBoard[placement.getInitX()][placement.getInitY()].getPiece()->setColour('w');
+                theBoard[placement.getInitX()][placement.getInitY()].getPiece()->setSquare(&theBoard[placement.getInitX()][placement.getInitY()]);
             }
             else {
                 availableBlacks.push_back(move(p));
                 theBoard[placement.getInitX()][placement.getInitY()].addPiece(availableBlacks.back().get());
                 theBoard[placement.getInitX()][placement.getInitY()].getPiece()->setColour('b');
+                theBoard[placement.getInitX()][placement.getInitY()].getPiece()->setSquare(&theBoard[placement.getInitX()][placement.getInitY()]);
             }
 
         } else if (input == "-") {

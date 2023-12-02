@@ -17,7 +17,7 @@ void Human::makeMove(Board& gameBoard) {
 
         piece->calculateMoves();
 
-        int successIndex;
+        int successIndex = 0;
         vector<Move> possibleMoves = piece->getMoves();
         for(Move m : possibleMoves) {
             if (moveAttempted.isEqual(m)) { 
@@ -27,8 +27,9 @@ void Human::makeMove(Board& gameBoard) {
             ++successIndex;
         }
         
-         cout << "hell" << endl;
+        
         if(foundMove) {
+            cout << "FOUND MOVE!!" << endl;
             Move successfulMove = possibleMoves[successIndex];
             Square* dest = successfulMove.getSquare();
 
