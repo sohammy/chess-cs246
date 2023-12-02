@@ -1,10 +1,10 @@
 #include "knight.h"
 
- Knight :: Knight (vector<vector<Square>>& board, char pieceType) : Piece(board, pieceType) {}
+Knight :: Knight (vector<vector<Square>>& board, char pieceType) : Piece(board, pieceType) {}
 
 void Knight:: calculateMoves () {
-    cout << "in knight" << endl;
-
+    
+    // Clear out all previous possible moves 
     possibleMoves.clear();
     blockedMoves.clear();
 

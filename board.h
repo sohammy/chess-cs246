@@ -34,7 +34,7 @@ public:
 
     void clearBoard();
     void initializeBoard(TextDisplay *td);
-    void setup(TextDisplay *td);
+    void setup(TextDisplay *td, bool& whoseTurn);
 };
 
 #endif

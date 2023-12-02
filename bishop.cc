@@ -4,9 +4,12 @@ Bishop::Bishop (vector<vector<Square>>& board, char pieceType) : Piece(board, pi
 
 void Bishop::calculateMoves() {
     cout << "in bishop" << endl;
+
+    // clear the arrays so that only relevant moves are saved
     possibleMoves.clear();
     blockedMoves.clear();
     
+    // Sets up possible directions Bishop can move in
     movesInDir(NE);
     movesInDir(NW);
     movesInDir(SW);
