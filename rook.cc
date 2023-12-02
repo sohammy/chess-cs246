@@ -3,7 +3,8 @@
 Rook::Rook(vector<vector<Square>>& board, char pieceType) : Piece(board, pieceType) {}
 
 void Rook::calculateMoves() {
-    cout << "in Rook" << endl;
+    
+    // Clear irrelevant possible moves
     possibleMoves.clear();
     blockedMoves.clear();
     
@@ -12,6 +13,5 @@ void Rook::calculateMoves() {
     movesInDir(S);
     movesInDir(W);
 
-    cout << possibleMoves.size() << endl;
     // Add Castling Functionality
 }
