@@ -34,8 +34,8 @@ bool Board::containsWhiteKing() {
 }
 
 bool Board::containsBlackKing() {
-    for (int i = 0; i < availableWhites.size(); ++i) {
-        if (availableWhites[i]->getPieceName() == 'k') {
+    for (int i = 0; i < availableBlacks.size(); ++i) {
+        if (availableBlacks[i]->getPieceName() == 'k') {
             return true;
         }
     }
@@ -137,7 +137,7 @@ void Board::initializeBoard(TextDisplay *td) {
         theBoard[7][i].getPiece()->setColour('w');
     }
 
-    
+
 
 
 }
@@ -177,12 +177,12 @@ void Board::setup() {
             unique_ptr<Piece> p = nullptr;
             p = makePiece(piece, theBoard);
             
-            if (p->getColour() == Colour::WHITE) {
+            if (white) {
                 availableWhites.push_back(move(p));
                 theBoard[placement.getInitX()][placement.getInitY()].addPiece(availableWhites.back().get());
             }
-            else if (p->getColour() == Colour::BLACK) {
-                availableWhites.push_back(move(p));
+            else {
+                availableBlacks.push_back(move(p));
                 theBoard[placement.getInitX()][placement.getInitY()].addPiece(availableBlacks.back().get());
             }
 
