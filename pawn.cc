@@ -85,13 +85,13 @@ bool Pawn::canDoubleStep() {
     int x = position->getX();
     int y = position->getY();
     if(!hasMoved) { 
-        if(pieceColour == WHITE) {
+        if(pieceColour == WHITE && x == 6) {
             if(theBoard[x - 1][y].getPiece() == nullptr) {
                 if(theBoard[x - 2][y].getPiece() == nullptr) {
                     return true;
                 }
             }
-        } else if ( pieceColour == BLACK) {
+        } else if ( pieceColour == BLACK && x == 1) {
             if(theBoard[x + 1][y].getPiece() == nullptr) {
                 if(theBoard[x + 2][y].getPiece() == nullptr) {
                     return true;
