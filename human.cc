@@ -12,8 +12,6 @@ void Human::makeMove(Board& gameBoard) { // add colour to this so that we can on
         cin >> pieceSelected >> destination;
         Move moveAttempted = Move(pieceSelected, destination, gameBoard.getBoard());
 
-        // cout << moveAttempted.getInitX() << moveAttempted.getInitY() << moveAttempted.getDestX() << moveAttempted.getDestY() << endl;
-
         Square* start = &gameBoard.getBoard()[moveAttempted.getInitX()][moveAttempted.getInitY()]; 
         Piece* piece = start->getPiece();
         piece->calculateMoves();
@@ -22,16 +20,13 @@ void Human::makeMove(Board& gameBoard) { // add colour to this so that we can on
         vector<Move> possibleMoves = piece->getMoves();
         for(Move m : possibleMoves) {
             if (moveAttempted.isEqual(m)) { 
-                cout << "WE MADE IT" << endl;
                 foundMove = true;
                 break;
             }
             ++successIndex;
         }
         
-        
         if(foundMove) {
-            cout << "FOUND MOVE!!" << endl;
             Move successfulMove = possibleMoves[successIndex];
             Square* dest = successfulMove.getSquare();
 
