@@ -18,10 +18,10 @@ using namespace std;
 
 class Board {
     vector<vector<Square>> theBoard;
-    vector<Piece*> availableWhites;
-    vector<Piece*> availableBlacks;
-    vector<Piece*> capturedWhites;
-    vector<Piece*> capturedBlacks;
+    vector<unique_ptr<Piece>> availableWhites;
+    vector<unique_ptr<Piece>> availableBlacks;
+    vector<unique_ptr<Piece>> capturedWhites;
+    vector<unique_ptr<Piece>> capturedBlacks;
 
     int moveCounter;
 

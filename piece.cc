@@ -415,5 +415,4 @@ void Piece::notify(Square* s) {
             }
         }
     }
-
 }

@@ -29,7 +29,7 @@ void Square::removePiece() {
 
 // Adds piece to the Square 
 void Square::addPiece(Piece *piece) {
-    currPiece = move(piece);
+    currPiece = piece;
     notifyDisplayObservers();
 }
 
