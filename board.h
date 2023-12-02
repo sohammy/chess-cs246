@@ -35,6 +35,8 @@ public:
     void clearBoard();
     void initializeBoard();
     void setup(bool& whoseTurn);
+
+    void removePiece(int xCoord, int yCoord);
 };
 
 #endif

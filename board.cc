@@ -17,6 +17,7 @@ unique_ptr<Piece> makePiece (char pieceChar, vector<vector<Square>>& board) {
         return make_unique<Bishop>(board, initChar);
     } else if (pieceChar == 'N') {
         return make_unique<Knight>(board, initChar);
+        cout << "Making Knight" << endl;
     } else if (pieceChar == 'P') {
         return make_unique<Pawn>(board, initChar);
     }
@@ -188,17 +189,7 @@ void Board::setup(bool& whoseTurn) {
             int xCoord = placement.getInitX();
             int yCoord = placement.getInitY();
 
-            for (unsigned int i = 0; i < availableWhites.size(); ++i) {
-                if (availableWhites[i]->getX() == xCoord && availableWhites[i]->getY() == yCoord) {
-                    availableWhites.erase(availableWhites.begin() + i);
-                }
-            }
-
-            for (unsigned int i = 0; i < availableBlacks.size(); ++i) {
-                if (availableBlacks[i]->getX() == xCoord && availableBlacks[i]->getY()) {
-                    availableBlacks.erase(availableBlacks.begin() + i);
-                }
-            }
+            removePiece(xCoord, yCoord);
 
             theBoard[placement.getInitX()][placement.getInitY()].removePiece();
 
@@ -209,6 +200,28 @@ void Board::setup(bool& whoseTurn) {
         }
 
     }
+}
+
+void Board:: removePiece(int xCoord, int yCoord) {
+    //cout << "White Before has " << availableWhites.size() << " Pieces" << endl;
+    //cout << "Black Before Has " << availableBlacks.size() << " Pieces" << endl;
+
+    for (unsigned int i = 0; i < availableWhites.size(); ++i) {
+        //cout << "Looking at White" << endl;
+        if (availableWhites[i]->getX() == xCoord && availableWhites[i]->getY() == yCoord) {
+            availableWhites.erase(availableWhites.begin() + i);
+        }
+    }
+
+    for (unsigned int i = 0; i < availableBlacks.size(); ++i) {
+        //cout << "Looking at Black" << endl;
+        if (availableBlacks[i]->getX() == xCoord && availableBlacks[i]->getY() == yCoord) {
+            availableBlacks.erase(availableBlacks.begin() + i);
+        }
+    }
+
+    //cout << "White Now has " << availableWhites.size() << " Pieces" << endl;
+    //cout << "Black Now Has " << availableBlacks.size() << " Pieces" << endl;
 }
 
 void Board::incrMoveCounter() {
