@@ -4,7 +4,7 @@ using namespace std;
 
 Human::Human() {}
 
-void Human::makeMove(Board& gameBoard) {
+void Human::makeMove(Board& gameBoard) { // add colour to this so that we can only move the right pieces
     string pieceSelected, destination;
     bool foundMove = false;
 
@@ -44,10 +44,10 @@ void Human::makeMove(Board& gameBoard) {
             piece->pieceMoved();
             dest->notifyDisplayObservers();
             start->notifyDisplayObservers();
-            cout << "error is in start->notifyPieceObservers" << endl;
-            start->notifyPieceObservers();
-            cout << "nvm error is in dest->notifyPieceObservers" << endl;
-            dest->notifyPieceObservers();
+            // cout << "error is in start->notifyPieceObservers" << endl;
+            // start->notifyPieceObservers();
+            // cout << "nvm error is in dest->notifyPieceObservers" << endl;
+            // dest->notifyPieceObservers();
         } else {
             cout << "Please make a valid move" << endl;
         }
