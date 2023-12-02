@@ -4,15 +4,13 @@ using namespace std;
 
 Human::Human() {}
 
-void Human::makeMove(Board& gameBoard) {
+void Human::makeMove(Board& gameBoard) { // add colour to this so that we can only move the right pieces
     string pieceSelected, destination;
     bool foundMove = false;
 
     while(!foundMove){
         cin >> pieceSelected >> destination;
         Move moveAttempted = Move(pieceSelected, destination, gameBoard.getBoard());
-
-        // cout << moveAttempted.getInitX() << moveAttempted.getInitY() << moveAttempted.getDestX() << moveAttempted.getDestY() << endl;
 
         Square* start = &gameBoard.getBoard()[moveAttempted.getInitX()][moveAttempted.getInitY()]; 
         Piece* piece = start->getPiece();
@@ -22,16 +20,13 @@ void Human::makeMove(Board& gameBoard) {
         vector<Move> possibleMoves = piece->getMoves();
         for(Move m : possibleMoves) {
             if (moveAttempted.isEqual(m)) { 
-                cout << "WE MADE IT" << endl;
                 foundMove = true;
                 break;
             }
             ++successIndex;
         }
         
-        
         if(foundMove) {
-            cout << "FOUND MOVE!!" << endl;
             Move successfulMove = possibleMoves[successIndex];
             Square* dest = successfulMove.getSquare();
 
@@ -44,10 +39,10 @@ void Human::makeMove(Board& gameBoard) {
             piece->pieceMoved();
             dest->notifyDisplayObservers();
             start->notifyDisplayObservers();
-            cout << "error is in start->notifyPieceObservers" << endl;
-            start->notifyPieceObservers();
-            cout << "nvm error is in dest->notifyPieceObservers" << endl;
-            dest->notifyPieceObservers();
+            // cout << "error is in start->notifyPieceObservers" << endl;
+            // start->notifyPieceObservers();
+            // cout << "nvm error is in dest->notifyPieceObservers" << endl;
+            // dest->notifyPieceObservers();
         } else {
             cout << "Please make a valid move" << endl;
         }

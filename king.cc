@@ -59,7 +59,6 @@ void King::calculateMoves() {
     // set x and y to King's current x and y coordinates
     int x = position->getX();
     int y = position->getY();
-
     vector<Move> maybeMoves = movesIncludingNonLegal(x,y);
     
     Colour otherTeam;
@@ -84,18 +83,18 @@ void King::calculateMoves() {
     }
 }
 
-bool King::checkMate() {
+// bool King::checkMate() {
 
-    bool KingCannotMove = false;
-    bool CanKillToSave = false;
-    bool CanBlockToSave = false;
+//     bool KingCannotMove = false;
+//     bool CanKillToSave = false;
+//     bool CanBlockToSave = false;
 
-    if (getMoves().size() == 0) {
-        KingCannotMove = true;
-    }
+//     if (getMoves().size() == 0) {
+//         KingCannotMove = true;
+//     }
 
-    // for each opp piece that is about to kill king, see if there is a friendly piece that can kill it
+//     // for each opp piece that is about to kill king, see if there is a friendly piece that can kill it
 
-    for (Piece p: )
+//     for (Piece p: )
 
-}
+// }
