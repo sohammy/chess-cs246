@@ -33,8 +33,8 @@ public:
     vector<vector<Square>>& getBoard();
 
     void clearBoard();
-    void initializeBoard(TextDisplay *td);
-    void setup(TextDisplay *td, bool& whoseTurn);
+    void initializeBoard();
+    void setup(bool& whoseTurn);
 };
 
 #endif

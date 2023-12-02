@@ -18,8 +18,8 @@ private:
     vector<Observer*> possiblePieces;
 
     // x & y coordinates of the square
-    int x;
-    int y;
+    int col;
+    int row;
 
     // The current piece sitting on the square
     Piece* currPiece;
@@ -31,8 +31,8 @@ public:
     ~Square();
     int getX();
     int getY();
-    Square* setX(int x);
-    Square* setY(int y);
+    Square* setX(int col);
+    Square* setY(int row);
     Piece* getPiece();
     void removePiece();
     void addPiece(Piece *piece);

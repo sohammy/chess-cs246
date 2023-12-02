@@ -46,7 +46,7 @@ void Board::clearBoard() {
     theBoard.clear();
 }
 
-void Board::initializeBoard(TextDisplay *td) {
+void Board::initializeBoard() {
     clearBoard();
     theBoard.resize(BOARDSIZE); // Resizes the Board to be an 8x8 Grid
     for (int i = 0; i < BOARDSIZE; ++i) {
@@ -102,7 +102,7 @@ void Board::initializeBoard(TextDisplay *td) {
 
 }
 
-void Board::setup(TextDisplay *td, bool& whoseTurn) {
+void Board::setup(bool& whoseTurn) {
     clearBoard();
 
     theBoard.resize(BOARDSIZE); // Resizes the Board to be an 8x8 Grid
@@ -141,20 +141,37 @@ void Board::setup(TextDisplay *td, bool& whoseTurn) {
                 white = true;
             }
 
+            // Checking for Errors
             if (theBoard[placement.getInitX()][placement.getInitY()].getPiece() != nullptr) {
                 cout << "ERROR: A PIECE ALREADY EXISTS THERE" << endl;
                 continue;
             }
 
+            if ((piece == 'P') && (placement.getDestX() == 7)) {
+                cout << "ERROR: CANNOT PLACE WHITE PAWN in ROW #1" << endl;
+                continue;
+            }
+
+            if ((piece == 'p') && (placement.getDestX() == 0)) {
+                cout << "ERROR: CANNOT PLACE BLACK PAWN in ROW #8" << endl;
+                continue;
+            }
+
             unique_ptr<Piece> p = nullptr;
             p = makePiece(piece, theBoard);
+            cout << "Made Piece" << endl;
             
             if (white) {
                 availableWhites.push_back(move(p));
+                cout << "1" << endl;
                 theBoard[placement.getInitX()][placement.getInitY()].addPiece(availableWhites.back().get());
+                cout << "2" << endl;
                 theBoard[placement.getInitX()][placement.getInitY()].getPiece()->setColour('w');
+                cout << "3" << endl;
                 theBoard[placement.getInitX()][placement.getInitY()].getPiece()->setSquare(&theBoard[placement.getInitX()][placement.getInitY()]);
+                cout << "4" << endl;
                 theBoard[placement.getInitX()][placement.getInitY()].getPiece()->calculateMoves();
+                cout << "5" << endl;
             }
             else {
                 availableBlacks.push_back(move(p));
@@ -163,8 +180,6 @@ void Board::setup(TextDisplay *td, bool& whoseTurn) {
                 theBoard[placement.getInitX()][placement.getInitY()].getPiece()->setSquare(&theBoard[placement.getInitX()][placement.getInitY()]);
                 theBoard[placement.getInitX()][placement.getInitY()].getPiece()->calculateMoves();
             }
-
-            //cout << *td;
 
         } else if (input == "-") {
             string place;
@@ -187,12 +202,12 @@ void Board::setup(TextDisplay *td, bool& whoseTurn) {
 
             theBoard[placement.getInitX()][placement.getInitY()].removePiece();
 
-            //cout << *td; 
         } else if (input == "WHITE" ) {
             whoseTurn = 0;
         } else if (input == "BLACK") {
             whoseTurn = 1;
         }
+
     }
 }
 
