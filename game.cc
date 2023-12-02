@@ -112,9 +112,11 @@ void Game::play(Board& myBoard) {
     while (whoWon() == -1) { // Switches Turns Back and Forth between Black + White
         cout << *td;
         if (!whoseTurn) {
+            cout << "White's turn to move" << endl;
             white->makeMove(myBoard); // getMove() should take in user input, only does move once 'move' is given as input (as per instructions)
             myBoard.incrMoveCounter();
         } if (whoseTurn) {
+            cout << "Black's turn to move" << endl;
             black->makeMove(myBoard); // getMove() should take in user input, only does move once 'move' is given as input (as per instructions)
             myBoard.incrMoveCounter();
         }

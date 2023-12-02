@@ -3,6 +3,7 @@
 Queen::Queen (vector<vector<Square>>& board, char pieceType) : Piece(board, pieceType) {}
 
 void Queen:: calculateMoves() {
+    cout << "in queen" << endl;
     possibleMoves.clear();
     blockedMoves.clear();
    

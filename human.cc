@@ -12,28 +12,36 @@ void Human::makeMove(Board& gameBoard) {
         cin >> pieceSelected >> destination;
         Move moveAttempted = Move(pieceSelected, destination, gameBoard.getBoard());
 
-        vector<Move> possibleMoves = gameBoard.getBoard()[moveAttempted.getInitX()][moveAttempted.getInitY()].getPiece()->getMoves();
+        Square* start = &gameBoard.getBoard()[moveAttempted.getInitX()][moveAttempted.getInitY()]; 
+        Piece* piece = start->getPiece();
+
+        piece->calculateMoves();
+
+        int successIndex;
+        vector<Move> possibleMoves = piece->getMoves();
         for(Move m : possibleMoves) {
             if (moveAttempted.isEqual(m)) { 
-                foundMove = true; 
+                foundMove = true;
                 break;
             }
+            ++successIndex;
         }
-
+        
+         cout << "hell" << endl;
         if(foundMove) {
-            if(gameBoard.getBoard()[moveAttempted.getDestX()][moveAttempted.getDestY()].getPiece() != nullptr) { // change to impl of square
-                gameBoard.getBoard()[moveAttempted.getDestX()][moveAttempted.getDestY()].removePiece();
-            }
-            gameBoard.getBoard()[moveAttempted.getDestX()][moveAttempted.getDestY()].addPiece(
-                gameBoard.getBoard()[moveAttempted.getInitX()][moveAttempted.getInitY()].getPiece()
-            );
+            Move successfulMove = possibleMoves[successIndex];
+            Square* dest = successfulMove.getSquare();
 
-            gameBoard.getBoard()[moveAttempted.getInitX()][moveAttempted.getInitY()].removePiece();
-            gameBoard.getBoard()[moveAttempted.getDestX()][moveAttempted.getDestY()].getPiece()->pieceMoved();
-            gameBoard.getBoard()[moveAttempted.getDestX()][moveAttempted.getDestY()].notifyDisplayObservers();
-            gameBoard.getBoard()[moveAttempted.getInitX()][moveAttempted.getInitY()].notifyDisplayObservers();
-            gameBoard.getBoard()[moveAttempted.getInitX()][moveAttempted.getInitY()].notifyPieceObservers();
-            gameBoard.getBoard()[moveAttempted.getDestX()][moveAttempted.getDestY()].notifyPieceObservers();
+            if(dest->getPiece() != nullptr) { // change to impl of square
+                dest->removePiece();
+            }
+            dest->addPiece(piece);
+            start->removePiece();
+            piece->pieceMoved();
+            dest->notifyDisplayObservers();
+            start->notifyDisplayObservers();
+            start->notifyPieceObservers();
+            dest->notifyPieceObservers();
         } else {
             cout << "Please make a valid move" << endl;
         }

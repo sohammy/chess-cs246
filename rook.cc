@@ -3,6 +3,7 @@
 Rook::Rook(vector<vector<Square>>& board, char pieceType) : Piece(board, pieceType) {}
 
 void Rook::calculateMoves() {
+    cout << "in Rook" << endl;
     possibleMoves.clear();
     blockedMoves.clear();
     

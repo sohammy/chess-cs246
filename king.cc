@@ -48,6 +48,7 @@ vector<Move> King::movesIncludingNonLegal(int x, int y) {
 }
 
 void King::calculateMoves() {
+    cout << "in King" << endl;
     possibleMoves.clear();
     blockedMoves.clear();
 

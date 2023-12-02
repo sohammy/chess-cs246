@@ -40,10 +40,10 @@ Move::Move(int x, int y, int destX, int destY, Direction d, Square* dest):
 
 Move::Move(string m, string d, vector<vector<Square>>& gameBoard) {
     if (m.size() == 2 && d.size() == 2) {
-        initialX = letterToInt(m[0]);
-        initialY = 8 - (m[1] - '0');
-        destinationX = letterToInt(d[0]);
-        destinationY = 8 - (d[1] - '0');
+        initialX = 8 - (m[1] - '0');
+        initialY = letterToInt(m[0]);
+        destinationX = 8 - (d[1] - '0');
+        destinationY = letterToInt(d[0]);
     } else {
         // Add some error handling for invalid string formats
         // Set default values or throw an exception, depending on your error-handling strategy

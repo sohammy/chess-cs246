@@ -137,6 +137,15 @@ void Board::initializeBoard(TextDisplay *td) {
         theBoard[0][i].getPiece()->setColour('b');
     }
 
+    // availableWhites.emplace_back(whiteB1);
+    // availableWhites.emplace_back(whiteB2);
+    // availableWhites.emplace_back(whiteN1);
+    // availableWhites.emplace_back(whiteN2);
+    // availableWhites.emplace_back(whiteR1);
+    // availableWhites.emplace_back(whiteR2);
+    // availableWhites.emplace_back(whiteK1);
+    // availableWhites.emplace_back(whiteQ1);
+
 }
 
 void Board::setup() {

@@ -3,6 +3,7 @@
  Knight :: Knight (vector<vector<Square>>& board, char pieceType) : Piece(board, pieceType) {}
 
 void Knight:: calculateMoves () {
+    cout << "in knight" << endl;
 
     possibleMoves.clear();
     blockedMoves.clear();
