@@ -25,15 +25,15 @@ void Pawn::calculateMoves() {
         }
     } else {
         if(pieceColour == WHITE) {
-            if (y > 0) {
-                if(theBoard[x][y - 1].getPiece() == nullptr) {
+            if (x > 0) {
+                if(theBoard[x - 1][y].getPiece() == nullptr) {
                     Move s1 = Move(x, y, x - 1, y, &theBoard[x - 1][y], N);
                     possibleMoves.emplace_back(s1);
                 }
             }
         } else if(pieceColour == BLACK) {
-            if (y < 7) {
-                if(theBoard[x][y + 1].getPiece() == nullptr) {
+            if (x < 7) {
+                if(theBoard[x + 1][y].getPiece() == nullptr) {
                     Move s1 = Move(x, y, x + 1, y, &theBoard[x + 1][y], S);
                     possibleMoves.emplace_back(s1);
                 }

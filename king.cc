@@ -55,8 +55,6 @@ void King::calculateMoves() {
     int x = position->getX();
     int y = position->getY();
     vector<Move> maybeMoves = movesIncludingNonLegal(x,y);
-
-    cout << maybeMoves.size() << "number of maybe moves" << endl;
     
     Colour otherTeam;
     if(pieceColour == WHITE) otherTeam = BLACK;
@@ -65,7 +63,6 @@ void King::calculateMoves() {
     vector<Move> otherTeamsMoves = getTeamsMoves(otherTeam);
     for(Move m: maybeMoves) {
         bool exclusiveToKing = true;
-        cout << otherTeamsMoves.size() << "other teams moves" << endl;
         for(Move n: otherTeamsMoves) {
             if(m.isSameDestination(n)) {
                 exclusiveToKing = false;
