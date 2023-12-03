@@ -54,9 +54,7 @@ vector<Move> Piece::getTeamsBlockedMoves(Colour c) {
     vector<Move> allMoves;
     for(Piece* p : pieces) {
         vector<Move> thisPiecesMoves;
-        if(toupper(p->getPieceName()) != 'K') {
-            thisPiecesMoves = p->getBlockedMoves();
-        }
+        thisPiecesMoves = p->getBlockedMoves();
 
         for(Move m : thisPiecesMoves) {
             allMoves.emplace_back(m);
@@ -85,6 +83,12 @@ void Piece::movesInDir(Direction d, int n) {
             } else {
                 possibleMoves.emplace_back(m);
                 theBoard[x][y].addPieceObservers(this);
+                if(n != 0) {
+                    if(y > 0) {
+                        Move n = Move(position->getX(), position->getY(), x, y - 1, &theBoard[x][y-1], d);
+                        blockedMoves.emplace_back(n);
+                    }
+                }
                 break;
             }
         }
@@ -103,6 +107,12 @@ void Piece::movesInDir(Direction d, int n) {
             } else {
                 possibleMoves.emplace_back(m);
                 theBoard[x][y].addPieceObservers(this);
+                if(n != 0) {
+                    if(x < 7) {
+                        Move n = Move(position->getX(), position->getY(), x + 1, y, &theBoard[x + 1][y], d);
+                        blockedMoves.emplace_back(n);
+                    }
+                }
                 break;
             }
         }
@@ -121,6 +131,12 @@ void Piece::movesInDir(Direction d, int n) {
             } else {
                 possibleMoves.emplace_back(m);
                 theBoard[x][y].addPieceObservers(this);
+                if(n != 0) {
+                    if(y < 7) {
+                        Move n = Move(position->getX(), position->getY(), x, y + 1, &theBoard[x][y + 1], d);
+                        blockedMoves.emplace_back(n);
+                    }
+                }
                 break;
             }
         }
@@ -139,6 +155,12 @@ void Piece::movesInDir(Direction d, int n) {
             } else {
                 possibleMoves.emplace_back(m);
                 theBoard[x][y].addPieceObservers(this);
+                if(n != 0) {
+                    if(x > 0) {
+                        Move n = Move(position->getX(), position->getY(), x - 1, y, &theBoard[x - 1][y], d);
+                        blockedMoves.emplace_back(n);
+                    }
+                }
                 break;
             }
         }
@@ -158,6 +180,12 @@ void Piece::movesInDir(Direction d, int n) {
             } else {
                 possibleMoves.emplace_back(m);
                 theBoard[x][y].addPieceObservers(this);
+                if(n != 0) {
+                    if(y > 0 && x < 7) {
+                        Move n = Move(position->getX(), position->getY(), x + 1, y - 1, &theBoard[x + 1][y - 1], d);
+                        blockedMoves.emplace_back(n);
+                    }
+                }
                 break;
             }
         }
@@ -177,6 +205,12 @@ void Piece::movesInDir(Direction d, int n) {
             } else {
                 possibleMoves.emplace_back(m);
                 theBoard[x][y].addPieceObservers(this);
+                if(n != 0) {
+                    if(y > 0 && x > 0) {
+                        Move n = Move(position->getX(), position->getY(), x - 1, y - 1, &theBoard[x - 1][y - 1], d);
+                        blockedMoves.emplace_back(n);
+                    }
+                }
                 break;
             }
         }
@@ -196,6 +230,12 @@ void Piece::movesInDir(Direction d, int n) {
             } else {
                 possibleMoves.emplace_back(m);
                 theBoard[x][y].addPieceObservers(this);
+                if(n != 0) {
+                    if(y < 7 && x < 7) {
+                        Move n = Move(position->getX(), position->getY(), x + 1, y + 1, &theBoard[x + 1][y + 1], d);
+                        blockedMoves.emplace_back(n);
+                    }
+                }
                 break;
             }
         }
@@ -215,6 +255,12 @@ void Piece::movesInDir(Direction d, int n) {
             } else {
                 possibleMoves.emplace_back(m);
                 theBoard[x][y].addPieceObservers(this);
+                if(n != 0) {
+                    if(y < 7 && x > 0) {
+                        Move n = Move(position->getX(), position->getY(), x - 1, y + 1, &theBoard[x - 1][y + 1], d);
+                        blockedMoves.emplace_back(n);
+                    }
+                }
                 break;
             }
         }

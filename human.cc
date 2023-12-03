@@ -47,6 +47,7 @@ void Human::makeMove(Board& gameBoard, Colour team) { // add colour to this so t
                     piece->pieceMoved();
                     dest->notifyDisplayObservers();
                     start->notifyDisplayObservers();
+                    piece->calculateMoves();
                     // cout << "error is in start->notifyPieceObservers" << endl;
                     // start->notifyPieceObservers();
                     // cout << "nvm error is in dest->notifyPieceObservers" << endl;
