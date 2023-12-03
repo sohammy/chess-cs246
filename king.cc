@@ -124,7 +124,7 @@ char King::checkMate() {
     cout << numberOfAttackers << endl;
 
     if (numberOfAttackers == 1) {
-        if(possibleMoves.size() == 0) { // If king can't move
+        if(possibleMoves.size() == 0) { // If king can't move haha
 
             Piece* attackingPiece = piecesCheckingKing[0];
             vector<Move> ourTeamsMoves = getTeamsMoves(pieceColour);
