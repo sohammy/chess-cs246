@@ -21,6 +21,7 @@ unique_ptr<Piece> makePiece (char pieceChar, vector<vector<Square>>& board) {
         return make_unique<Bishop>(board, initChar);
     } else if (pieceChar == 'N') {
         return make_unique<Knight>(board, initChar);
+        cout << "Making Knight" << endl;
     } else if (pieceChar == 'P') {
         return make_unique<Pawn>(board, initChar);
     }
@@ -50,7 +51,7 @@ void Board::clearBoard() {
     theBoard.clear();
 }
 
-void Board::initializeBoard(TextDisplay *td) {
+void Board::initializeBoard() {
     clearBoard();
     theBoard.resize(BOARDSIZE); // Resizes the Board to be an 8x8 Grid
     for (int i = 0; i < BOARDSIZE; ++i) {
@@ -106,7 +107,7 @@ void Board::initializeBoard(TextDisplay *td) {
 
 }
 
-void Board::setup(TextDisplay *td, bool& whoseTurn) {
+void Board::setup(bool& whoseTurn) {
     clearBoard();
 
     theBoard.resize(BOARDSIZE); // Resizes the Board to be an 8x8 Grid
@@ -145,20 +146,37 @@ void Board::setup(TextDisplay *td, bool& whoseTurn) {
                 white = true;
             }
 
+            // Checking for Errors
             if (theBoard[placement.getInitX()][placement.getInitY()].getPiece() != nullptr) {
                 cout << "ERROR: A PIECE ALREADY EXISTS THERE" << endl;
                 continue;
             }
 
+            if ((piece == 'P') && (placement.getDestX() == 7)) {
+                cout << "ERROR: CANNOT PLACE WHITE PAWN in ROW #1" << endl;
+                continue;
+            }
+
+            if ((piece == 'p') && (placement.getDestX() == 0)) {
+                cout << "ERROR: CANNOT PLACE BLACK PAWN in ROW #8" << endl;
+                continue;
+            }
+
             unique_ptr<Piece> p = nullptr;
             p = makePiece(piece, theBoard);
+            cout << "Made Piece" << endl;
             
             if (white) {
                 availableWhites.push_back(move(p));
+                cout << "1" << endl;
                 theBoard[placement.getInitX()][placement.getInitY()].addPiece(availableWhites.back().get());
+                cout << "2" << endl;
                 theBoard[placement.getInitX()][placement.getInitY()].getPiece()->setColour('w');
+                cout << "3" << endl;
                 theBoard[placement.getInitX()][placement.getInitY()].getPiece()->setSquare(&theBoard[placement.getInitX()][placement.getInitY()]);
+                cout << "4" << endl;
                 theBoard[placement.getInitX()][placement.getInitY()].getPiece()->calculateMoves();
+                cout << "5" << endl;
             }
             else {
                 availableBlacks.push_back(move(p));
@@ -168,8 +186,6 @@ void Board::setup(TextDisplay *td, bool& whoseTurn) {
                 theBoard[placement.getInitX()][placement.getInitY()].getPiece()->calculateMoves();
             }
 
-            //cout << *td;
-
         } else if (input == "-") {
             string place;
             cin >> place;
@@ -177,27 +193,39 @@ void Board::setup(TextDisplay *td, bool& whoseTurn) {
             int xCoord = placement.getInitX();
             int yCoord = placement.getInitY();
 
-            for (unsigned int i = 0; i < availableWhites.size(); ++i) {
-                if (availableWhites[i]->getX() == xCoord && availableWhites[i]->getY() == yCoord) {
-                    availableWhites.erase(availableWhites.begin() + i);
-                }
-            }
-
-            for (unsigned int i = 0; i < availableBlacks.size(); ++i) {
-                if (availableBlacks[i]->getX() == xCoord && availableBlacks[i]->getY()) {
-                    availableBlacks.erase(availableBlacks.begin() + i);
-                }
-            }
+            removePiece(xCoord, yCoord);
 
             theBoard[placement.getInitX()][placement.getInitY()].removePiece();
 
-            //cout << *td; 
         } else if (input == "WHITE" ) {
             whoseTurn = 0;
         } else if (input == "BLACK") {
             whoseTurn = 1;
         }
+
     }
+}
+
+void Board:: removePiece(int xCoord, int yCoord) {
+    //cout << "White Before has " << availableWhites.size() << " Pieces" << endl;
+    //cout << "Black Before Has " << availableBlacks.size() << " Pieces" << endl;
+
+    for (unsigned int i = 0; i < availableWhites.size(); ++i) {
+        //cout << "Looking at White" << endl;
+        if (availableWhites[i]->getX() == xCoord && availableWhites[i]->getY() == yCoord) {
+            availableWhites.erase(availableWhites.begin() + i);
+        }
+    }
+
+    for (unsigned int i = 0; i < availableBlacks.size(); ++i) {
+        //cout << "Looking at Black" << endl;
+        if (availableBlacks[i]->getX() == xCoord && availableBlacks[i]->getY() == yCoord) {
+            availableBlacks.erase(availableBlacks.begin() + i);
+        }
+    }
+
+    //cout << "White Now has " << availableWhites.size() << " Pieces" << endl;
+    //cout << "Black Now Has " << availableBlacks.size() << " Pieces" << endl;
 }
 
 void Board::incrMoveCounter() {

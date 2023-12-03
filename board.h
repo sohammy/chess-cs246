@@ -34,8 +34,10 @@ public:
     int whoWon(bool team);
 
     void clearBoard();
-    void initializeBoard(TextDisplay *td);
-    void setup(TextDisplay *td, bool& whoseTurn);
+    void initializeBoard();
+    void setup(bool& whoseTurn);
+
+    void removePiece(int xCoord, int yCoord);
 };
 
 #endif

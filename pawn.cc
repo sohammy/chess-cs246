@@ -3,13 +3,18 @@
 Pawn::Pawn(vector<vector<Square>>& board, char pieceType): Piece(board, pieceType) {}
 
 void Pawn::calculateMoves() {
+    //cout << "In Pawn" << endl;
     int x = position->getX();
     int y = position->getY();
+    //cout << "1" << endl;
 
     possibleMoves.clear();
     blockedMoves.clear();
+    //cout << "2" << endl;
 
     bool doubleStep = canDoubleStep();
+    //cout << "3" << endl;
+
 
     if(doubleStep) {
         if(pieceColour == WHITE) {

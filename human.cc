@@ -30,9 +30,12 @@ void Human::makeMove(Board& gameBoard) { // add colour to this so that we can on
             Move successfulMove = possibleMoves[successIndex];
             Square* dest = successfulMove.getSquare();
 
-            if(dest->getPiece() != nullptr) {
-                dest->removePiece();
+            if(dest->getPiece() != nullptr) { 
+                cout << "There is a Piece There, We are Removing it" << endl;
+                gameBoard.removePiece(dest->getX(), dest->getY());
             }
+
+            dest->removePiece();
             dest->addPiece(piece);
             piece->setSquare(dest);
             start->removePiece();

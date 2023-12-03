@@ -2,18 +2,18 @@
 
 // Constructor which takes in x, y, and pointer to a Piece
 Square::Square(int x, int y, Piece *currPiece): 
-    x{x}, y{y}, currPiece{currPiece} {}
+    col{x}, row{y}, currPiece{currPiece} {}
 
 Square::~Square() {}
 
 // Returns x value from 0 - 7
 int Square::getX() {
-    return x;
+    return col;
 }
 
 // Returns y value from 0 - 7
 int Square::getY() {
-    return y;
+    return row;
 }
 
 // Returns the Piece on the Square
@@ -37,7 +37,7 @@ void Square::addPiece(Piece *piece) {
 // If the square is the first or last row, then it has the ability to promote a piece on it
 // so we assign it a bool value to represent this
 bool Square::canPromote() {
-    if (x == 0 || x == 7) {
+    if (col == 0 || col == 7) {
         return true;
     } else {
         return false;
@@ -81,12 +81,12 @@ void Square::removePieceObserver(Observer *o) {
 }
 
 Square* Square::setX(int x) {
-    this->x = x;
+    this->col = x;
     return this;
 }
 
 Square* Square::setY(int y) {
-    this->y = y;
+    this->row = y;
     return this;
 }
 

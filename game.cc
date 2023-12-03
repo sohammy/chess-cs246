@@ -117,10 +117,10 @@ void Game::gameStart() {
     cin >> input;
 
     if (input == "play") {
-        myBoard.initializeBoard(td.get());
+        myBoard.initializeBoard();
         play(myBoard);
     } else if (input == "setup") {
-        myBoard.setup(td.get(), whoseTurn);
+        myBoard.setup(whoseTurn);
         play(myBoard);
     } else {
         cout << "Thanks for Playing!" << endl;
