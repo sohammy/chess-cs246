@@ -5,7 +5,7 @@
 class Computer : public Player {
     public:
         Computer();
-        void makeMove(Board& gameBoard) override;
+        void makeMove(Board& gameBoard, Colour team) override;
 };
 
 

@@ -5,7 +5,7 @@
 class Human : public Player {
     public:
         Human();
-        void makeMove(Board& gameBoard) override;
+        void makeMove(Board& gameBoard, Colour team) override;
 };
 
 #endif

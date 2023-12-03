@@ -5,6 +5,33 @@ using namespace std;
 const int BOARDSIZE = 8;
 
 int Board::whoWon(bool team) {
+    if(!team) {
+        for(int i = 0; i < availableWhites.size(); ++i) {
+            Piece* p = availableWhites[i].get();
+            if(dynamic_cast<King*>(p) != nullptr) {
+                King* king = dynamic_cast<King*>(p);
+                char c = king->checkMate();
+                if (c == 'M') {
+                    return 1;
+                } else if (c == 'C') {
+                    return 0;
+                }
+            }
+        }
+    } else if (team) {
+        for(int i = 0; i < availableBlacks.size(); ++i) {
+            Piece* p = availableBlacks[i].get();
+            if(dynamic_cast<King*>(p) != nullptr) {
+                King* king = dynamic_cast<King*>(p);
+                char c = king->checkMate();
+                if (c == 'M') {
+                    return 1;
+                } else if (c == 'C') {
+                    return 0;
+                }
+            }
+        }
+    }
     return -1;
 }
 
@@ -21,7 +48,6 @@ unique_ptr<Piece> makePiece (char pieceChar, vector<vector<Square>>& board) {
         return make_unique<Bishop>(board, initChar);
     } else if (pieceChar == 'N') {
         return make_unique<Knight>(board, initChar);
-        cout << "Making Knight" << endl;
     } else if (pieceChar == 'P') {
         return make_unique<Pawn>(board, initChar);
     }

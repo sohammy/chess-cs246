@@ -2,4 +2,4 @@
 
 Computer::Computer() {}
 
-void Computer::makeMove(Board& gameBoard) {}
+void Computer::makeMove(Board& gameBoard, Colour team) {}

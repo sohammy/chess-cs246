@@ -17,7 +17,7 @@
 class Player {
     public:
         Player();
-        virtual void makeMove(Board& gameBoard) = 0;
+        virtual void makeMove(Board& gameBoard, Colour team) = 0;
  };
 
 #endif
