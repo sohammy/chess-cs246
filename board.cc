@@ -211,20 +211,25 @@ void Board::setup(bool& whoseTurn) {
                 theBoard[placement.getInitX()][placement.getInitY()].getPiece()->calculateMoves();
             }
 
-            if (dynamic_cast<King*>(theBoard[placement.getInitX()][placement.getInitY()].getPiece()) != nullptr) {
-                    cout << "Here" << endl;
-                    King* king = dynamic_cast<King*>(theBoard[placement.getInitX()][placement.getInitY()].getPiece());
-                    char c = king->checkMate();
-                    cout << "char is " << c << endl;
-                    if (c == 'C') {
-                        cout << "Your King is in Mate! Can't Be Placed Here!" << endl;
-                        removePiece(placement.getInitX(), placement.getInitY());
-                        theBoard[placement.getInitX()][placement.getInitY()].removePiece();
-                    } else if (c == 'M') {
-                        cout << "Your King is in Checkmate! Can't Be Placed Here!" << endl;
-                        removePiece(placement.getInitX(), placement.getInitY());
-                        theBoard[placement.getInitX()][placement.getInitY()].removePiece();
-                    }
+            // if (dynamic_cast<King*>(theBoard[placement.getInitX()][placement.getInitY()].getPiece()) != nullptr) {
+            //         cout << "Here" << endl;
+            //         King* king = dynamic_cast<King*>(theBoard[placement.getInitX()][placement.getInitY()].getPiece());
+            //         char c = king->checkMate();
+            //         cout << "char is " << c << endl;
+            //         if (c == 'C') {
+            //             cout << "Your King is in Mate! Can't Be Placed Here!" << endl;
+            //             removePiece(placement.getInitX(), placement.getInitY());
+            //             theBoard[placement.getInitX()][placement.getInitY()].removePiece();
+            //         } else if (c == 'M') {
+            //             cout << "Your King is in Checkmate! Can't Be Placed Here!" << endl;
+            //             removePiece(placement.getInitX(), placement.getInitY());
+            //             theBoard[placement.getInitX()][placement.getInitY()].removePiece();
+            //         }
+            // }
+
+            if (isMate()) {
+                removePiece(placement.getInitX(), placement.getInitY());
+                theBoard[placement.getInitX()][placement.getInitY()].removePiece();
             }
 
         } else if (input == "-") {
@@ -234,9 +239,41 @@ void Board::setup(bool& whoseTurn) {
             int xCoord = placement.getInitX();
             int yCoord = placement.getInitY();
 
-            removePiece(xCoord, yCoord);
+            if (theBoard[placement.getInitX()][placement.getInitY()].getPiece() == nullptr) {
+                cout << "There is no piece on this square!" << endl;
+            }
 
+            char piece = theBoard[placement.getInitX()][placement.getInitY()].getPiece()->getPieceName();
+            char isWhite  = false;
+
+            if (65 <= piece && piece <= 90) {
+                isWhite = true;
+            }
+
+            removePiece(xCoord, yCoord);
             theBoard[placement.getInitX()][placement.getInitY()].removePiece();
+
+            if (isMate()) {
+                
+                unique_ptr<Piece> p = nullptr;
+                p = makePiece(piece);
+                cout << "Made Piece" << endl;
+
+                if (isWhite) {
+                    availableWhites.push_back(move(p));
+                    theBoard[placement.getInitX()][placement.getInitY()].addPiece(availableWhites.back().get());
+                    theBoard[placement.getInitX()][placement.getInitY()].getPiece()->setColour('w');
+                    theBoard[placement.getInitX()][placement.getInitY()].getPiece()->setSquare(&theBoard[placement.getInitX()][placement.getInitY()]);
+                    theBoard[placement.getInitX()][placement.getInitY()].getPiece()->calculateMoves();
+                }
+                else {
+                    availableBlacks.push_back(move(p));
+                    theBoard[placement.getInitX()][placement.getInitY()].addPiece(availableBlacks.back().get());
+                    theBoard[placement.getInitX()][placement.getInitY()].getPiece()->setColour('b');
+                    theBoard[placement.getInitX()][placement.getInitY()].getPiece()->setSquare(&theBoard[placement.getInitX()][placement.getInitY()]);
+                    theBoard[placement.getInitX()][placement.getInitY()].getPiece()->calculateMoves();
+                }
+            }
             
         } else if (input == "WHITE" ) {
             whoseTurn = 0;
@@ -244,6 +281,27 @@ void Board::setup(bool& whoseTurn) {
             whoseTurn = 1;
         }
     }
+}
+
+bool Board:: isMate() {
+    for (unsigned int i = 0; i < theBoard.size(); ++i) {
+        for (unsigned int j = 0; j < theBoard.size(); ++j) {
+            if (dynamic_cast<King*>(theBoard[i][j].getPiece()) != nullptr) {
+                    cout << "Here" << endl;
+                    King* king = dynamic_cast<King*>(theBoard[i][j].getPiece());
+                    char c = king->checkMate();
+                    cout << "char is " << c << endl;
+                    if (c == 'C') {
+                        cout << "Your King is in Mate! Can't perform operation" << endl;
+                        return true;
+                    } else if (c == 'M') {
+                        cout << "Your King is in Checkmate! Can't perform operation" << endl;
+                        return true;
+                    }
+            }
+        }
+    }
+    return false;
 }
 
 void Board:: removePiece(int xCoord, int yCoord) {
