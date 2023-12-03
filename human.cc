@@ -10,56 +10,71 @@ void Human::makeMove(Board& gameBoard, Colour team) { // add colour to this so t
 
     while(!foundMove){
         cin >> pieceSelected >> destination;
-        Move moveAttempted = Move(pieceSelected, destination, gameBoard.getBoard());
+        if(pieceSelected.length() == 2 && 
+        destination.length() == 2 &&
+        pieceSelected[0] <= 'h' &&
+        pieceSelected[0] >= 'a' &&
+        pieceSelected[1] >= '1' &&
+        pieceSelected[1] <= '8' &&
+        destination[0] <= 'h' &&
+        destination[0] >= 'a' &&
+        destination[1] >= '1' &&
+        destination[1] <= '8') {
+            Move moveAttempted = Move(pieceSelected, destination, gameBoard.getBoard());
 
-        Square* start = &gameBoard.getBoard()[moveAttempted.getInitX()][moveAttempted.getInitY()]; 
-        Piece* piece = start->getPiece();
+            Square* start = &gameBoard.getBoard()[moveAttempted.getInitX()][moveAttempted.getInitY()]; 
+            Piece* piece = start->getPiece();
 
-        if(piece != nullptr) {
+            if(piece != nullptr) {
 
-            if(team == piece->getColour()) {
+                if(team == piece->getColour()) {
 
-                piece->calculateMoves();
-
-                int successIndex = 0;
-                vector<Move> possibleMoves = piece->getMoves();
-                for(Move m : possibleMoves) {
-                    if (moveAttempted.isEqual(m)) { 
-                        foundMove = true;
-                        break;
-                    }
-                    ++successIndex;
-                }
-                
-                if(foundMove) {
-                    Move successfulMove = possibleMoves[successIndex];
-                    Square* dest = successfulMove.getSquare();
-
-                    if(dest->getPiece() != nullptr) { 
-                        cout << "There is a Piece There, We are Removing it" << endl;
-                        gameBoard.removePiece(dest->getX(), dest->getY());
-                    }
-
-                    dest->removePiece();
-                    dest->addPiece(piece);
-                    piece->setSquare(dest);
-                    start->removePiece();
-                    piece->pieceMoved();
-                    dest->notifyDisplayObservers();
-                    start->notifyDisplayObservers();
                     piece->calculateMoves();
-                    // cout << "error is in start->notifyPieceObservers" << endl;
-                    // start->notifyPieceObservers();
-                    // cout << "nvm error is in dest->notifyPieceObservers" << endl;
-                    // dest->notifyPieceObservers();
+
+                    int successIndex = 0;
+                    vector<Move> possibleMoves = piece->getMoves();
+                    for(Move m : possibleMoves) {
+                        if (moveAttempted.isEqual(m)) { 
+                            foundMove = true;
+                            break;
+                        }
+                        ++successIndex;
+                    }
+                    
+                    if(foundMove) {
+                        Move successfulMove = possibleMoves[successIndex];
+                        Square* dest = successfulMove.getSquare();
+
+                        if(dest->getPiece() != nullptr) { 
+                            cout << "There is a Piece There, We are Removing it" << endl;
+                            gameBoard.removePiece(dest->getX(), dest->getY());
+                        }
+
+                        start->removePiece();
+
+                        if(gameBoard.isMate()) {
+                            start->addPiece(piece);
+                            foundMove = false;
+                        } else {
+                            dest->removePiece();
+                            dest->addPiece(piece);
+                            piece->setSquare(dest);
+                            piece->pieceMoved();
+                            dest->notifyDisplayObservers();
+                            start->notifyDisplayObservers();
+                            piece->calculateMoves();
+                        }
+                    } else {
+                        cout << "Please make a valid move" << endl;
+                    }
                 } else {
-                    cout << "Please make a valid move" << endl;
+                    cout << "You can only select pieces from your team!" << endl;
                 }
             } else {
-                cout << "You can only select pieces from your team!" << endl;
+                cout << "Please pick a valid square" << endl;
             }
         } else {
-            cout << "Please pick a valid square" << endl;
+            cout << "Please enter valid coordinates" << endl;
         }
     }
 }
