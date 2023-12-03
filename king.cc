@@ -51,7 +51,6 @@ vector<Move> King::movesIncludingNonLegal(int x, int y) {
 }
 
 void King::calculateMoves() {
-
     // clear the arrays so that only relevant moves are saved
     possibleMoves.clear();
     blockedMoves.clear();
@@ -66,11 +65,20 @@ void King::calculateMoves() {
     else otherTeam = WHITE;
 
     vector<Move> otherTeamsMoves = getTeamsMoves(otherTeam); // for other teams king, just return all the possilbe moves it could make, not depeding on this kings move
+    vector<Move> otherTeamsBlockedMoves = getTeamsBlockedMoves(otherTeam);
 
-     // Check whether any of the moves in maybeMoves is unsafe (opponent can kill)
+    // Check whether any of the moves in maybeMoves is unsafe (opponent can kill)
+    int index = 0;
     for(Move m: maybeMoves) {
         bool exclusiveToKing = true;
         for(Move n: otherTeamsMoves) {
+            if(m.isSameDestination(n)) {
+                exclusiveToKing = false;
+                break;
+            }
+        }
+
+        for(Move n: otherTeamsBlockedMoves) {
             if(m.isSameDestination(n)) {
                 exclusiveToKing = false;
                 break;
@@ -80,6 +88,7 @@ void King::calculateMoves() {
         if(exclusiveToKing) {
             possibleMoves.emplace_back(m);
         }
+        ++index;
     }
 }
 
@@ -115,14 +124,16 @@ char King::checkMate() {
     cout << numberOfAttackers << endl;
 
     if (numberOfAttackers == 1) {
-        if(possibleMoves.size() == 0) { // If king can't move
+        if(possibleMoves.size() == 0) { // If king can't move haha
 
             Piece* attackingPiece = piecesCheckingKing[0];
             vector<Move> ourTeamsMoves = getTeamsMoves(pieceColour);
             vector<Move> ourTeamsMovesWithoutKing;
             for(Move m: ourTeamsMoves) { // If we can take the piece that's attacking
                 if(m.getDestX() == attackingPiece->getX() && m.getDestY() == attackingPiece->getY()) {
-                    return 'C';
+                    if(m.getInitX() != getX() && m.getInitY() != getY()) {
+                        return 'C';
+                    }
                 }
                 if(m.getInitX() != getX() && m.getInitY() != getY()) ourTeamsMovesWithoutKing.emplace_back(m);
             }
