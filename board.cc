@@ -225,7 +225,7 @@ void Board::setup(bool& whoseTurn) {
                         removePiece(placement.getInitX(), placement.getInitY());
                         theBoard[placement.getInitX()][placement.getInitY()].removePiece();
                     }
-            }
+            } 
 
         } else if (input == "-") {
             string place;
@@ -247,25 +247,17 @@ void Board::setup(bool& whoseTurn) {
 }
 
 void Board:: removePiece(int xCoord, int yCoord) {
-    //cout << "White Before has " << availableWhites.size() << " Pieces" << endl;
-    //cout << "Black Before Has " << availableBlacks.size() << " Pieces" << endl;
-
     for (unsigned int i = 0; i < availableWhites.size(); ++i) {
-        //cout << "Looking at White" << endl;
         if (availableWhites[i]->getX() == xCoord && availableWhites[i]->getY() == yCoord) {
             availableWhites.erase(availableWhites.begin() + i);
         }
     }
 
     for (unsigned int i = 0; i < availableBlacks.size(); ++i) {
-        //cout << "Looking at Black" << endl;
         if (availableBlacks[i]->getX() == xCoord && availableBlacks[i]->getY() == yCoord) {
             availableBlacks.erase(availableBlacks.begin() + i);
         }
     }
-
-    //cout << "White Now has " << availableWhites.size() << " Pieces" << endl;
-    //cout << "Black Now Has " << availableBlacks.size() << " Pieces" << endl;
 }
 
 void Board::incrMoveCounter() {
