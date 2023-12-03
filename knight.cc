@@ -79,7 +79,7 @@ void Knight:: calculateMoves () {
             theBoard[curX - 2][curY - 1].addPieceObservers(this);
         } else {
             blockedMoves.emplace_back(Move(curX, curY, curX - 2, curY - 1, &theBoard[curX - 2][curY - 1], NW));
-            theBoard[curX][curY-1].addPieceObservers(this);
+            theBoard[curX - 2][curY-1].addPieceObservers(this);
         }
     }
 
