@@ -12,10 +12,10 @@ int Board::whoWon(bool team) {
                 King* king = dynamic_cast<King*>(p);
                 char c = king->checkMate();
                 if (c == 'M') {
-                    cout << "CHECKMATE WHITE" << endl;
+                    cout << "CHECKMATE! BLACK WINS" << endl;
                     return 1;
                 } else if (c == 'C') {
-                    cout << "IN CHECK WHITE" << endl;
+                    cout << "WHITE IS IN CHECK" << endl;
                     return 0;
                 }
             }
@@ -27,10 +27,10 @@ int Board::whoWon(bool team) {
                 King* king = dynamic_cast<King*>(p);
                 char c = king->checkMate();
                 if (c == 'M') {
-                    cout << "CHECKMATE BLACK" << endl;
+                    cout << "CHECKMATE! WHITE WINS!" << endl;
                     return 1;
                 } else if (c == 'C') {
-                    cout << "IN CHECK BLACK" << endl;
+                    cout << "BLACK IS IN CHECK" << endl;
                     return 0;
                 }
             }
