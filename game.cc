@@ -101,10 +101,73 @@ void Game::play(Board& myBoard) {
             cout << "White's turn to move" << endl;
             white->makeMove(myBoard, WHITE); // getMove() should take in user input, only does move once 'move' is given as input (as per instructions)
             myBoard.incrMoveCounter();
+
+            for (unsigned int i = 0; i < myBoard.getBoard().size(); ++i) { // NEW
+                if (myBoard.getBoard()[0][i].getPiece() != nullptr) {
+                    if (myBoard.getBoard()[0][i].getPiece()->getPieceName() == 'P') {
+                        cout << "You can Promote your Pawn!" << endl;
+
+                        myBoard.removePiece(0, i);
+                        myBoard.getBoard()[0][i].removePiece();
+
+                        cout << "INPUT A NEW PIECE: " << endl;
+
+                        while(myBoard.getBoard()[0][i].getPiece() == nullptr) {
+                            char newPiece;
+                            cin >> newPiece;
+                            newPiece = toupper(newPiece);
+                            if (newPiece == 'Q' || newPiece == 'R' || newPiece == 'B' || newPiece == 'N') {
+                                unique_ptr<Piece> p = nullptr;
+                                p = myBoard.makePiece(newPiece);
+                                cout << p->getPieceName() << endl;
+                                myBoard.availableBlacks.push_back(move(p));
+                                myBoard.getBoard()[0][i].addPiece(myBoard.availableBlacks.back().get());
+                                myBoard.getBoard()[0][i].getPiece()->setColour('w');
+                                myBoard.getBoard()[0][i].getPiece()->setSquare(&myBoard.getBoard()[0][i]);
+                                myBoard.getBoard()[0][i].getPiece()->calculateMoves();
+                            } else {
+                                cout << "Please input 'Q', 'R', 'B', or 'N'" << endl;
+                            }
+                        }
+                    }
+                } 
+            }
+
         } if (whoseTurn) {
             cout << "Black's turn to move" << endl;
             black->makeMove(myBoard, BLACK); // getMove() should take in user input, only does move once 'move' is given as input (as per instructions)
             myBoard.incrMoveCounter();
+
+            for (unsigned int i = 0; i < myBoard.getBoard().size(); ++i) { // NEW
+                if (myBoard.getBoard()[7][i].getPiece() != nullptr) {
+                    if (myBoard.getBoard()[7][i].getPiece()->getPieceName() == 'p') {
+                        cout << "You can Promote your Pawn!" << endl;
+
+                        myBoard.removePiece(7, i);
+                        myBoard.getBoard()[7][i].removePiece();
+
+                        cout << "INPUT A NEW PIECE: " << endl;
+                        
+                        while(myBoard.getBoard()[7][i].getPiece() == nullptr) {
+                            char newPiece;
+                            cin >> newPiece;
+                            newPiece = tolower(newPiece);
+                            if (newPiece == 'q' || newPiece == 'r' || newPiece == 'b' || newPiece == 'n') {
+                                unique_ptr<Piece> p = nullptr;
+                                p = myBoard.makePiece(newPiece);
+                                cout << p->getPieceName() << endl;
+                                myBoard.availableBlacks.push_back(move(p));
+                                myBoard.getBoard()[7][i].addPiece(myBoard.availableBlacks.back().get());
+                                myBoard.getBoard()[7][i].getPiece()->setColour('b');
+                                myBoard.getBoard()[7][i].getPiece()->setSquare(&myBoard.getBoard()[7][i]);
+                                myBoard.getBoard()[7][i].getPiece()->calculateMoves();
+                            } else {
+                                cout << "Please input 'Q', 'R', 'B', or 'N'" << endl;
+                            }
+                        }
+                    }
+                } 
+            }
         }
         whoseTurn = !whoseTurn;
     }

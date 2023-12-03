@@ -22,11 +22,15 @@ void Pawn::calculateMoves() {
             Move s2 = Move(x, y, x - 2, y, &theBoard[x - 2][y], N);
             possibleMoves.emplace_back(s1);
             possibleMoves.emplace_back(s2);
+            theBoard[x - 1][y].addPieceObservers(this);
+            theBoard[x - 2][y].addPieceObservers(this);
         } else if (pieceColour == BLACK) {
             Move s1 = Move(x, y, x + 1, y, &theBoard[x + 1][y], S);
             Move s2 = Move(x, y, x + 2, y, &theBoard[x + 2][y], S);
             possibleMoves.emplace_back(s1);
             possibleMoves.emplace_back(s2);
+            theBoard[x + 1][y].addPieceObservers(this);
+            theBoard[x + 2][y].addPieceObservers(this);
         }
     } else {
         if(pieceColour == WHITE) {
@@ -34,6 +38,7 @@ void Pawn::calculateMoves() {
                 if(theBoard[x - 1][y].getPiece() == nullptr) {
                     Move s1 = Move(x, y, x - 1, y, &theBoard[x - 1][y], N);
                     possibleMoves.emplace_back(s1);
+                    theBoard[x - 1][y].addPieceObservers(this);
                 }
             }
         } else if(pieceColour == BLACK) {
@@ -41,6 +46,7 @@ void Pawn::calculateMoves() {
                 if(theBoard[x + 1][y].getPiece() == nullptr) {
                     Move s1 = Move(x, y, x + 1, y, &theBoard[x + 1][y], S);
                     possibleMoves.emplace_back(s1);
+                    theBoard[x + 1][y].addPieceObservers(this);
                 }
             }
         }
@@ -52,12 +58,14 @@ void Pawn::calculateMoves() {
                 if (theBoard[x - 1][y + 1].getPiece() != nullptr && theBoard[x - 1][y + 1].getPiece()->getColour() != pieceColour) {
                     Move s1 = Move(x, y, x - 1, y + 1, &theBoard[x - 1][y + 1], NE);
                     possibleMoves.emplace_back(s1);
+                    theBoard[x - 1][y + 1].addPieceObservers(this);
                 }
             } 
             if (y > 0) {
                 if (theBoard[x - 1][y - 1].getPiece() != nullptr && theBoard[x - 1][y - 1].getPiece()->getColour() != pieceColour) {
                     Move s1 = Move(x, y, x - 1, y - 1, &theBoard[x - 1][y - 1], NW);
                     possibleMoves.emplace_back(s1);
+                    theBoard[x - 1][y - 1].addPieceObservers(this);
                 }
             }
         } 
@@ -68,18 +76,22 @@ void Pawn::calculateMoves() {
                 if (theBoard[x + 1][y + 1].getPiece() != nullptr && theBoard[x + 1][y + 1].getPiece()->getColour() != pieceColour) {
                     Move s1 = Move(x, y, x + 1, y + 1, &theBoard[x + 1][y + 1], SE);
                     possibleMoves.emplace_back(s1);
+                    theBoard[x + 1][y + 1].addPieceObservers(this);
                 } else if (theBoard[x + 1][y + 1].canEnPassant()) {
                     Move s1 = Move(x, y, x + 1, y + 1, &theBoard[x + 1][y + 1], SE);
                     possibleMoves.emplace_back(s1);
+                    theBoard[x + 1][y + 1].addPieceObservers(this);
                 }
             } 
             if (y > 0) {
                 if (theBoard[x + 1][y - 1].getPiece() != nullptr && theBoard[x + 1][y - 1].getPiece()->getColour() != pieceColour) {
                     Move s1 = Move(x, y, x + 1, y - 1, &theBoard[x + 1][y - 1], SW);
                     possibleMoves.emplace_back(s1);
+                    theBoard[x + 1][y - 1].addPieceObservers(this);
                 } else if (theBoard[x + 1][y - 1].canEnPassant()) {
                     Move s1 = Move(x, y, x + 1, y - 1, &theBoard[x + 1][y - 1], SW);
                     possibleMoves.emplace_back(s1);
+                    theBoard[x + 1][y - 1].addPieceObservers(this);
                 }
             }
         } 
