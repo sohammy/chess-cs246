@@ -240,7 +240,8 @@ void Board::setup(bool& whoseTurn) {
             int yCoord = placement.getInitY();
 
             if (theBoard[placement.getInitX()][placement.getInitY()].getPiece() == nullptr) {
-                cout << "There is no piece on this square!" << endl;
+                cout << "There is no piece on this square! Cannot perform operation!" << endl;
+                continue;
             }
 
             char piece = theBoard[placement.getInitX()][placement.getInitY()].getPiece()->getPieceName();
