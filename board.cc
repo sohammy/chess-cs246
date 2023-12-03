@@ -216,12 +216,14 @@ void Board::setup(bool& whoseTurn) {
                     King* king = dynamic_cast<King*>(theBoard[placement.getInitX()][placement.getInitY()].getPiece());
                     char c = king->checkMate();
                     cout << "char is " << c << endl;
-                    if (c == 'M') {
+                    if (c == 'C') {
                         cout << "Your King is in Mate! Can't Be Placed Here!" << endl;
                         removePiece(placement.getInitX(), placement.getInitY());
-                    } else if (c == 'C') {
+                        theBoard[placement.getInitX()][placement.getInitY()].removePiece();
+                    } else if (c == 'M') {
                         cout << "Your King is in Checkmate! Can't Be Placed Here!" << endl;
                         removePiece(placement.getInitX(), placement.getInitY());
+                        theBoard[placement.getInitX()][placement.getInitY()].removePiece();
                     }
             }
 
