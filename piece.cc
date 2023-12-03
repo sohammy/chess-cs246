@@ -200,6 +200,7 @@ void Piece::movesInDir(Direction d) {
 // NOTIFY FUNCTION //
 
 void Piece::notify(Square* s) {
+    cout << "Hi there" << endl;
     bool isInPossibleMoves = true;
     Direction d;
     for(Move m : blockedMoves) {
