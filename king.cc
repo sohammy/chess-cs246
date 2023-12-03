@@ -8,28 +8,44 @@ vector<Move> King::movesIncludingNonLegal(int x, int y) {
     vector<Move> maybeMoves;
 
     if(y > 0) { // Check if King can potentially move South one square
-        movesInDir(W,1);
+        if(theBoard[x][y-1].getPiece() == nullptr || theBoard[x][y-1].getPiece()->getColour() != pieceColour) {
+            maybeMoves.emplace_back(Move(x,y,x,y-1,&theBoard[x][y-1],W));
+        }
     }
     if(y < 7) { // Check if King can potentially move North one square
-        movesInDir(E,1);
+        if(theBoard[x][y+1].getPiece() == nullptr || theBoard[x][y+1].getPiece()->getColour() != pieceColour) {
+            maybeMoves.emplace_back(Move(x,y,x,y+1,&theBoard[x][y+1],E));
+        }
     }
     if(x > 0){ // Check if King can potentially move West one square
-        movesInDir(N,1);
+        if(theBoard[x-1][y].getPiece() == nullptr || theBoard[x-1][y].getPiece()->getColour() != pieceColour) {
+            maybeMoves.emplace_back(Move(x,y,x-1,y,&theBoard[x-1][y],N));
+        }
     }    
     if(x < 7) { // Check if king can potentially move East one square
-        movesInDir(S,1);
+        if(theBoard[x+1][y].getPiece() == nullptr || theBoard[x+1][y].getPiece()->getColour() != pieceColour) {
+            maybeMoves.emplace_back(Move(x,y,x+1,y,&theBoard[x+1][y],S));
+        }
     }    
     if(y > 0 && x > 0) { // Check if king can potentially move SouthWest one square
-        movesInDir(NW,1);
+        if(theBoard[x-1][y-1].getPiece() == nullptr || theBoard[x-1][y-1].getPiece()->getColour() != pieceColour) {
+            maybeMoves.emplace_back(Move(x,y,x-1,y-1,&theBoard[x-1][y-1],NW));
+        }
     }    
     if(y > 0 && x < 7){ // Check if king can potentially move SouthEast one square
-        movesInDir(SW,1);
+        if(theBoard[x+1][y-1].getPiece() == nullptr || theBoard[x+1][y-1].getPiece()->getColour() != pieceColour) {
+            maybeMoves.emplace_back(Move(x,y,x+1,y-1,&theBoard[x+1][y-1],SW));
+        }
     }    
-    if(y < 7 && x > 0){ // Check if king can potentially move NorthEast one square
-        movesInDir(NE,1);
+    if(y < 7 && x > 0){ // Check if king can potentially move NorthWest one square
+        if(theBoard[x-1][y+1].getPiece() == nullptr || theBoard[x-1][y+1].getPiece()->getColour() != pieceColour) {
+            maybeMoves.emplace_back(Move(x,y,x-1,y+1,&theBoard[x-1][y+1],NE));
+        }
     }
-    if(y < 7 && x < 7) { // Check if king can potentially move SouthEast one square
-        movesInDir(SE,1);
+    if(y < 7 && x < 7) { // Check if king can potentially move NorthEast one square
+        if(theBoard[x+1][y+1].getPiece() == nullptr || theBoard[x+1][y+1].getPiece()->getColour() != pieceColour) {
+            maybeMoves.emplace_back(Move(x,y,x+1,y+1,&theBoard[x+1][y+1],SE));
+        }
     }
     return maybeMoves;
 }
@@ -42,7 +58,7 @@ void King::calculateMoves() {
     // set x and y to King's current x and y coordinates
     int x = position->getX();
     int y = position->getY();
-    movesIncludingNonLegal(x,y);
+    vector<Move> maybeMoves = movesIncludingNonLegal(x,y);
     
     Colour otherTeam;
     if(pieceColour == WHITE) otherTeam = BLACK;
@@ -51,10 +67,9 @@ void King::calculateMoves() {
     vector<Move> otherTeamsMoves = getTeamsMoves(otherTeam); // for other teams king, just return all the possilbe moves it could make, not depeding on this kings move
     vector<Move> otherTeamsBlockedMoves = getTeamsBlockedMoves(otherTeam);
 
-    cout << possibleMoves.size() << endl;
-     // Check whether any of the moves in maybeMoves is unsafe (opponent can kill)
+    // Check whether any of the moves in maybeMoves is unsafe (opponent can kill)
     int index = 0;
-    for(Move m: possibleMoves) {
+    for(Move m: maybeMoves) {
         bool exclusiveToKing = true;
         for(Move n: otherTeamsMoves) {
             if(m.isSameDestination(n)) {
@@ -71,7 +86,7 @@ void King::calculateMoves() {
         }
         // if the move is safe, emplace it in the vector possibleMoves
         if(exclusiveToKing) {
-            possibleMoves.erase(possibleMoves.begin() + index);
+            possibleMoves.emplace_back(m);
         }
         ++index;
     }
@@ -92,7 +107,7 @@ char King::checkMate() {
         vector<Move> thisPiecesMoves = p->getMoves();
 
         for(Move m : thisPiecesMoves) {
-            if(m.getDestX() == getX() && m.getDestY() == getY()) {
+            if(m.getDestX() == position->getX() && m.getDestY() == position->getY()) {
                 checkingKingMoves.emplace_back(m);
                 piecesCheckingKing.emplace_back(p);
             }
@@ -116,7 +131,9 @@ char King::checkMate() {
             vector<Move> ourTeamsMovesWithoutKing;
             for(Move m: ourTeamsMoves) { // If we can take the piece that's attacking
                 if(m.getDestX() == attackingPiece->getX() && m.getDestY() == attackingPiece->getY()) {
-                    return 'C';
+                    if(m.getInitX() != getX() && m.getInitY() != getY()) {
+                        return 'C';
+                    }
                 }
                 if(m.getInitX() != getX() && m.getInitY() != getY()) ourTeamsMovesWithoutKing.emplace_back(m);
             }

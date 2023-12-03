@@ -34,8 +34,14 @@ vector<Move> Piece::getTeamsMoves(Colour c) {
     vector<Piece*> pieces = getTeamOfColour(c);
     vector<Move> allMoves;
     for(Piece* p : pieces) {
-        vector<Move> thisPiecesMoves = p->getMoves();
-
+        vector<Move> thisPiecesMoves;
+        if(toupper(p->getPieceName()) == 'K') {
+            King* king = dynamic_cast<King*>(p);
+            thisPiecesMoves = king->movesIncludingNonLegal(king->getX(), king->getY());
+        } else {
+            p->calculateMoves();
+            thisPiecesMoves = p->getMoves();
+        }
         for(Move m : thisPiecesMoves) {
             allMoves.emplace_back(m);
         }
@@ -47,7 +53,10 @@ vector<Move> Piece::getTeamsBlockedMoves(Colour c) {
     vector<Piece*> pieces = getTeamOfColour(c);
     vector<Move> allMoves;
     for(Piece* p : pieces) {
-        vector<Move> thisPiecesMoves = p->getBlockedMoves();
+        vector<Move> thisPiecesMoves;
+        if(toupper(p->getPieceName()) != 'K') {
+            thisPiecesMoves = p->getBlockedMoves();
+        }
 
         for(Move m : thisPiecesMoves) {
             allMoves.emplace_back(m);
