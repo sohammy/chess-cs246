@@ -4,6 +4,10 @@ using namespace std;
 
 const int BOARDSIZE = 8;
 
+int Board::whoWon(bool team) {
+    return -1;
+}
+
 unique_ptr<Piece> makePiece (char pieceChar, vector<vector<Square>>& board) {
     char initChar = pieceChar;
     pieceChar = toupper(pieceChar);

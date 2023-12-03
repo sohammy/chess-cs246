@@ -65,7 +65,7 @@ void King::calculateMoves() {
     if(pieceColour == WHITE) otherTeam = BLACK;
     else otherTeam = WHITE;
 
-    vector<Move> otherTeamsMoves = getTeamsMoves(otherTeam);
+    vector<Move> otherTeamsMoves = getTeamsMoves(otherTeam); // for other teams king, just return all the possilbe moves it could make, not depeding on this kings move
 
      // Check whether any of the moves in maybeMoves is unsafe (opponent can kill)
     for(Move m: maybeMoves) {
@@ -83,18 +83,65 @@ void King::calculateMoves() {
     }
 }
 
-// bool King::checkMate() {
+char King::checkMate() {
+    Colour otherTeam;
+    if(pieceColour == WHITE) otherTeam = BLACK;
+    else otherTeam = WHITE;
 
-//     bool KingCannotMove = false;
-//     bool CanKillToSave = false;
-//     bool CanBlockToSave = false;
+    vector<Piece*> otherTeamPieces = getTeamOfColour(otherTeam);
+    
+    vector<Move> checkingKingMoves;
+    vector<Piece*> piecesCheckingKing;
 
-//     if (getMoves().size() == 0) {
-//         KingCannotMove = true;
-//     }
+    for(Piece* p : otherTeamPieces) {
+        p->calculateMoves();
+        vector<Move> thisPiecesMoves = p->getMoves();
 
-//     // for each opp piece that is about to kill king, see if there is a friendly piece that can kill it
+        for(Move m : thisPiecesMoves) {
+            if(m.getDestX() == position->getX() && m.getDestY() == position->getY()) {
+                checkingKingMoves.emplace_back(m);
+                piecesCheckingKing.emplace_back(p);
+            }
+        }
+    }
 
-//     for (Piece p: )
+    calculateMoves();
+    int numberOfAttackers = piecesCheckingKing.size();
 
-// }
+    if (numberOfAttackers == 1) {
+        if(possibleMoves.size() == 0) { // If king can't move
+            Piece* attackingPiece = piecesCheckingKing[0];
+            vector<Move> ourTeamsMoves = getTeamsMoves(pieceColour);
+            for(Move m: ourTeamsMoves) { // If we can take the piece that's attacking
+                if(m.getDestX() == attackingPiece->getX() && m.getDestY() == attackingPiece->getY()) {
+                    return 'C';
+                }
+            }
+            vector<Move> attackersMoves = attackingPiece->getMoves();
+            Direction attackDirection = checkingKingMoves[0].getDirection();
+            vector<Move> attackMovesTowardsKing;
+
+            for(Move m : attackersMoves) {
+                if(m.getDirection() == attackDirection) {
+                    attackMovesTowardsKing.emplace_back(m);
+                }
+            }
+
+            for(Move m : attackMovesTowardsKing) { // If we can block
+                for(Move n : ourTeamsMoves) {
+                    if(m.isSameDestination(n)) {
+                        return 'C';
+                    }
+                }
+            }
+            return 'M';
+        }
+
+    } else if (numberOfAttackers > 1) {
+        if(possibleMoves.size() == 0) {
+            return 'M';
+        }
+    }
+
+    return 'N';
+}

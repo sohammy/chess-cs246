@@ -17,20 +17,6 @@ void Game::setTurn(char c) {
     return;
 }
 
-
-int Game::whoWon() {
-    // if (white.checkMate()) { // Checks if White has been Checkmated
-    //     ++blackScore;
-    //     return 1;
-    // } else if (black.checkMate()) { // Checks if Black has been Checkmated
-    //     ++whiteScore;
-    //     return 0;
-    // } 
-    // return -1;
-
-    return -1;
-}
-
 void Game::play(Board& myBoard) {
     td = make_shared<TextDisplay>();
     
@@ -109,7 +95,7 @@ void Game::play(Board& myBoard) {
         }
     }
 
-    while (whoWon() == -1) { // Switches Turns Back and Forth between Black + White
+    while (myBoard.whoWon(whoseTurn) == -1) { // Switches Turns Back and Forth between Black + White
         cout << *td;
         if (!whoseTurn) {
             cout << "White's turn to move" << endl;

@@ -31,6 +31,7 @@ public:
 
     void incrMoveCounter();
     vector<vector<Square>>& getBoard();
+    int whoWon(bool team);
 
     void clearBoard();
     void initializeBoard();

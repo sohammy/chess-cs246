@@ -28,7 +28,6 @@ public:
     void gameStart();
     void play(Board& myBoard);
     void setTurn(char c);
-    int whoWon();
 };
 
 #endif
