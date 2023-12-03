@@ -17,6 +17,8 @@ public:
     // function that updates the Piece's vector of possible moves it can make,
     // given its location and surrounding pieces.
     void calculateMoves() override;
+
+    char checkMate();
 };
 
 #endif

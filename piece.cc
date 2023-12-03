@@ -26,7 +26,6 @@ vector<Piece*> Piece::getTeamOfColour(Colour c) {
             }
         }
     }
-    cout << pieces.size() << " other pieces" << endl;
     return pieces;
 }
 
