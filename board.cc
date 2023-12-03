@@ -39,21 +39,21 @@ int Board::whoWon(bool team) {
     return -1;
 }
 
-unique_ptr<Piece> makePiece (char pieceChar, vector<vector<Square>>& board) {
+unique_ptr<Piece> Board::makePiece (char pieceChar) {
     char initChar = pieceChar;
     pieceChar = toupper(pieceChar);
     if (pieceChar == 'K') {
-        return make_unique<King>(board, initChar);
+        return make_unique<King>(theBoard, initChar);
     } else if (pieceChar == 'Q') {
-        return make_unique<Queen>(board, initChar);
+        return make_unique<Queen>(theBoard, initChar);
     } else if (pieceChar == 'R') {
-        return make_unique<Rook>(board, initChar);
+        return make_unique<Rook>(theBoard, initChar);
     } else if (pieceChar == 'B') {
-        return make_unique<Bishop>(board, initChar);
+        return make_unique<Bishop>(theBoard, initChar);
     } else if (pieceChar == 'N') {
-        return make_unique<Knight>(board, initChar);
+        return make_unique<Knight>(theBoard, initChar);
     } else if (pieceChar == 'P') {
-        return make_unique<Pawn>(board, initChar);
+        return make_unique<Pawn>(theBoard, initChar);
     }
     return nullptr;
 }
@@ -100,7 +100,7 @@ void Board::initializeBoard() {
     int index = 0;
     for(char c : whiteChars) {
         unique_ptr<Piece> p = nullptr;
-        p = makePiece(c, theBoard);
+        p = makePiece(c);
         availableWhites.push_back(move(p));
         if(index < BOARDSIZE) {
             theBoard[6][index].addPiece(availableWhites.back().get());
@@ -119,7 +119,7 @@ void Board::initializeBoard() {
     index = 0;
     for(char c : blackChars) {
         unique_ptr<Piece> p = nullptr;
-        p = makePiece(c, theBoard);
+        p = makePiece(c);
         availableBlacks.push_back(move(p));
         if(index < BOARDSIZE) {
             theBoard[1][index].addPiece(availableBlacks.back().get());
@@ -193,20 +193,15 @@ void Board::setup(bool& whoseTurn) {
             }
 
             unique_ptr<Piece> p = nullptr;
-            p = makePiece(piece, theBoard);
+            p = makePiece(piece);
             cout << "Made Piece" << endl;
             
             if (white) {
                 availableWhites.push_back(move(p));
-                cout << "1" << endl;
                 theBoard[placement.getInitX()][placement.getInitY()].addPiece(availableWhites.back().get());
-                cout << "2" << endl;
                 theBoard[placement.getInitX()][placement.getInitY()].getPiece()->setColour('w');
-                cout << "3" << endl;
                 theBoard[placement.getInitX()][placement.getInitY()].getPiece()->setSquare(&theBoard[placement.getInitX()][placement.getInitY()]);
-                cout << "4" << endl;
                 theBoard[placement.getInitX()][placement.getInitY()].getPiece()->calculateMoves();
-                cout << "5" << endl;
             }
             else {
                 availableBlacks.push_back(move(p));
@@ -214,6 +209,20 @@ void Board::setup(bool& whoseTurn) {
                 theBoard[placement.getInitX()][placement.getInitY()].getPiece()->setColour('b');
                 theBoard[placement.getInitX()][placement.getInitY()].getPiece()->setSquare(&theBoard[placement.getInitX()][placement.getInitY()]);
                 theBoard[placement.getInitX()][placement.getInitY()].getPiece()->calculateMoves();
+            }
+
+            if (dynamic_cast<King*>(theBoard[placement.getInitX()][placement.getInitY()].getPiece()) != nullptr) {
+                    cout << "Here" << endl;
+                    King* king = dynamic_cast<King*>(theBoard[placement.getInitX()][placement.getInitY()].getPiece());
+                    char c = king->checkMate();
+                    cout << "char is " << c << endl;
+                    if (c == 'M') {
+                        cout << "Your King is in Mate! Can't Be Placed Here!" << endl;
+                        removePiece(placement.getInitX(), placement.getInitY());
+                    } else if (c == 'C') {
+                        cout << "Your King is in Checkmate! Can't Be Placed Here!" << endl;
+                        removePiece(placement.getInitX(), placement.getInitY());
+                    }
             }
 
         } else if (input == "-") {
@@ -226,13 +235,12 @@ void Board::setup(bool& whoseTurn) {
             removePiece(xCoord, yCoord);
 
             theBoard[placement.getInitX()][placement.getInitY()].removePiece();
-
+            
         } else if (input == "WHITE" ) {
             whoseTurn = 0;
         } else if (input == "BLACK") {
             whoseTurn = 1;
         }
-
     }
 }
 

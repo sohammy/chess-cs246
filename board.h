@@ -18,14 +18,15 @@ using namespace std;
 
 class Board {
     vector<vector<Square>> theBoard;
-    vector<unique_ptr<Piece>> availableWhites;
-    vector<unique_ptr<Piece>> availableBlacks;
-    vector<unique_ptr<Piece>> capturedWhites;
-    vector<unique_ptr<Piece>> capturedBlacks;
 
     int moveCounter;
 
 public:
+    vector<unique_ptr<Piece>> availableWhites;
+    vector<unique_ptr<Piece>> availableBlacks;
+
+    unique_ptr<Piece> makePiece (char pieceChar);
+
     bool containsBlackKing();
     bool containsWhiteKing();
 
