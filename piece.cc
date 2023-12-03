@@ -1,4 +1,5 @@
 #include "piece.h"
+#include "king.h"
 
 Piece::Piece(vector<vector<Square>>& board, char pieceName) : theBoard{board}, pieceName{pieceName} {}
 
@@ -33,7 +34,14 @@ vector<Move> Piece::getTeamsMoves(Colour c) {
     vector<Piece*> pieces = getTeamOfColour(c);
     vector<Move> allMoves;
     for(Piece* p : pieces) {
-        vector<Move> thisPiecesMoves = p->getMoves();
+        vector<Move> thisPiecesMoves;
+        if(toupper(p->getPieceName()) == 'K') {
+            King* king = dynamic_cast<King*>(p);
+            thisPiecesMoves = king->movesIncludingNonLegal(p->getX(), p->getY());
+        } else {
+            p->calculateMoves();
+            thisPiecesMoves = p->getMoves();
+        }
         for(Move m : thisPiecesMoves) {
             allMoves.emplace_back(m);
         }

@@ -6,27 +6,31 @@ const int BOARDSIZE = 8;
 
 int Board::whoWon(bool team) {
     if(!team) {
-        for(int i = 0; i < availableWhites.size(); ++i) {
+        for(unsigned int i = 0; i < availableWhites.size(); ++i) {
             Piece* p = availableWhites[i].get();
             if(dynamic_cast<King*>(p) != nullptr) {
                 King* king = dynamic_cast<King*>(p);
                 char c = king->checkMate();
                 if (c == 'M') {
+                    cout << "CHECKMATE WHITE" << endl;
                     return 1;
                 } else if (c == 'C') {
+                    cout << "IN CHECK WHITE" << endl;
                     return 0;
                 }
             }
         }
     } else if (team) {
-        for(int i = 0; i < availableBlacks.size(); ++i) {
+        for(unsigned int i = 0; i < availableBlacks.size(); ++i) {
             Piece* p = availableBlacks[i].get();
             if(dynamic_cast<King*>(p) != nullptr) {
                 King* king = dynamic_cast<King*>(p);
                 char c = king->checkMate();
                 if (c == 'M') {
+                    cout << "CHECKMATE BLACK" << endl;
                     return 1;
                 } else if (c == 'C') {
+                    cout << "IN CHECK BLACK" << endl;
                     return 0;
                 }
             }
@@ -56,7 +60,7 @@ unique_ptr<Piece> makePiece (char pieceChar, vector<vector<Square>>& board) {
 
 
 bool Board::containsWhiteKing() {
-    for (int i = 0; i < availableWhites.size(); ++i) {
+    for (unsigned int i = 0; i < availableWhites.size(); ++i) {
         if (availableWhites[i]->getPieceName() == 'K') {
             return true;
         }
@@ -65,7 +69,7 @@ bool Board::containsWhiteKing() {
 }
 
 bool Board::containsBlackKing() {
-    for (int i = 0; i < availableBlacks.size(); ++i) {
+    for (unsigned int i = 0; i < availableBlacks.size(); ++i) {
         if (availableBlacks[i]->getPieceName() == 'k') {
             return true;
         }
@@ -150,7 +154,7 @@ void Board::setup(bool& whoseTurn) {
     string input;
     while (cin >> input) {
 
-        for (int i = 0; i < input.length(); ++i) {
+        for (unsigned int i = 0; i < input.length(); ++i) {
             input[i] = toupper(input[i]);
         }
 

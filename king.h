@@ -7,12 +7,12 @@ using namespace std;
 
 class King : public Piece {
 
-    // Vector of Moves the King can make (With exceptions)
-    vector<Move> movesIncludingNonLegal(int x, int y);
-
-public:
+    public:
     // Contructor:
     King (vector<vector<Square>>& board, char pieceType);
+
+    // Vector of Moves the King can make (With exceptions)
+    vector<Move> movesIncludingNonLegal(int x, int y);
 
     // function that updates the Piece's vector of possible moves it can make,
     // given its location and surrounding pieces.

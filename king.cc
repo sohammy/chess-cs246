@@ -105,18 +105,28 @@ char King::checkMate() {
         }
     }
 
+    cout << piecesCheckingKing.size() << checkingKingMoves.size() << endl;
+
+    // Everything up to here is seeing what is dangerous to the King at the moment
+
     calculateMoves();
     int numberOfAttackers = piecesCheckingKing.size();
 
+    cout << numberOfAttackers << endl;
+
     if (numberOfAttackers == 1) {
         if(possibleMoves.size() == 0) { // If king can't move
+
             Piece* attackingPiece = piecesCheckingKing[0];
             vector<Move> ourTeamsMoves = getTeamsMoves(pieceColour);
+            vector<Move> ourTeamsMovesWithoutKing;
             for(Move m: ourTeamsMoves) { // If we can take the piece that's attacking
                 if(m.getDestX() == attackingPiece->getX() && m.getDestY() == attackingPiece->getY()) {
                     return 'C';
                 }
+                if(m.getInitX() != getX() && m.getInitY() != getY()) ourTeamsMovesWithoutKing.emplace_back(m);
             }
+
             vector<Move> attackersMoves = attackingPiece->getMoves();
             Direction attackDirection = checkingKingMoves[0].getDirection();
             vector<Move> attackMovesTowardsKing;
@@ -128,13 +138,15 @@ char King::checkMate() {
             }
 
             for(Move m : attackMovesTowardsKing) { // If we can block
-                for(Move n : ourTeamsMoves) {
+                for(Move n : ourTeamsMovesWithoutKing) {
                     if(m.isSameDestination(n)) {
                         return 'C';
                     }
                 }
             }
             return 'M';
+        } else {
+            return 'C';
         }
 
     } else if (numberOfAttackers > 1) {
