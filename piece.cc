@@ -34,14 +34,8 @@ vector<Move> Piece::getTeamsMoves(Colour c) {
     vector<Piece*> pieces = getTeamOfColour(c);
     vector<Move> allMoves;
     for(Piece* p : pieces) {
-        vector<Move> thisPiecesMoves;
-        if(toupper(p->getPieceName()) == 'K') {
-            King* king = dynamic_cast<King*>(p);
-            thisPiecesMoves = king->movesIncludingNonLegal(p->getX(), p->getY());
-        } else {
-            p->calculateMoves();
-            thisPiecesMoves = p->getMoves();
-        }
+        vector<Move> thisPiecesMoves = p->getMoves();
+
         for(Move m : thisPiecesMoves) {
             allMoves.emplace_back(m);
         }
@@ -49,13 +43,27 @@ vector<Move> Piece::getTeamsMoves(Colour c) {
     return allMoves;
 }
 
+vector<Move> Piece::getTeamsBlockedMoves(Colour c) {
+    vector<Piece*> pieces = getTeamOfColour(c);
+    vector<Move> allMoves;
+    for(Piece* p : pieces) {
+        vector<Move> thisPiecesMoves = p->getBlockedMoves();
+
+        for(Move m : thisPiecesMoves) {
+            allMoves.emplace_back(m);
+        }
+    } 
+    return allMoves;
+}
+
 // MOVESINDIR FUNCTION //
 
-void Piece::movesInDir(Direction d) {
+void Piece::movesInDir(Direction d, int n) {
     int x = position->getX();
     int y = position->getY();
     if (d == W) {
-        while(y > 0) {
+        while(y > 0 && n >= 1) {
+            --n;
             --y;
             Move m = Move(position->getX(), position->getY(), x, y, &theBoard[x][y], d);
             if(theBoard[x][y].getPiece() == nullptr) {
@@ -72,7 +80,8 @@ void Piece::movesInDir(Direction d) {
             }
         }
     } else if (d == S) {
-        while(x < 7) {
+        while(x < 7 && n >= 1) {
+            --n;
             ++x;
             Move m = Move(position->getX(), position->getY(), x, y, &theBoard[x][y], d);
             if(theBoard[x][y].getPiece() == nullptr) {
@@ -89,7 +98,8 @@ void Piece::movesInDir(Direction d) {
             }
         }
     } else if (d == E) {
-        while(y < 7) {
+        while(y < 7 && n >= 1) {
+            --n;
             ++y;
             Move m = Move(position->getX(), position->getY(), x, y, &theBoard[x][y], d);
             if(theBoard[x][y].getPiece() == nullptr) {
@@ -106,7 +116,8 @@ void Piece::movesInDir(Direction d) {
             }
         }
     } else if (d == N) {
-        while(x > 0) {
+        while(x > 0 && n >= 1) {
+            --n;
             --x;
             Move m = Move(position->getX(), position->getY(), x, y, &theBoard[x][y], d);
             if(theBoard[x][y].getPiece() == nullptr) {
@@ -123,7 +134,8 @@ void Piece::movesInDir(Direction d) {
             }
         }
     } else if (d == SW) {
-        while(y > 0 && x < 7) {
+        while(y > 0 && x < 7 && n >= 1) {
+            --n;
             --y;
             ++x;
             Move m = Move(position->getX(), position->getY(), x, y, &theBoard[x][y], d);
@@ -141,7 +153,8 @@ void Piece::movesInDir(Direction d) {
             }
         }
     } else if (d == NW) {
-        while(y > 0 && x > 0) {
+        while(y > 0 && x > 0 && n >= 1) {
+            --n;
             --y;
             --x;
             Move m = Move(position->getX(), position->getY(), x, y, &theBoard[x][y], d);
@@ -159,7 +172,8 @@ void Piece::movesInDir(Direction d) {
             }
         }
     } else if (d == SE) {
-        while(y < 7 && x < 7) {
+        while(y < 7 && x < 7 && n >= 1) {
+            --n;
             ++y;
             ++x;
             Move m = Move(position->getX(), position->getY(), x, y, &theBoard[x][y], d);
@@ -177,7 +191,8 @@ void Piece::movesInDir(Direction d) {
             }
         }
     } else if (d == NE) {
-        while(y < 7 && x > 0) {
+        while(y < 7 && x > 0 && n >= 1) {
+            --n;
             ++y;
             --x;
             Move m = Move(position->getX(), position->getY(), x, y, &theBoard[x][y], d);

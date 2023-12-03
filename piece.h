@@ -27,6 +27,7 @@ class Piece : public Observer{
         
         vector<Piece*> getTeamOfColour(Colour c);
         vector<Move> getTeamsMoves(Colour c);
+        vector<Move> getTeamsBlockedMoves(Colour c);
 
     public:
         
@@ -34,7 +35,7 @@ class Piece : public Observer{
 
         virtual void calculateMoves() = 0;
         
-        void movesInDir(Direction d);
+        void movesInDir(Direction d, int n = 100);
         void notify(Square* s) override;
         void setColour(char c);
         void setPieceName(char c = ' ');
@@ -44,6 +45,7 @@ class Piece : public Observer{
         int getX() { return position->getX(); }
         int getY() { return position->getY(); }
         vector<Move> getMoves() { return possibleMoves; }
+        vector<Move> getBlockedMoves() { return blockedMoves; }
         Colour getColour() { return pieceColour; }
         void pieceMoved() { hasMoved = true; }
 

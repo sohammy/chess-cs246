@@ -15,7 +15,7 @@ void Human::makeMove(Board& gameBoard, Colour team) { // add colour to this so t
         Square* start = &gameBoard.getBoard()[moveAttempted.getInitX()][moveAttempted.getInitY()]; 
         Piece* piece = start->getPiece();
 
-        if(piece == nullptr) {
+        if(piece != nullptr) {
 
             if(team == piece->getColour()) {
 
