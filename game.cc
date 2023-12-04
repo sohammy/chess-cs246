@@ -142,8 +142,6 @@ void Game::play(Board& myBoard) {
                             }
                         }
                     }
-                } 
-                cout << *td;
             }
 
             for (int i = 0; i < myBoard.getBoard()[6].size(); ++i) { // TURNS OFF ALL 'ENPASSANTABLE SQUARES' FOR WHITE
