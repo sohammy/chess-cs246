@@ -16,10 +16,10 @@ int main() {
 
     Game myGame;
 
-    cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
-    cout << " -- Type 'play' + [Player 1] + [Player 2] to Get Started!" << endl;
+    cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
+    cout << " -- Type 'play' + [Player 1] + [Player 2] to Play!" << endl;
     cout << " -- Type 'setup' to enter Setup Mode!" << endl;
-    cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
+    cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
     cout << endl;
 
     myGame.gameStart();

@@ -12,7 +12,7 @@ int Board::whoWon(bool team) {
                 King* king = dynamic_cast<King*>(p);
                 char c = king->checkMate();
                 if (c == 'M') {
-                    cout << "CHECKMATE! BLACK WINS" << endl;
+                    // cout << "CHECKMATE! BLACK WINS" << endl;
                     return 1;
                 } else if (c == 'C') {
                     cout << "WHITE IS IN CHECK" << endl;
@@ -27,7 +27,7 @@ int Board::whoWon(bool team) {
                 King* king = dynamic_cast<King*>(p);
                 char c = king->checkMate();
                 if (c == 'M') {
-                    cout << "CHECKMATE! WHITE WINS!" << endl;
+                    // cout << "CHECKMATE! WHITE WINS!" << endl;
                     return 1;
                 } else if (c == 'C') {
                     cout << "BLACK IS IN CHECK" << endl;
@@ -36,6 +36,34 @@ int Board::whoWon(bool team) {
             }
         }
     }
+    
+
+    bool whiteCanMove = false;
+    bool blackCanMove = false;
+    if (team == 0) {
+        for (unsigned int i = 0; i < availableWhites.size(); ++i) {
+            if (availableWhites[i]->getMoves().size() != 0) {
+                whiteCanMove = true;
+                cout << "set white to true" << endl;
+            }
+            if (!whiteCanMove && !isMate()) {
+                cout << "White Can't Move" << endl;
+                return 2;
+            }
+        }
+    } else if (team == 1) {
+        for (unsigned int i = 0; i < availableBlacks.size(); ++i) {
+            if (availableBlacks[i]->getMoves().size() != 0) {
+                blackCanMove = true;
+                cout << "set black to true" << endl;
+            }
+            if (!blackCanMove && !isMate()) {
+                cout << "Black Can't Move" << endl;
+                return 2;
+            }
+        }
+    }
+
     return -1;
 }
 
@@ -79,6 +107,8 @@ bool Board::containsBlackKing() {
 
 void Board::clearBoard() {
     theBoard.clear();
+    availableWhites.clear();
+    availableBlacks.clear(); 
 }
 
 void Board::initializeBoard() {
@@ -141,6 +171,8 @@ void Board::initializeBoard() {
 }
 
 void Board::setup(bool& whoseTurn) {
+    cout << "You've Entered Setup Mode!" << endl;
+    cout << endl;
     clearBoard();
 
     theBoard.resize(BOARDSIZE); // Resizes the Board to be an 8x8 Grid
@@ -180,6 +212,17 @@ void Board::setup(bool& whoseTurn) {
             }
 
             // Checking for Errors
+
+            if (piece == 'k' && containsBlackKing()) {
+                cout << "ERROR: A BLACK KING ALREADY EXISTS ON THE BOARD!" << endl;
+                continue;
+            }
+
+            if (piece == 'K' && containsWhiteKing()) {
+                cout << "ERROR: A WHITE KING ALREADY EXISTS ON THE BOARD!" << endl;
+                continue;
+            }
+
             if (theBoard[placement.getInitX()][placement.getInitY()].getPiece() != nullptr) {
                 cout << "ERROR: A PIECE ALREADY EXISTS THERE" << endl;
                 continue;
@@ -283,6 +326,10 @@ void Board::setup(bool& whoseTurn) {
             whoseTurn = 0;
         } else if (input == "BLACK") {
             whoseTurn = 1;
+        } else if (input == "CLEAR") {
+            clearBoard();
+            cout << availableWhites.size() << endl;
+            cout << availableBlacks.size() << endl;
         }
     }
 }

@@ -17,7 +17,7 @@ void Pawn::calculateMoves() {
 
 
     if(doubleStep) {
-        if(pieceColour == WHITE) {
+        if (pieceColour == WHITE) {
             Move s1 = Move(x, y, x - 1, y, &theBoard[x - 1][y], N);
             Move s2 = Move(x, y, x - 2, y, &theBoard[x - 2][y], N);
             possibleMoves.emplace_back(s1);
@@ -33,7 +33,7 @@ void Pawn::calculateMoves() {
             theBoard[x + 2][y].addPieceObservers(this);
         }
     } else {
-        if(pieceColour == WHITE) {
+        if (pieceColour == WHITE) {
             if (x > 0) {
                 if(theBoard[x - 1][y].getPiece() == nullptr) {
                     Move s1 = Move(x, y, x - 1, y, &theBoard[x - 1][y], N);
@@ -41,7 +41,7 @@ void Pawn::calculateMoves() {
                     theBoard[x - 1][y].addPieceObservers(this);
                 }
             }
-        } else if(pieceColour == BLACK) {
+        } else if (pieceColour == BLACK) {
             if (x < 7) {
                 if(theBoard[x + 1][y].getPiece() == nullptr) {
                     Move s1 = Move(x, y, x + 1, y, &theBoard[x + 1][y], S);
@@ -59,7 +59,12 @@ void Pawn::calculateMoves() {
                     Move s1 = Move(x, y, x - 1, y + 1, &theBoard[x - 1][y + 1], NE);
                     possibleMoves.emplace_back(s1);
                     theBoard[x - 1][y + 1].addPieceObservers(this);
-                } else {
+                } else if (theBoard[x - 1][y + 1].canEnPassant()) {
+                    Move s1 = Move(x, y, x - 1, y + 1, &theBoard[x - 1][y + 1], SE);
+                    possibleMoves.emplace_back(s1);
+                    theBoard[x - 1][y + 1].addPieceObservers(this);
+                }
+                else {
                     Move s1 = Move(x, y, x - 1, y + 1, &theBoard[x - 1][y + 1], NE);
                     blockedMoves.emplace_back(s1);
                 }
@@ -69,7 +74,12 @@ void Pawn::calculateMoves() {
                     Move s1 = Move(x, y, x - 1, y - 1, &theBoard[x - 1][y - 1], NW);
                     possibleMoves.emplace_back(s1);
                     theBoard[x - 1][y - 1].addPieceObservers(this);
-                } else {
+                } else if (theBoard[x - 1][y - 1].canEnPassant()) {
+                    Move s1 = Move(x, y, x - 1, y - 1, &theBoard[x - 1][y - 1], SE);
+                    possibleMoves.emplace_back(s1);
+                    theBoard[x - 1][y - 1].addPieceObservers(this);
+                }
+                else {
                     Move s1 = Move(x, y, x - 1, y - 1, &theBoard[x - 1][y - 1], NW);
                     blockedMoves.emplace_back(s1); 
                 }
