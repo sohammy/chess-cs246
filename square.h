@@ -42,6 +42,8 @@ public:
     void removePieceObserver(Observer *o);
     void notifyPieceObservers();
     void notifyDisplayObservers();
+    void turnOffEnPassant();
+    void turnOnEnPassant();
     bool canEnPassant();
 };
 

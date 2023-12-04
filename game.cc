@@ -143,6 +143,10 @@ void Game::play(Board& myBoard) {
                 } 
             }
 
+            for (int i = 0; i < myBoard.getBoard()[6].size(); ++i) { // TURNS OFF ALL 'ENPASSANTABLE SQUARES' FOR WHITE
+                myBoard.getBoard()[5][i].turnOffEnPassant();
+            }
+
         } if (whoseTurn) {
             cout << "Black's turn to move" << endl;
             black->makeMove(myBoard, BLACK); // getMove() should take in user input, only does move once 'move' is given as input (as per instructions)
@@ -178,6 +182,11 @@ void Game::play(Board& myBoard) {
                     }
                 } 
             }
+
+            for (int i = 0; i < myBoard.getBoard()[6].size(); ++i) { // TURNS OFF ALL 'ENPASSANTABLE SQUARES' FOR WHITE
+                myBoard.getBoard()[2][i].turnOffEnPassant();
+            }
+
         }
         whoseTurn = !whoseTurn;
     }

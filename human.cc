@@ -64,6 +64,7 @@ void Human::makeMove(Board& gameBoard, Colour team) { // add colour to this so t
                             start->notifyDisplayObservers();
                             piece->calculateMoves();
                         }
+                        
                     } else {
                         cout << "Please make a valid move" << endl;
                     }

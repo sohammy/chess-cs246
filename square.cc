@@ -80,6 +80,14 @@ void Square::removePieceObserver(Observer *o) {
     }
 }
 
+void Square::turnOffEnPassant() {
+    enPassant = false;
+}
+
+void Square::turnOnEnPassant() {
+    enPassant = true;
+}
+
 Square* Square::setX(int x) {
     this->col = x;
     return this;
