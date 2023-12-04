@@ -46,10 +46,7 @@ void Human::makeMove(Board& gameBoard, Colour team) { // add colour to this so t
                         Square* dest = successfulMove.getSquare();
                         bool enPassanting = false;
 
-                        if(dest->getPiece() != nullptr) { 
-                            cout << "There is a Piece There, We are Removing it" << endl;
-                            gameBoard.removePiece(dest->getX(), dest->getY());
-                        }
+                        
 
                         if(toupper(piece->getPieceName()) == 'P') {
                             cout << "Detected Pawn Movement..." << endl;
@@ -95,6 +92,10 @@ void Human::makeMove(Board& gameBoard, Colour team) { // add colour to this so t
                             start->notifyDisplayObservers();
                             piece->calculateMoves();
                         } else {
+                            if(dest->getPiece() != nullptr) { 
+                                    cout << "There is a Piece There, We are Removing it" << endl;
+                                    gameBoard.removePiece(dest->getX(), dest->getY());
+                            }
                             dest->removePiece();
                             dest->addPiece(piece);
                             piece->setSquare(dest);
