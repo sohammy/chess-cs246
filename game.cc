@@ -108,8 +108,8 @@ void Game::play(Board& myBoard) {
     }
 
     while (myBoard.whoWon(whoseTurn) != 1 && myBoard.whoWon(whoseTurn) != 2) { // Switches Turns Back and Forth between Black + White
+        cout << *td;
         if (!whoseTurn) {
-            cout << *td;
             cout << "White's turn to move" << endl;
             white->makeMove(myBoard, WHITE); // getMove() should take in user input, only does move once 'move' is given as input (as per instructions)
             myBoard.incrMoveCounter();
@@ -142,13 +142,15 @@ void Game::play(Board& myBoard) {
                             }
                         }
                     }
-            }
+                }
 
-            for (int i = 0; i < myBoard.getBoard()[2].size(); ++i) { // TURNS OFF ALL 'ENPASSANTABLE SQUARES' FOR BLACK
-                myBoard.getBoard()[2][i].turnOffEnPassant();
-            }
+                for (int i = 0; i < myBoard.getBoard()[2].size(); ++i) { // TURNS OFF ALL 'ENPASSANTABLE SQUARES' FOR BLACK
+                    myBoard.getBoard()[2][i].turnOffEnPassant();
+                }
+            } 
+        }
 
-        } if (whoseTurn) {
+        else if (whoseTurn) {
             cout << "Black's turn to move" << endl;
             black->makeMove(myBoard, BLACK); // getMove() should take in user input, only does move once 'move' is given as input (as per instructions)
             myBoard.incrMoveCounter();
@@ -180,6 +182,7 @@ void Game::play(Board& myBoard) {
                                 cout << "Please input 'Q', 'R', 'B', or 'N'" << endl;
                             }
                         }
+
                     }
                 } 
             }
@@ -187,11 +190,10 @@ void Game::play(Board& myBoard) {
             for (int i = 0; i < myBoard.getBoard()[5].size(); ++i) { // TURNS OFF ALL 'ENPASSANTABLE SQUARES' FOR WHITE
                 myBoard.getBoard()[5][i].turnOffEnPassant();
             }
-
+        
         }
-        whoseTurn = !whoseTurn;
+        whoseTurn = !whoseTurn;   
     }
-
     if (myBoard.whoWon(whoseTurn) == 1) {
         if (whoseTurn == 0) {
             cout << "CHECKMATE! Black Wins!" << endl;
@@ -211,19 +213,18 @@ void Game::play(Board& myBoard) {
             gameStart();
         }
     } else if (myBoard.whoWon(whoseTurn) == 2) {
-        cout << "STALEMATE! Nobody Wins!" << endl;
+            cout << "STALEMATE! Nobody Wins!" << endl;
 
-        playAgainMsg();
+            playAgainMsg();
 
-        blackScore += 0.5;
-        whiteScore += 0.5;
-        setTurn('w');
-        gameStart();
-    }
+            blackScore += 0.5;
+            whiteScore += 0.5;
+            setTurn('w');
+            gameStart();
+        }
 }
 
 void Game::gameStart() {
-
     cout << "-------------------------" << endl;
     cout << " Current White Score: " << whiteScore << endl;
     cout << " Current Black Score: " << blackScore << endl;
@@ -245,3 +246,4 @@ void Game::gameStart() {
         cout << "Thanks for Playing!" << endl;
     }
 }
+
