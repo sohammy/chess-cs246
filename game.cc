@@ -29,6 +29,7 @@ void Game::setTurn(char c) {
 
 void Game::play(Board& myBoard) {
     td = make_shared<TextDisplay>();
+    //gd = make_shared<GraphicsDisplay>(8);
     
     string whitePlayer;
     string blackPlayer;
@@ -101,13 +102,14 @@ void Game::play(Board& myBoard) {
     for(int x = 0; x < boardSize; ++x) {
         for(int y = 0; y < boardSize; ++y) {
             myBoard.getBoard()[x][y].addDisplayObservers(td.get());
+            // myBoard.getBoard()[x][y].addDisplayObservers(gd.get());
             myBoard.getBoard()[x][y].notifyDisplayObservers();
         }
     }
 
     while (myBoard.whoWon(whoseTurn) != 1 && myBoard.whoWon(whoseTurn) != 2) { // Switches Turns Back and Forth between Black + White
-        cout << *td;
         if (!whoseTurn) {
+            cout << *td;
             cout << "White's turn to move" << endl;
             white->makeMove(myBoard, WHITE); // getMove() should take in user input, only does move once 'move' is given as input (as per instructions)
             myBoard.incrMoveCounter();
@@ -141,6 +143,7 @@ void Game::play(Board& myBoard) {
                         }
                     }
                 } 
+                cout << *td;
             }
 
             for (int i = 0; i < myBoard.getBoard()[6].size(); ++i) { // TURNS OFF ALL 'ENPASSANTABLE SQUARES' FOR WHITE

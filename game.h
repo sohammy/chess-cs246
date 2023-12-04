@@ -13,12 +13,14 @@
 #include "stagethree.h"
 #include "stagefour.h"
 #include "textdisplay.h"
+#include "graphicsdisplay.h"
 
 class Game {
     unique_ptr<Player> white;
     unique_ptr<Player> black;
 
     std::shared_ptr<TextDisplay> td;
+    //std::shared_ptr<GraphicsDisplay> gd;
 
     bool whoseTurn;
     double whiteScore = 0;
