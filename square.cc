@@ -28,7 +28,8 @@ void Square::removePiece() {
 
 // Adds piece to the Square 
 void Square::addPiece(Piece *piece) {
-    currPiece = move(piece);    
+    currPiece = move(piece);
+    notifyDisplayObservers(); 
 }
 
 // If the square is the first or last row, then it has the ability to promote a piece on it

@@ -53,50 +53,50 @@ void StageOne::makeMove(Board &gameBoard, Colour team) {
 
             Piece* opposingPiece = nullptr;
             if(dest->getPiece() != nullptr) {
-                            opposingPiece = dest->getPiece();
-                        }
-                        start->removePiece();
-                        dest->removePiece();
-                        dest->addPiece(piece);
+                opposingPiece = dest->getPiece();
+            }
+            start->removePiece();
+            dest->removePiece();
+            dest->addPiece(piece);
 
-                        if(gameBoard.isMate()) {
-                            dest->removePiece();
-                            dest->addPiece(opposingPiece);
-                            start->addPiece(piece);
-                            foundMove = false;
-                        } else if(enPassanting) {
-                            dest->removePiece();
-                            dest->addPiece(opposingPiece);
-                            if(team == WHITE) {
-                                cout << "There is a Piece There, We are Removing it" << endl;
-                                gameBoard.removePiece(dest->getX() + 1, dest->getY());
-                                gameBoard.getBoard()[dest->getX() + 1][dest->getY()].removePiece();
-                            } else {
-                                cout << "There is a Piece There, We are Removing it" << endl;
-                                gameBoard.removePiece(dest->getX() - 1, dest->getY());
-                                gameBoard.getBoard()[dest->getX() - 1][dest->getY()].removePiece();
-                            }
-                            dest->addPiece(piece);
-                            piece->setSquare(dest);
-                            piece->pieceMoved();
-                            dest->notifyDisplayObservers();
-                            start->notifyDisplayObservers();
-                            piece->calculateMoves();
-                        } else {
-                            dest->removePiece();
-                            dest->addPiece(opposingPiece);
-                            if(dest->getPiece() != nullptr) { 
-                                    cout << "There is a Piece There, We are Removing it" << endl;
-                                    gameBoard.removePiece(dest->getX(), dest->getY());
-                            }
-                            dest->removePiece();
-                            dest->addPiece(piece);
-                            piece->setSquare(dest);
-                            piece->pieceMoved();
-                            dest->notifyDisplayObservers();
-                            start->notifyDisplayObservers();
-                            piece->calculateMoves();
-                        }
+            if(gameBoard.isMate()) {
+                dest->removePiece();
+                dest->addPiece(opposingPiece);
+                start->addPiece(piece);
+                foundMove = false;
+            } else if(enPassanting) {
+                dest->removePiece();
+                dest->addPiece(opposingPiece);
+                if(team == WHITE) {
+                    cout << "There is a Piece There, We are Removing it" << endl;
+                    gameBoard.removePiece(dest->getX() + 1, dest->getY());
+                    gameBoard.getBoard()[dest->getX() + 1][dest->getY()].removePiece();
+                } else {
+                    cout << "There is a Piece There, We are Removing it" << endl;
+                    gameBoard.removePiece(dest->getX() - 1, dest->getY());
+                    gameBoard.getBoard()[dest->getX() - 1][dest->getY()].removePiece();
+                }
+                dest->addPiece(piece);
+                piece->setSquare(dest);
+                piece->pieceMoved();
+                dest->notifyDisplayObservers();
+                start->notifyDisplayObservers();
+                piece->calculateMoves();
+            } else {
+                dest->removePiece();
+                dest->addPiece(opposingPiece);
+                if(dest->getPiece() != nullptr) { 
+                    cout << "There is a Piece There, We are Removing it" << endl;
+                    gameBoard.removePiece(dest->getX(), dest->getY());
+                }
+                dest->removePiece();
+                dest->addPiece(piece);
+                piece->setSquare(dest);
+                piece->pieceMoved();
+                dest->notifyDisplayObservers();
+                start->notifyDisplayObservers();
+                piece->calculateMoves();
+            }
         }
     }
 }
