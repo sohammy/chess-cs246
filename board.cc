@@ -334,7 +334,7 @@ void Board::setup(bool& whoseTurn) {
     }
 }
 
-bool Board:: isMate() {
+bool Board::isMate() {
     for (unsigned int i = 0; i < theBoard.size(); ++i) {
         for (unsigned int j = 0; j < theBoard.size(); ++j) {
             if (dynamic_cast<King*>(theBoard[i][j].getPiece()) != nullptr) {
