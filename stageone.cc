@@ -2,6 +2,10 @@
 #include <cstdlib>
 
 void StageOne::makeMove(Board &gameBoard, Colour team) {
+    string shouldMove;
+    cin >> shouldMove;
+    if(shouldMove != "move") return;
+
     vector<Piece *> teamPieces;
     if (team == WHITE) {
         for (unsigned int i = 0; i < gameBoard.availableWhites.size(); ++i) {
@@ -32,7 +36,7 @@ void StageOne::makeMove(Board &gameBoard, Colour team) {
         if(ourMove.getInitX() < 8 && ourMove.getInitY() < 8 && ourMove.getDestX() < 8 && ourMove.getDestY() < 8) {
             Square* start = &gameBoard.getBoard()[ourMove.getInitX()][ourMove.getInitY()]; 
             Piece* piece = start->getPiece();
-
+            cout << ourMove.getInitX() << ourMove.getInitY() << ourMove.getDestX() << ourMove.getDestY() << endl;
             Square *dest = ourMove.getSquare();
             bool enPassanting = false;
 
@@ -59,12 +63,13 @@ void StageOne::makeMove(Board &gameBoard, Colour team) {
             dest->removePiece();
             dest->addPiece(piece);
 
-            if(gameBoard.isMate()) {
+            if(toupper(piece->getPieceName()) != 'K' && gameBoard.isMate()) {
                 dest->removePiece();
                 dest->addPiece(opposingPiece);
                 start->addPiece(piece);
                 foundMove = false;
             } else if(enPassanting) {
+                foundMove = true;
                 dest->removePiece();
                 dest->addPiece(opposingPiece);
                 if(team == WHITE) {
@@ -83,6 +88,7 @@ void StageOne::makeMove(Board &gameBoard, Colour team) {
                 start->notifyDisplayObservers();
                 piece->calculateMoves();
             } else {
+                foundMove = true;
                 dest->removePiece();
                 dest->addPiece(opposingPiece);
                 if(dest->getPiece() != nullptr) { 

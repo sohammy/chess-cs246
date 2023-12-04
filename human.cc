@@ -68,7 +68,7 @@ void Human::makeMove(Board& gameBoard, Colour team) { // add colour to this so t
                         dest->removePiece();
                         dest->addPiece(piece);
 
-                        if(gameBoard.isMate()) {
+                        if(toupper(piece->getPieceName()) != 'K' && gameBoard.isMate() ) {
                             dest->removePiece();
                             dest->addPiece(opposingPiece);
                             start->addPiece(piece);
