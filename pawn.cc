@@ -60,7 +60,7 @@ void Pawn::calculateMoves() {
                     possibleMoves.emplace_back(s1);
                     theBoard[x - 1][y + 1].addPieceObservers(this);
                 } else if (theBoard[x - 1][y + 1].canEnPassant()) {
-                    Move s1 = Move(x, y, x - 1, y + 1, &theBoard[x - 1][y + 1], SE);
+                    Move s1 = Move(x, y, x - 1, y + 1, &theBoard[x - 1][y + 1], NE);
                     possibleMoves.emplace_back(s1);
                     theBoard[x - 1][y + 1].addPieceObservers(this);
                 }
@@ -75,7 +75,7 @@ void Pawn::calculateMoves() {
                     possibleMoves.emplace_back(s1);
                     theBoard[x - 1][y - 1].addPieceObservers(this);
                 } else if (theBoard[x - 1][y - 1].canEnPassant()) {
-                    Move s1 = Move(x, y, x - 1, y - 1, &theBoard[x - 1][y - 1], SE);
+                    Move s1 = Move(x, y, x - 1, y - 1, &theBoard[x - 1][y - 1], NW);
                     possibleMoves.emplace_back(s1);
                     theBoard[x - 1][y - 1].addPieceObservers(this);
                 }

@@ -132,8 +132,8 @@ void Game::play(Board& myBoard) {
                                 unique_ptr<Piece> p = nullptr;
                                 p = myBoard.makePiece(newPiece);
                                 cout << p->getPieceName() << endl;
-                                myBoard.availableBlacks.push_back(move(p));
-                                myBoard.getBoard()[0][i].addPiece(myBoard.availableBlacks.back().get());
+                                myBoard.availableWhites.push_back(move(p));
+                                myBoard.getBoard()[0][i].addPiece(myBoard.availableWhites.back().get());
                                 myBoard.getBoard()[0][i].getPiece()->setColour('w');
                                 myBoard.getBoard()[0][i].getPiece()->setSquare(&myBoard.getBoard()[0][i]);
                                 myBoard.getBoard()[0][i].getPiece()->calculateMoves();
@@ -144,8 +144,8 @@ void Game::play(Board& myBoard) {
                     }
             }
 
-            for (int i = 0; i < myBoard.getBoard()[6].size(); ++i) { // TURNS OFF ALL 'ENPASSANTABLE SQUARES' FOR WHITE
-                myBoard.getBoard()[5][i].turnOffEnPassant();
+            for (int i = 0; i < myBoard.getBoard()[2].size(); ++i) { // TURNS OFF ALL 'ENPASSANTABLE SQUARES' FOR BLACK
+                myBoard.getBoard()[2][i].turnOffEnPassant();
             }
 
         } if (whoseTurn) {
@@ -184,8 +184,8 @@ void Game::play(Board& myBoard) {
                 } 
             }
 
-            for (int i = 0; i < myBoard.getBoard()[6].size(); ++i) { // TURNS OFF ALL 'ENPASSANTABLE SQUARES' FOR WHITE
-                myBoard.getBoard()[2][i].turnOffEnPassant();
+            for (int i = 0; i < myBoard.getBoard()[5].size(); ++i) { // TURNS OFF ALL 'ENPASSANTABLE SQUARES' FOR WHITE
+                myBoard.getBoard()[5][i].turnOffEnPassant();
             }
 
         }
