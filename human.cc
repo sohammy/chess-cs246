@@ -41,12 +41,10 @@ void Human::makeMove(Board& gameBoard, Colour team) { // add colour to this so t
                         ++successIndex;
                     }
                     
-                    if(foundMove) {
+                    if(foundMove) { // Once we found move
                         Move successfulMove = possibleMoves[successIndex];
                         Square* dest = successfulMove.getSquare();
                         bool enPassanting = false;
-
-                        
 
                         if(toupper(piece->getPieceName()) == 'P') {
                             cout << "Detected Pawn Movement..." << endl;
