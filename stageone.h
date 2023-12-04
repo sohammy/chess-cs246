@@ -3,7 +3,8 @@
 #include "computer.h"
 
 class StageOne : public Computer{
-
+    public:
+       void makeMove(Board& gameBoard, Colour team) override;
 };
 
 #endif
