@@ -59,13 +59,23 @@ void Human::makeMove(Board& gameBoard, Colour team) { // add colour to this so t
                                 }
                             }
                         }
-
+                        
+                        Piece* opposingPiece = nullptr;
+                        if(dest->getPiece() != nullptr) {
+                            opposingPiece = dest->getPiece();
+                        }
                         start->removePiece();
+                        dest->removePiece();
+                        dest->addPiece(piece);
 
                         if(gameBoard.isMate()) {
+                            dest->removePiece();
+                            dest->addPiece(opposingPiece);
                             start->addPiece(piece);
                             foundMove = false;
                         } else if(enPassanting) {
+                            dest->removePiece();
+                            dest->addPiece(opposingPiece);
                             if(team == WHITE) {
                                 cout << "There is a Piece There, We are Removing it" << endl;
                                 gameBoard.removePiece(dest->getX() + 1, dest->getY());
@@ -82,6 +92,8 @@ void Human::makeMove(Board& gameBoard, Colour team) { // add colour to this so t
                             start->notifyDisplayObservers();
                             piece->calculateMoves();
                         } else {
+                            dest->removePiece();
+                            dest->addPiece(opposingPiece);
                             if(dest->getPiece() != nullptr) { 
                                     cout << "There is a Piece There, We are Removing it" << endl;
                                     gameBoard.removePiece(dest->getX(), dest->getY());

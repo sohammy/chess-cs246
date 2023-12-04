@@ -46,10 +46,10 @@ int Board::whoWon(bool team) {
                 whiteCanMove = true;
                 cout << "set white to true" << endl;
             }
-            if (!whiteCanMove && !isMate()) {
-                cout << "White Can't Move" << endl;
-                return 2;
-            }
+        }
+        if (!whiteCanMove && !isMate()) {
+            cout << "White Can't Move" << endl;
+            return 2;
         }
     } else if (team == 1) {
         for (unsigned int i = 0; i < availableBlacks.size(); ++i) {
@@ -57,13 +57,12 @@ int Board::whoWon(bool team) {
                 blackCanMove = true;
                 cout << "set black to true" << endl;
             }
-            if (!blackCanMove && !isMate()) {
-                cout << "Black Can't Move" << endl;
-                return 2;
-            }
+        }
+        if (!blackCanMove && !isMate()) {
+            cout << "Black Can't Move" << endl;
+            return 2;
         }
     }
-
     return -1;
 }
 
