@@ -44,10 +44,31 @@ void Human::makeMove(Board& gameBoard, Colour team) { // add colour to this so t
                     if(foundMove) {
                         Move successfulMove = possibleMoves[successIndex];
                         Square* dest = successfulMove.getSquare();
+                        bool enPassanting = false;
 
                         if(dest->getPiece() != nullptr) { 
                             cout << "There is a Piece There, We are Removing it" << endl;
                             gameBoard.removePiece(dest->getX(), dest->getY());
+                        }
+
+                        if(toupper(piece->getPieceName()) == 'P') {
+                            cout << "Detected Pawn Movement..." << endl;
+                            if(piece->getY() != dest->getY()) {
+                                cout << "Pawn is attacking" << endl;
+                                if(dest->canEnPassant() && dest->getPiece() == nullptr) {
+                                    enPassanting = true;
+                                    cout << "We are en passanting" << endl;
+                                }
+                            } else if (abs(piece->getX() - dest->getX()) == 2) {
+                                cout << "We moved 2" << endl;
+                                if(team == WHITE) {
+                                    gameBoard.getBoard()[piece->getX() - 1][piece->getY()].turnOnEnPassant();
+                                    cout << "White piece is now En Passantable" << endl;
+                                } else {
+                                    gameBoard.getBoard()[piece->getX() + 1][piece->getY()].turnOnEnPassant();
+                                    cout << "Black piece is now En Passantable" << endl;
+                                }
+                            }
                         }
 
                         start->removePiece();
@@ -55,6 +76,24 @@ void Human::makeMove(Board& gameBoard, Colour team) { // add colour to this so t
                         if(gameBoard.isMate()) {
                             start->addPiece(piece);
                             foundMove = false;
+                        } else if(enPassanting) {
+                            if(team == WHITE) {
+                                cout << "There is a Piece There, We are Removing it" << endl;
+                                gameBoard.removePiece(dest->getX() + 1, dest->getY());
+                                gameBoard.getBoard()[dest->getX() + 1][dest->getY()].removePiece();
+                                cout << "White piece is now En Passantable" << endl;
+                            } else {
+                                cout << "There is a Piece There, We are Removing it" << endl;
+                                gameBoard.removePiece(dest->getX() - 1, dest->getY());
+                                gameBoard.getBoard()[dest->getX() - 1][dest->getY()].removePiece();
+                                cout << "Black piece is now En Passantable" << endl;
+                            }
+                            dest->addPiece(piece);
+                            piece->setSquare(dest);
+                            piece->pieceMoved();
+                            dest->notifyDisplayObservers();
+                            start->notifyDisplayObservers();
+                            piece->calculateMoves();
                         } else {
                             dest->removePiece();
                             dest->addPiece(piece);
