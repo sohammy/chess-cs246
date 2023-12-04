@@ -2,6 +2,16 @@
 
 using namespace std;
 
+
+void playAgainMsg () {
+    cout << endl;
+    cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
+    cout << " -- Type 'play' + [Player 1] + [Player 2] to Play Again!" << endl;
+    cout << " -- Type 'setup' to enter Setup Mode!" << endl;
+    cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
+    cout << endl;
+}
+
 void stringUpper (string& s) {
     for (unsigned int i = 0; i < s.length(); ++i) {
         s[i] = toupper(s[i]); 
@@ -95,7 +105,7 @@ void Game::play(Board& myBoard) {
         }
     }
 
-    while (myBoard.whoWon(whoseTurn) != 1) { // Switches Turns Back and Forth between Black + White
+    while (myBoard.whoWon(whoseTurn) != 1 && myBoard.whoWon(whoseTurn) != 2) { // Switches Turns Back and Forth between Black + White
         cout << *td;
         if (!whoseTurn) {
             cout << "White's turn to move" << endl;
@@ -171,9 +181,45 @@ void Game::play(Board& myBoard) {
         }
         whoseTurn = !whoseTurn;
     }
+
+    if (myBoard.whoWon(whoseTurn) == 1) {
+        if (whoseTurn == 0) {
+            cout << "CHECKMATE! Black Wins!" << endl;
+
+            playAgainMsg();
+
+            ++blackScore;
+            setTurn('w');
+            gameStart();
+        } else if (whoseTurn == 1) {
+            cout << "CHECKMATE! White Wins!" << endl;
+
+            playAgainMsg();
+            
+            ++whiteScore;
+            setTurn('w');
+            gameStart();
+        }
+    } else if (myBoard.whoWon(whoseTurn) == 2) {
+        cout << "STALEMATE! Nobody Wins!" << endl;
+
+        playAgainMsg();
+
+        blackScore += 0.5;
+        whiteScore += 0.5;
+        setTurn('w');
+        gameStart();
+    }
 }
 
 void Game::gameStart() {
+
+    cout << "-------------------------" << endl;
+    cout << " Current White Score: " << whiteScore << endl;
+    cout << " Current Black Score: " << blackScore << endl;
+    cout << "-------------------------" << endl;
+    cout << endl;
+    
     Board myBoard;
 
     string input;
@@ -187,7 +233,5 @@ void Game::gameStart() {
         play(myBoard);
     } else {
         cout << "Thanks for Playing!" << endl;
-        cout << "White Score: " << whiteScore << endl;
-        cout << "Black Score: " << blackScore << endl;
     }
 }

@@ -21,8 +21,8 @@ class Game {
     std::shared_ptr<TextDisplay> td;
 
     bool whoseTurn;
-    int whiteScore = 0;
-    int blackScore = 0;
+    double whiteScore = 0;
+    double blackScore = 0;
 
 public:
     void gameStart();
