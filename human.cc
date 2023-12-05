@@ -45,6 +45,8 @@ void Human::makeMove(Board& gameBoard, Colour team) { // add colour to this so t
                         Move successfulMove = possibleMoves[successIndex];
                         Square* dest = successfulMove.getSquare();
                         bool enPassanting = false;
+                        bool canCastleLong = false;
+                        bool canCastleShort = false;
 
                         if(toupper(piece->getPieceName()) == 'P') {
                             if(piece->getY() != dest->getY()) {
@@ -56,6 +58,29 @@ void Human::makeMove(Board& gameBoard, Colour team) { // add colour to this so t
                                     gameBoard.getBoard()[piece->getX() - 1][piece->getY()].turnOnEnPassant();
                                 } else {
                                     gameBoard.getBoard()[piece->getX() + 1][piece->getY()].turnOnEnPassant();
+                                }
+                            }
+                        }
+
+                        if(toupper(piece->getPieceName()) == 'K') {
+                            cout << "Here in K" << endl;
+                            
+                            cout << "Piece Y is " << piece->getY() << endl;
+                            cout << "Dest Y is " << dest->getY() << endl;
+
+                            if (piece->getY() - dest->getY() >= 0) {
+                                King* myKing = dynamic_cast<King*>(piece);
+                                if (myKing->canCastleLong()) {
+                                    cout << "Here in KLong" << endl;
+                                    canCastleLong = true;
+                                }
+                            }
+
+                            if (piece->getY() - dest->getY() <= 0) {
+                                King* myKing = dynamic_cast<King*>(piece);
+                                if (myKing->canCastleShort()) {
+                                    cout << "Here in KShort" << endl;
+                                    canCastleShort = true;
                                 }
                             }
                         }
@@ -91,7 +116,55 @@ void Human::makeMove(Board& gameBoard, Colour team) { // add colour to this so t
                             dest->notifyDisplayObservers();
                             start->notifyDisplayObservers();
                             piece->calculateMoves();
-                        } else {
+                        } else if (canCastleLong) {
+                            
+                            cout << "In canCastleLong" << endl;
+                            piece->setSquare(dest);
+                            dest->addPiece(piece);
+                            start->removePiece();
+                            piece->pieceMoved();
+                       
+                            
+                            cout << "The Piece Is " << gameBoard.getBoard()[dest->getX()][dest->getY() - 2].getPiece()->getPieceName() << endl;
+                        
+                            gameBoard.getBoard()[dest->getX()][dest->getY() - 2].getPiece()->setSquare(&gameBoard.getBoard()[dest->getX()][dest->getY() + 1]);
+                            gameBoard.getBoard()[dest->getX()][dest->getY() + 1].addPiece(gameBoard.getBoard()[dest->getX()][dest->getY() - 2].getPiece());
+                            gameBoard.getBoard()[dest->getX()][dest->getY() - 2].removePiece();
+                            gameBoard.getBoard()[dest->getX()][dest->getY() + 1].getPiece()->pieceMoved();
+
+                            dest->notifyDisplayObservers();
+                            start->notifyDisplayObservers();
+                            gameBoard.getBoard()[dest->getX()][dest->getY() + 1].notifyDisplayObservers();
+                            gameBoard.getBoard()[dest->getX()][dest->getY() - 2].notifyDisplayObservers();
+
+                            piece->calculateMoves();
+                            gameBoard.getBoard()[dest->getX()][dest->getY() + 1].getPiece()->calculateMoves();
+
+                        } else if (canCastleShort) {
+
+                            cout << "In canCastleShort " << endl;
+                            piece->setSquare(dest);
+                            dest->addPiece(piece);
+                            start->removePiece();
+                            piece->pieceMoved();
+
+                            cout << "The Piece Is " << gameBoard.getBoard()[dest->getX()][dest->getY() + 1].getPiece()->getPieceName() << endl;
+                        
+                            gameBoard.getBoard()[dest->getX()][dest->getY() + 1].getPiece()->setSquare(&gameBoard.getBoard()[dest->getX()][dest->getY() - 1]);
+                            gameBoard.getBoard()[dest->getX()][dest->getY() - 1].addPiece(gameBoard.getBoard()[dest->getX()][dest->getY() + 1].getPiece());
+                            gameBoard.getBoard()[dest->getX()][dest->getY() + 1].removePiece();
+                            gameBoard.getBoard()[dest->getX()][dest->getY() - 1].getPiece()->pieceMoved();
+
+                            dest->notifyDisplayObservers();
+                            start->notifyDisplayObservers();
+                            gameBoard.getBoard()[dest->getX()][dest->getY() + 1].notifyDisplayObservers();
+                            gameBoard.getBoard()[dest->getX()][dest->getY() - 1].notifyDisplayObservers();
+
+                            piece->calculateMoves();
+                            gameBoard.getBoard()[dest->getX()][dest->getY() - 1].getPiece()->calculateMoves();
+
+                        }
+                        else {
                             dest->removePiece();
                             dest->addPiece(opposingPiece);
                             if(dest->getPiece() != nullptr) { 

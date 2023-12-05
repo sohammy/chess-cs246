@@ -19,6 +19,10 @@ class King : public Piece {
     void calculateMoves() override;
 
     char checkMate();
+
+    bool canCastleShort();
+
+    bool canCastleLong();
 };
 
 #endif
