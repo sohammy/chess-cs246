@@ -12,6 +12,7 @@
 #include "stagetwo.h"
 #include "stagethree.h"
 #include "stagefour.h"
+#include "stagefive.h"
 #include "textdisplay.h"
 #include "graphicsdisplay.h"
 

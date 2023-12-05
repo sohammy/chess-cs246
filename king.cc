@@ -178,6 +178,8 @@ char King::checkMate() {
     } else if (numberOfAttackers > 1) {
         if(possibleMoves.size() == 0) {
             return 'M';
+        } else {
+            return 'C';
         }
     }
 
