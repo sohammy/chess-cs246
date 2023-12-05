@@ -161,7 +161,6 @@ void Board::initializeBoard() {
        theBoard[1][i].getPiece()->calculateMoves();
        theBoard[6][i].getPiece()->calculateMoves();
        theBoard[7][i].getPiece()->calculateMoves();
-
     }
 }
 
@@ -191,6 +190,7 @@ void Board::setup(bool& whoseTurn) {
         if (input == "DONE") {
             if (containsBlackKing() && containsWhiteKing()) {
                 cout << "SETUP COMPLETE!" << endl;
+
                 break;
             } else {
                 cout << "YOU DO NOT HAVE 2 KINGS (BLACK AND WHITE) ON THE BOARD" << endl;
@@ -219,8 +219,8 @@ void Board::setup(bool& whoseTurn) {
             }
 
             if (theBoard[placement.getInitX()][placement.getInitY()].getPiece() != nullptr) {
-                cout << "ERROR: A PIECE ALREADY EXISTS THERE" << endl;
-                continue;
+                removePiece(placement.getInitX(), placement.getInitY());
+                theBoard[placement.getInitX()][placement.getInitY()].removePiece();
             }
 
             if ((piece == 'P') && (placement.getDestX() == 7)) {
@@ -301,9 +301,9 @@ void Board::setup(bool& whoseTurn) {
                 }
             }
             
-        } else if (input == "= WHITE" ) {
+        } else if (input == "=WHITE" || input == "=white" ) {
             whoseTurn = 0;
-        } else if (input == "= BLACK") {
+        } else if (input == "=BLACK" || input == "=black" ) {
             whoseTurn = 1;
         } else if (input == "CLEAR") {
             clearBoard();

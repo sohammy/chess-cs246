@@ -87,6 +87,14 @@ void Square::removePieceObserver(Observer *o) {
     }
 }
 
+void Square::removeDisplayObservers(Observer *o) {
+    for (unsigned int i = 0; i < possiblePieces.size(); ++i) { 
+        if (displays[i] == o) {
+            displays.erase(possiblePieces.begin() + i);
+        }
+    }
+}
+
 void Square::turnOffEnPassant() {
     enPassant = false;
 }

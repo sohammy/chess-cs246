@@ -40,6 +40,7 @@ public:
     void addPiece(Piece *piece);
     bool canPromote();
     void addDisplayObservers(Observer* o);
+    void removeDisplayObservers (Observer* o);
     void addPieceObservers(Observer *o);
     void removePieceObserver(Observer *o);
     void notifyPieceObservers();

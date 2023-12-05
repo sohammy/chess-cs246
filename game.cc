@@ -29,7 +29,7 @@ void Game::setTurn(char c) {
 
 void Game::play(Board& myBoard) {
     td = make_shared<TextDisplay>();
-    gd = make_shared<GraphicsDisplay>(8);
+    gd = make_shared<GraphicsDisplay>(8); // GRAPHICS DISPLAY
     
     string whitePlayer;
     string blackPlayer;
@@ -102,7 +102,7 @@ void Game::play(Board& myBoard) {
     for(int x = 0; x < boardSize; ++x) {
         for(int y = 0; y < boardSize; ++y) {
             myBoard.getBoard()[x][y].addDisplayObservers(td.get());
-            myBoard.getBoard()[x][y].addDisplayObservers(gd.get());
+            myBoard.getBoard()[x][y].addDisplayObservers(gd.get()); // GRAPHICS DISPLAY
             myBoard.getBoard()[x][y].notifyDisplayObservers();
         }
     }
@@ -198,20 +198,6 @@ void Game::play(Board& myBoard) {
         }  
     }
 
-    if (myBoard.whiteLose) {
-        cout << "WHITE RESIGNED! Black Wins!" << endl;
-        playAgainMsg();
-        ++blackScore;
-        setTurn('w');
-        gameStart();
-    } else if (myBoard.blackLose) {
-        cout << "BLACK RESIGNED! White Wins!" << endl;
-        playAgainMsg();
-        ++whiteScore;
-        setTurn('w');
-        gameStart();
-    }
-
     if (myBoard.whoWon(whoseTurn) == 1) {
         if (whoseTurn == 0) {
             cout << "CHECKMATE! Black Wins!" << endl;
@@ -239,7 +225,21 @@ void Game::play(Board& myBoard) {
             whiteScore += 0.5;
             setTurn('w');
             gameStart();
-        }
+    }
+
+    if (myBoard.whiteLose) {
+        cout << "WHITE RESIGNED! Black Wins!" << endl;
+        playAgainMsg();
+        ++blackScore;
+        setTurn('w');
+        gameStart();
+    } else if (myBoard.blackLose) {
+        cout << "BLACK RESIGNED! White Wins!" << endl;
+        playAgainMsg();
+        ++whiteScore;
+        setTurn('w');
+        gameStart();
+    }
 }
 
 void Game::gameStart() {
