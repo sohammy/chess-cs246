@@ -79,7 +79,8 @@ int pawnEncouragementForPromotion(Board& gameBoard, Colour team) {
     return sum;
 }
 
-int calculateDistanceToCenter(Piece* p) {
+int pointsForDistanceToCenter(Piece* p) {
+    // This way we don't just spam pawns in the middle of the board
     if(abs(3-p->getX()) <= 1 && abs(3-p->getY()) <= 1 && toupper(p->getPieceName()) != 'P') {
         return 5;
     } else if (abs(3-p->getX()) == 2 && abs(3-p->getY()) == 2 && toupper(p->getPieceName()) != 'P') {
@@ -92,12 +93,12 @@ int calculateDistanceToCenter(Piece* p) {
     return 0;
 }
 
-int calculatePieceActivityScore( Board& gameBoard, Colour team) {
+int bonusForMovingToMiddle( Board& gameBoard, Colour team) {
     int pieceActivityScore = 0;
-    for ( auto& row : gameBoard.getBoard()) {
-        for ( auto& square : row) {
+    for (vector<Square>& vctr : gameBoard.getBoard()) {
+        for (Square& square : vctr) {
             if (square.getPiece() != nullptr && square.getPiece()->getColour() == team) {
-                int distanceToCenter = calculateDistanceToCenter(square.getPiece());
+                int distanceToCenter = pointsForDistanceToCenter(square.getPiece());
                 pieceActivityScore += distanceToCenter;
             }
         }
@@ -106,7 +107,7 @@ int calculatePieceActivityScore( Board& gameBoard, Colour team) {
     return pieceActivityScore;
 }
 
-int calculateMaterialScore(Board& gameBoard, Colour team) {
+int piecesOnBoardValue(Board& gameBoard, Colour team) {
     int materialBalance = 0;
     for (vector<Square>& vctr : gameBoard.getBoard()) {
         for (Square& square : vctr) {
@@ -120,9 +121,11 @@ int calculateMaterialScore(Board& gameBoard, Colour team) {
     return materialBalance;
 }
 
-int evaluateCurrentPosition(Board& gameBoard, Colour team) {
-    int materialScore = calculateMaterialScore(gameBoard, team);
-    int pieceAcitivityScore = calculatePieceActivityScore(gameBoard, team);
+//
+//
+int evaluateMove(Board& gameBoard, Colour team) {
+    int materialScore = piecesOnBoardValue(gameBoard, team);
+    int pieceAcitivityScore = bonusForMovingToMiddle(gameBoard, team);
     int pawnPromotionBonus = pawnEncouragementForPromotion(gameBoard, team);
 
     int overallEvaluation = materialScore + pieceAcitivityScore + pawnPromotionBonus;
@@ -133,8 +136,6 @@ int evaluateCurrentPosition(Board& gameBoard, Colour team) {
 
 //
 //
-//
-
 bool isValidMove(Move m) {
     if(m.getDestX() <= 7 && m.getDestX() >= 0 && m.getDestY() <= 7 && m.getDestY() >=0
     && m.getInitX() <= 7 && m.getInitX() >= 0 && m.getInitY() <= 7 && m.getInitY() >=0) return true;
@@ -242,7 +243,7 @@ Move Computer::generateMove(Board& gameBoard, Colour team, int levels, Colour in
                 int moveValue;
 
                 if (level == 0) {
-                    moveValue = evaluateCurrentPosition(gameBoard, initialTeam);
+                    moveValue = evaluateMove(gameBoard, initialTeam);
                 } else {
                     moveValue = generateMove(gameBoard, otherTeam, level, initialTeam, alpha, beta).getValue();
                 }
