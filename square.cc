@@ -24,6 +24,15 @@ Piece* Square::getPiece() {
 // Removes the Piece from the square (DOES NOT MANAGE MEMORY)
 void Square::removePiece() {
     currPiece = nullptr;
+    notifyDisplayObservers();
+}
+
+void Square::removePieceWithoutObservers() {
+    currPiece = nullptr;
+}
+
+void Square::addPieceWithoutObservers(Piece *piece) {
+    currPiece = move(piece);
 }
 
 // Adds piece to the Square 

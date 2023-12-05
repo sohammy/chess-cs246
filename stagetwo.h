@@ -4,7 +4,8 @@
 
 class StageTwo : public Computer{
     public:
-        void makeMove(Board& gameBoard, Colour team) override {}
+        Move doMove(Board& gameBoard, Colour team) override;
+        int teamValueCalc(vector<Piece*> pieces) override;
 };
 
 #endif

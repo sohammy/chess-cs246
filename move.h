@@ -12,6 +12,7 @@ class Move {
     int initialY;
     int destinationX;
     int destinationY;
+    int moveValue = 0;
     Square* destSquare;
     Direction moveDirection;
 
@@ -27,6 +28,8 @@ class Move {
         int getInitY() { return initialY; }
         int getDestX() { return destinationX; }
         int getDestY() { return destinationY; }
+        void setValue(int n) {moveValue = n;}
+        int getValue() { return moveValue; }
         Direction getDirection() { return moveDirection; }
         Square* getSquare() { return destSquare; }
 

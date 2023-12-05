@@ -44,6 +44,7 @@ class Piece : public Observer{
         char getPieceName() { return pieceName; }
         int getX() { return position->getX(); }
         int getY() { return position->getY(); }
+        Square* getSquare() {return position;}
         vector<Move> getMoves() { return possibleMoves; }
         vector<Move> getBlockedMoves() { return blockedMoves; }
         Colour getColour() { return pieceColour; }

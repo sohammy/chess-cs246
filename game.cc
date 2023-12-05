@@ -193,13 +193,11 @@ void Game::play(Board& myBoard) {
             }
         
         }
-
-         if (whoseTurn == true) {
+        if (whoseTurn == true) {
              whoseTurn = false;
-         } else {
+        } else {
              whoseTurn = true;
-         }
-        //whoseTurn = !whoseTurn;   
+        }  
     }
     if (myBoard.whoWon(whoseTurn) == 1) {
         if (whoseTurn == 0) {
