@@ -7,6 +7,9 @@
 #include "board.h"
 using namespace std;
 
+const int INTREALLYHIGH = 10000000;
+const int INTREALLLOW = -10000000;
+
 class Computer : public Player {
     Piece* attacker;
     Piece* defender;
