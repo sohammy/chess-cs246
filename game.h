@@ -30,6 +30,8 @@ public:
     void gameStart();
     void play(Board& myBoard);
     void setTurn(char c);
+    double getWhiteScore() {return whiteScore;}
+    double getBlackScore() {return blackScore;}
 };
 
 #endif

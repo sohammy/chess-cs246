@@ -107,13 +107,6 @@ void King::calculateMoves() {
         ++index;
     }
 
-    if (canCastleLong()) {
-        cout << "Can Castle Long!" << endl;
-    }
-    
-    if (canCastleShort()) {
-        cout << "Can Castle Short!" << endl;
-    }
 }
 
 char King::checkMate() {
@@ -138,18 +131,13 @@ char King::checkMate() {
         }
     }
 
-    cout << piecesCheckingKing.size() << checkingKingMoves.size() << endl;
-
     // Everything up to here is seeing what is dangerous to the King at the moment
 
     calculateMoves();
     int numberOfAttackers = piecesCheckingKing.size();
 
-    cout << numberOfAttackers << endl;
-
     if (numberOfAttackers == 1) {
-        if(possibleMoves.size() == 0) { // If king can't move haha
-
+        if(possibleMoves.size() == 0) { // If the King CAN'T Move
             Piece* attackingPiece = piecesCheckingKing[0];
             vector<Move> ourTeamsMoves = getTeamsMoves(pieceColour);
             vector<Move> ourTeamsMovesWithoutKing;
@@ -217,7 +205,7 @@ bool King::canCastleShort() {
                         cout << "Can Castle!" << endl;
                         return true; // NOT IN CHECK ANYWHERE IN THE PATH!
                     }
-                    //return false;
+                    return false;
                 }
                 return false;
             }
@@ -241,13 +229,12 @@ bool King::canCastleShort() {
                             }
                         }
                         ////
-                        cout << "Can Castle!" << endl;
                         Move m {"e8", "g8", theBoard};
                         possibleMoves.emplace_back(m);
                         return true; // NOT IN CHECK ANYWHERE IN THE PATH!
                     }
                 }
-                //return false;
+                return false;
             }
             return false;
         }
@@ -279,7 +266,7 @@ bool King::canCastleLong() {
                         cout << "Can Castle!" << endl;
                         return true; // NOT IN CHECK ANYWHERE IN THE PATH!
                     }
-                    //return false;
+                    return false;
                 }
                 return false;
             }
@@ -309,7 +296,7 @@ bool King::canCastleLong() {
                         return true; // NOT IN CHECK ANYWHERE IN THE PATH!
                     }
                 }
-                //return false;
+                return false;
             }
             return false;
         }

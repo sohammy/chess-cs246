@@ -12,7 +12,6 @@ int Board::whoWon(bool team) {
                 King* king = dynamic_cast<King*>(p);
                 char c = king->checkMate();
                 if (c == 'M') {
-                    // cout << "CHECKMATE! BLACK WINS" << endl;
                     return 1;
                 } else if (c == 'C') {
                     cout << "WHITE IS IN CHECK" << endl;
@@ -27,7 +26,6 @@ int Board::whoWon(bool team) {
                 King* king = dynamic_cast<King*>(p);
                 char c = king->checkMate();
                 if (c == 'M') {
-                    // cout << "CHECKMATE! WHITE WINS!" << endl;
                     return 1;
                 } else if (c == 'C') {
                     cout << "BLACK IS IN CHECK" << endl;
@@ -44,22 +42,20 @@ int Board::whoWon(bool team) {
         for (unsigned int i = 0; i < availableWhites.size(); ++i) {
             if (availableWhites[i]->getMoves().size() != 0) {
                 whiteCanMove = true;
-                cout << "set white to true" << endl;
             }
         }
         if (!whiteCanMove && !isMate()) {
-            cout << "White Can't Move" << endl;
+            cout << "WHITE IS UNABLE TO MOVE" << endl;
             return 2;
         }
     } else if (team == 1) {
         for (unsigned int i = 0; i < availableBlacks.size(); ++i) {
             if (availableBlacks[i]->getMoves().size() != 0) {
                 blackCanMove = true;
-                cout << "set black to true" << endl;
             }
         }
         if (!blackCanMove && !isMate()) {
-            cout << "Black Can't Move" << endl;
+            cout << "BLACK IS UNABLE TO MOVE" << endl;
             return 2;
         }
     }
@@ -194,10 +190,10 @@ void Board::setup(bool& whoseTurn) {
 
         if (input == "DONE") {
             if (containsBlackKing() && containsWhiteKing()) {
-                cout << "You have met requirements" << endl;
+                cout << "SETUP COMPLETE!" << endl;
                 break;
             } else {
-                cout << "You have not met requirements" << endl;
+                cout << "YOU DO NOT HAVE 2 KINGS (BLACK AND WHITE) ON THE BOARD" << endl;
             }
         } else if (input == "+") {
             char piece;
@@ -256,22 +252,6 @@ void Board::setup(bool& whoseTurn) {
                 theBoard[placement.getInitX()][placement.getInitY()].getPiece()->calculateMoves();
             }
 
-            // if (dynamic_cast<King*>(theBoard[placement.getInitX()][placement.getInitY()].getPiece()) != nullptr) {
-            //         cout << "Here" << endl;
-            //         King* king = dynamic_cast<King*>(theBoard[placement.getInitX()][placement.getInitY()].getPiece());
-            //         char c = king->checkMate();
-            //         cout << "char is " << c << endl;
-            //         if (c == 'C') {
-            //             cout << "Your King is in Mate! Can't Be Placed Here!" << endl;
-            //             removePiece(placement.getInitX(), placement.getInitY());
-            //             theBoard[placement.getInitX()][placement.getInitY()].removePiece();
-            //         } else if (c == 'M') {
-            //             cout << "Your King is in Checkmate! Can't Be Placed Here!" << endl;
-            //             removePiece(placement.getInitX(), placement.getInitY());
-            //             theBoard[placement.getInitX()][placement.getInitY()].removePiece();
-            //         }
-            // }
-
             if (isMate()) {
                 removePiece(placement.getInitX(), placement.getInitY());
                 theBoard[placement.getInitX()][placement.getInitY()].removePiece();
@@ -321,14 +301,22 @@ void Board::setup(bool& whoseTurn) {
                 }
             }
             
-        } else if (input == "WHITE" ) {
+        } else if (input == "= WHITE" ) {
             whoseTurn = 0;
-        } else if (input == "BLACK") {
+        } else if (input == "= BLACK") {
             whoseTurn = 1;
         } else if (input == "CLEAR") {
             clearBoard();
             cout << availableWhites.size() << endl;
             cout << availableBlacks.size() << endl;
+        } else if (input == "QUIT") {
+            cout << "Thanks for Playing!" << endl;
+            break;
+        }
+        
+        else {
+            cout << "Not a Valid Input!" << endl;
+            continue;
         }
     }
 }
@@ -337,10 +325,8 @@ bool Board::isMate() {
     for (unsigned int i = 0; i < theBoard.size(); ++i) {
         for (unsigned int j = 0; j < theBoard.size(); ++j) {
             if (dynamic_cast<King*>(theBoard[i][j].getPiece()) != nullptr) {
-                    cout << "Here" << endl;
                     King* king = dynamic_cast<King*>(theBoard[i][j].getPiece());
                     char c = king->checkMate();
-                    cout << "char is " << c << endl;
                     if (c == 'C') {
                         cout << "Your King is in Mate! Can't perform operation" << endl;
                         return true;
@@ -355,25 +341,19 @@ bool Board::isMate() {
 }
 
 void Board:: removePiece(int xCoord, int yCoord) {
-    //cout << "White Before has " << availableWhites.size() << " Pieces" << endl;
-    //cout << "Black Before Has " << availableBlacks.size() << " Pieces" << endl;
 
     for (unsigned int i = 0; i < availableWhites.size(); ++i) {
-        //cout << "Looking at White" << endl;
         if (availableWhites[i]->getX() == xCoord && availableWhites[i]->getY() == yCoord) {
             availableWhites.erase(availableWhites.begin() + i);
         }
     }
 
     for (unsigned int i = 0; i < availableBlacks.size(); ++i) {
-        //cout << "Looking at Black" << endl;
         if (availableBlacks[i]->getX() == xCoord && availableBlacks[i]->getY() == yCoord) {
             availableBlacks.erase(availableBlacks.begin() + i);
         }
     }
 
-    //cout << "White Now has " << availableWhites.size() << " Pieces" << endl;
-    //cout << "Black Now Has " << availableBlacks.size() << " Pieces" << endl;
 }
 
 void Board::incrMoveCounter() {

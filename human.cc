@@ -9,7 +9,17 @@ void Human::makeMove(Board& gameBoard, Colour team) { // add colour to this so t
     bool foundMove = false;
 
     while(!foundMove){
-        cin >> pieceSelected >> destination;
+        cin >> pieceSelected;
+        if (pieceSelected == "resign") {
+            if (team == Colour::BLACK) {
+                gameBoard.blackLose = true;
+                gameBoard.whiteLose = false;
+                break;
+            }
+            gameBoard.whiteLose = true;
+            break;
+        }
+        cin >> destination;
         if(pieceSelected.length() == 2 && 
         destination.length() == 2 &&
         pieceSelected[0] <= 'h' &&
@@ -21,7 +31,6 @@ void Human::makeMove(Board& gameBoard, Colour team) { // add colour to this so t
         destination[1] >= '1' &&
         destination[1] <= '8') {
             Move moveAttempted = Move(pieceSelected, destination, gameBoard.getBoard());
-            cout << moveAttempted.getInitX() << moveAttempted.getInitY() << moveAttempted.getDestX() << moveAttempted.getDestY() << endl;
             Square* start = &gameBoard.getBoard()[moveAttempted.getInitX()][moveAttempted.getInitY()]; 
             Piece* piece = start->getPiece();
 
@@ -63,15 +72,9 @@ void Human::makeMove(Board& gameBoard, Colour team) { // add colour to this so t
                         }
 
                         if(toupper(piece->getPieceName()) == 'K') {
-                            cout << "Here in K" << endl;
-                            
-                            cout << "Piece Y is " << piece->getY() << endl;
-                            cout << "Dest Y is " << dest->getY() << endl;
-
                             if (piece->getY() - dest->getY() >= 0) {
                                 King* myKing = dynamic_cast<King*>(piece);
                                 if (myKing->canCastleLong()) {
-                                    cout << "Here in KLong" << endl;
                                     canCastleLong = true;
                                 }
                             }
@@ -79,7 +82,6 @@ void Human::makeMove(Board& gameBoard, Colour team) { // add colour to this so t
                             if (piece->getY() - dest->getY() <= 0) {
                                 King* myKing = dynamic_cast<King*>(piece);
                                 if (myKing->canCastleShort()) {
-                                    cout << "Here in KShort" << endl;
                                     canCastleShort = true;
                                 }
                             }
@@ -102,11 +104,9 @@ void Human::makeMove(Board& gameBoard, Colour team) { // add colour to this so t
                             dest->removePiece();
                             dest->addPiece(opposingPiece);
                             if(team == WHITE) {
-                                cout << "There is a Piece There, We are Removing it" << endl;
                                 gameBoard.removePiece(dest->getX() + 1, dest->getY());
                                 gameBoard.getBoard()[dest->getX() + 1][dest->getY()].removePiece();
                             } else {
-                                cout << "There is a Piece There, We are Removing it" << endl;
                                 gameBoard.removePiece(dest->getX() - 1, dest->getY());
                                 gameBoard.getBoard()[dest->getX() - 1][dest->getY()].removePiece();
                             }
@@ -117,15 +117,10 @@ void Human::makeMove(Board& gameBoard, Colour team) { // add colour to this so t
                             start->notifyDisplayObservers();
                             piece->calculateMoves();
                         } else if (canCastleLong) {
-                            
-                            cout << "In canCastleLong" << endl;
                             piece->setSquare(dest);
                             dest->addPiece(piece);
                             start->removePiece();
                             piece->pieceMoved();
-                       
-                            
-                            cout << "The Piece Is " << gameBoard.getBoard()[dest->getX()][dest->getY() - 2].getPiece()->getPieceName() << endl;
                         
                             gameBoard.getBoard()[dest->getX()][dest->getY() - 2].getPiece()->setSquare(&gameBoard.getBoard()[dest->getX()][dest->getY() + 1]);
                             gameBoard.getBoard()[dest->getX()][dest->getY() + 1].addPiece(gameBoard.getBoard()[dest->getX()][dest->getY() - 2].getPiece());
@@ -142,13 +137,10 @@ void Human::makeMove(Board& gameBoard, Colour team) { // add colour to this so t
 
                         } else if (canCastleShort) {
 
-                            cout << "In canCastleShort " << endl;
                             piece->setSquare(dest);
                             dest->addPiece(piece);
                             start->removePiece();
                             piece->pieceMoved();
-
-                            cout << "The Piece Is " << gameBoard.getBoard()[dest->getX()][dest->getY() + 1].getPiece()->getPieceName() << endl;
                         
                             gameBoard.getBoard()[dest->getX()][dest->getY() + 1].getPiece()->setSquare(&gameBoard.getBoard()[dest->getX()][dest->getY() - 1]);
                             gameBoard.getBoard()[dest->getX()][dest->getY() - 1].addPiece(gameBoard.getBoard()[dest->getX()][dest->getY() + 1].getPiece());
@@ -168,7 +160,6 @@ void Human::makeMove(Board& gameBoard, Colour team) { // add colour to this so t
                             dest->removePiece();
                             dest->addPiece(opposingPiece);
                             if(dest->getPiece() != nullptr) { 
-                                    cout << "There is a Piece There, We are Removing it" << endl;
                                     gameBoard.removePiece(dest->getX(), dest->getY());
                             }
                             dest->removePiece();

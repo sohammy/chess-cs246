@@ -23,4 +23,9 @@ int main() {
     cout << endl;
 
     myGame.gameStart();
+    
+    cout << "Thanks for Playing!" << endl;
+    cout << "Final Score:" << endl;
+    cout << "White Score: " << myGame.getWhiteScore() << endl;
+    cout << "Black Score: " << myGame.getWhiteScore() << endl;
 }

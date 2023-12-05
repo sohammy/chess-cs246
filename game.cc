@@ -107,14 +107,14 @@ void Game::play(Board& myBoard) {
         }
     }
 
-    while (myBoard.whoWon(whoseTurn) != 1 && myBoard.whoWon(whoseTurn) != 2) { // Switches Turns Back and Forth between Black + White
+    while (myBoard.whoWon(whoseTurn) != 1 && myBoard.whoWon(whoseTurn) != 2 && !myBoard.whiteLose && !myBoard.blackLose) { // Switches Turns Back and Forth between Black + White
         cout << *td;
         if (!whoseTurn) {
             cout << "White's turn to move" << endl;
             white->makeMove(myBoard, WHITE); // getMove() should take in user input, only does move once 'move' is given as input (as per instructions)
             myBoard.incrMoveCounter();
 
-            for (unsigned int i = 0; i < myBoard.getBoard().size(); ++i) { // NEW
+            for (unsigned int i = 0; i < myBoard.getBoard().size(); ++i) {
                 if (myBoard.getBoard()[0][i].getPiece() != nullptr) {
                     if (myBoard.getBoard()[0][i].getPiece()->getPieceName() == 'P') {
                         cout << "You can Promote your Pawn!" << endl;
@@ -131,7 +131,6 @@ void Game::play(Board& myBoard) {
                             if (newPiece == 'Q' || newPiece == 'R' || newPiece == 'B' || newPiece == 'N') {
                                 unique_ptr<Piece> p = nullptr;
                                 p = myBoard.makePiece(newPiece);
-                                cout << p->getPieceName() << endl;
                                 myBoard.availableWhites.push_back(move(p));
                                 myBoard.getBoard()[0][i].addPiece(myBoard.availableWhites.back().get());
                                 myBoard.getBoard()[0][i].getPiece()->setColour('w');
@@ -173,7 +172,6 @@ void Game::play(Board& myBoard) {
                             if (newPiece == 'q' || newPiece == 'r' || newPiece == 'b' || newPiece == 'n') {
                                 unique_ptr<Piece> p = nullptr;
                                 p = myBoard.makePiece(newPiece);
-                                cout << p->getPieceName() << endl;
                                 myBoard.availableBlacks.push_back(move(p));
                                 myBoard.getBoard()[7][i].addPiece(myBoard.availableBlacks.back().get());
                                 myBoard.getBoard()[7][i].getPiece()->setColour('b');
@@ -199,6 +197,21 @@ void Game::play(Board& myBoard) {
              whoseTurn = true;
         }  
     }
+
+    if (myBoard.whiteLose) {
+        cout << "WHITE RESIGNED! Black Wins!" << endl;
+        playAgainMsg();
+        ++blackScore;
+        setTurn('w');
+        gameStart();
+    } else if (myBoard.blackLose) {
+        cout << "BLACK RESIGNED! White Wins!" << endl;
+        playAgainMsg();
+        ++whiteScore;
+        setTurn('w');
+        gameStart();
+    }
+
     if (myBoard.whoWon(whoseTurn) == 1) {
         if (whoseTurn == 0) {
             cout << "CHECKMATE! Black Wins!" << endl;
