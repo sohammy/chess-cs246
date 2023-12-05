@@ -40,7 +40,7 @@ public:
 
     void clearBoard();
     void initializeBoard();
-    void setup(bool& whoseTurn);
+    void setup(bool& whoseTurn, TextDisplay* myTD);
 
     void removePiece(int xCoord, int yCoord);
 };

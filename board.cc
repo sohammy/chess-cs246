@@ -45,7 +45,6 @@ int Board::whoWon(bool team) {
             }
         }
         if (!whiteCanMove && !isMate()) {
-            cout << "WHITE IS UNABLE TO MOVE" << endl;
             return 2;
         }
     } else if (team == 1) {
@@ -55,7 +54,6 @@ int Board::whoWon(bool team) {
             }
         }
         if (!blackCanMove && !isMate()) {
-            cout << "BLACK IS UNABLE TO MOVE" << endl;
             return 2;
         }
     }
@@ -108,6 +106,8 @@ void Board::clearBoard() {
 
 void Board::initializeBoard() {
     clearBoard();
+    availableWhites.clear();
+    availableBlacks.clear();
     theBoard.resize(BOARDSIZE); // Resizes the Board to be an 8x8 Grid
     for (int i = 0; i < BOARDSIZE; ++i) {
         theBoard[i].resize(BOARDSIZE);
@@ -161,14 +161,15 @@ void Board::initializeBoard() {
        theBoard[1][i].getPiece()->calculateMoves();
        theBoard[6][i].getPiece()->calculateMoves();
        theBoard[7][i].getPiece()->calculateMoves();
-
     }
 }
 
-void Board::setup(bool& whoseTurn) {
+void Board::setup(bool& whoseTurn, TextDisplay* myTD) {
     cout << "You've Entered Setup Mode!" << endl;
     cout << endl;
     clearBoard();
+    availableWhites.clear();
+    availableBlacks.clear();
 
     theBoard.resize(BOARDSIZE); // Resizes the Board to be an 8x8 Grid
     for (int i = 0; i < BOARDSIZE; ++i) {
@@ -178,6 +179,14 @@ void Board::setup(bool& whoseTurn) {
     for(int i = 0; i < BOARDSIZE; ++i) {
         for(int j = 0; j < BOARDSIZE; ++j) {
             theBoard[i][j].setX(i)->setY(j);
+        }
+    }
+
+    int boardSize = theBoard.size();
+    for(int x = 0; x < boardSize; ++x) {
+        for(int y = 0; y < boardSize; ++y) {
+            theBoard[x][y].addDisplayObservers(myTD);
+            theBoard[x][y].notifyDisplayObservers();
         }
     }
 
@@ -191,6 +200,7 @@ void Board::setup(bool& whoseTurn) {
         if (input == "DONE") {
             if (containsBlackKing() && containsWhiteKing()) {
                 cout << "SETUP COMPLETE!" << endl;
+
                 break;
             } else {
                 cout << "YOU DO NOT HAVE 2 KINGS (BLACK AND WHITE) ON THE BOARD" << endl;
@@ -219,8 +229,8 @@ void Board::setup(bool& whoseTurn) {
             }
 
             if (theBoard[placement.getInitX()][placement.getInitY()].getPiece() != nullptr) {
-                cout << "ERROR: A PIECE ALREADY EXISTS THERE" << endl;
-                continue;
+                removePiece(placement.getInitX(), placement.getInitY());
+                theBoard[placement.getInitX()][placement.getInitY()].removePiece();
             }
 
             if ((piece == 'P') && (placement.getDestX() == 7)) {
@@ -256,6 +266,8 @@ void Board::setup(bool& whoseTurn) {
                 removePiece(placement.getInitX(), placement.getInitY());
                 theBoard[placement.getInitX()][placement.getInitY()].removePiece();
             }
+
+            cout << *myTD << endl;
 
         } else if (input == "-") {
             string place;
@@ -300,15 +312,35 @@ void Board::setup(bool& whoseTurn) {
                     theBoard[placement.getInitX()][placement.getInitY()].getPiece()->calculateMoves();
                 }
             }
+
+            cout << *myTD << endl;
             
-        } else if (input == "= WHITE" ) {
+        } else if (input == "=WHITE" || input == "=white" ) {
             whoseTurn = 0;
-        } else if (input == "= BLACK") {
+        } else if (input == "=BLACK" || input == "=black" ) {
             whoseTurn = 1;
         } else if (input == "CLEAR") {
             clearBoard();
-            cout << availableWhites.size() << endl;
-            cout << availableBlacks.size() << endl;
+            theBoard.resize(BOARDSIZE); // Resizes the Board to be an 8x8 Grid
+            for (int i = 0; i < BOARDSIZE; ++i) {
+                theBoard[i].resize(BOARDSIZE);
+            }
+
+            for(int i = 0; i < BOARDSIZE; ++i) {
+                for(int j = 0; j < BOARDSIZE; ++j) {
+                    theBoard[i][j].setX(i)->setY(j);
+                }
+            }
+
+            int boardSize = theBoard.size();
+            for(int x = 0; x < boardSize; ++x) {
+                for(int y = 0; y < boardSize; ++y) {
+                    theBoard[x][y].addDisplayObservers(myTD);
+                    theBoard[x][y].notifyDisplayObservers();
+                }
+            }
+
+            cout << *myTD << endl;
         } else if (input == "QUIT") {
             cout << "Thanks for Playing!" << endl;
             break;

@@ -107,6 +107,9 @@ void King::calculateMoves() {
         ++index;
     }
 
+    canCastleShort();
+    canCastleLong();
+
 }
 
 char King::checkMate() {
@@ -204,7 +207,7 @@ bool King::canCastleShort() {
                         ////
                         Move m {"e1", "g1", theBoard};
                         possibleMoves.emplace_back(m);
-                        cout << "Can Castle!" << endl;
+                        //  It Can Castle!
                         return true; // NOT IN CHECK ANYWHERE IN THE PATH!
                     }
                     return false;
@@ -233,6 +236,7 @@ bool King::canCastleShort() {
                         ////
                         Move m {"e8", "g8", theBoard};
                         possibleMoves.emplace_back(m);
+                        //  It Can Castle!
                         return true; // NOT IN CHECK ANYWHERE IN THE PATH!
                     }
                 }
@@ -265,7 +269,7 @@ bool King::canCastleLong() {
                         //////
                         Move m {"e1", "c1", theBoard};
                         possibleMoves.emplace_back(m);
-                        cout << "Can Castle!" << endl;
+                        //  It Can Castle!
                         return true; // NOT IN CHECK ANYWHERE IN THE PATH!
                     }
                     return false;
@@ -294,7 +298,7 @@ bool King::canCastleLong() {
                     ////
                         Move m {"e8", "c8", theBoard};
                         possibleMoves.emplace_back(m);
-                        cout << "Can Castle!" << endl;
+                        //  It Can Castle!
                         return true; // NOT IN CHECK ANYWHERE IN THE PATH!
                     }
                 }
