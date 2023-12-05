@@ -340,6 +340,27 @@ bool Board::isMate() {
     return false;
 }
 
+bool Board::isMate(Colour team) {
+    for (unsigned int i = 0; i < theBoard.size(); ++i) {
+        for (unsigned int j = 0; j < theBoard.size(); ++j) {
+            if (dynamic_cast<King*>(theBoard[i][j].getPiece()) != nullptr) {
+                if(theBoard[i][j].getPiece()->getColour() == team) {
+                    King* king = dynamic_cast<King*>(theBoard[i][j].getPiece());
+                    char c = king->checkMate();
+                    if (c == 'C') {
+                        cout << "Your King is in Mate! Can't perform operation" << endl;
+                        return true;
+                    } else if (c == 'M') {
+                        cout << "Your King is in Checkmate! Can't perform operation" << endl;
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+    return false;
+}
+
 void Board:: removePiece(int xCoord, int yCoord) {
 
     for (unsigned int i = 0; i < availableWhites.size(); ++i) {

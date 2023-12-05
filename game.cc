@@ -29,7 +29,7 @@ void Game::setTurn(char c) {
 
 void Game::play(Board& myBoard) {
     td = make_shared<TextDisplay>();
-    // gd = make_shared<GraphicsDisplay>(8);
+    gd = make_shared<GraphicsDisplay>(8);
     
     string whitePlayer;
     string blackPlayer;
@@ -102,7 +102,7 @@ void Game::play(Board& myBoard) {
     for(int x = 0; x < boardSize; ++x) {
         for(int y = 0; y < boardSize; ++y) {
             myBoard.getBoard()[x][y].addDisplayObservers(td.get());
-            //myBoard.getBoard()[x][y].addDisplayObservers(gd.get());
+            myBoard.getBoard()[x][y].addDisplayObservers(gd.get());
             myBoard.getBoard()[x][y].notifyDisplayObservers();
         }
     }

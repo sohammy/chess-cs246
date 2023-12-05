@@ -29,6 +29,7 @@ public:
     unique_ptr<Piece> makePiece (char pieceChar);
 
     bool isMate();
+    bool isMate(Colour team);
 
     bool containsBlackKing();
     bool containsWhiteKing();

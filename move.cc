@@ -52,3 +52,7 @@ Move::Move(string m, string d, vector<vector<Square>>& gameBoard) {
         initialX = initialY = destinationX = destinationY = -1;
     }
 }
+
+Move::Move(Move m, int val)
+: initialX{m.getInitX()}, initialY{m.getInitY()}, destinationX{m.getDestX()}, 
+destinationY{m.getDestY()}, destSquare{m.getSquare()}, moveDirection{m.getDirection()}, moveValue{val} {}

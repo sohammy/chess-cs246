@@ -12,7 +12,7 @@ class Move {
     int initialY;
     int destinationX;
     int destinationY;
-    int moveValue = 0;
+    int moveValue;
     Square* destSquare;
     Direction moveDirection;
 
@@ -22,13 +22,14 @@ class Move {
     public:
         Move(int x, int y, int destX, int destY, Square* dest, Direction d);
         Move(string s, string d, vector<vector<Square>>& gameBoard);
+        Move(Move m, int val);
         bool isEqual(Move& other);
         bool isSameDestination(Move& other);
         int getInitX() { return initialX; }
         int getInitY() { return initialY; }
         int getDestX() { return destinationX; }
         int getDestY() { return destinationY; }
-        void setValue(int n) {moveValue = n;}
+        void setValue(int n) { moveValue = n; }
         int getValue() { return moveValue; }
         Direction getDirection() { return moveDirection; }
         Square* getSquare() { return destSquare; }
