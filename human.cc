@@ -21,7 +21,7 @@ void Human::makeMove(Board& gameBoard, Colour team) { // add colour to this so t
         destination[1] >= '1' &&
         destination[1] <= '8') {
             Move moveAttempted = Move(pieceSelected, destination, gameBoard.getBoard());
-
+            cout << moveAttempted.getInitX() << moveAttempted.getInitY() << moveAttempted.getDestX() << moveAttempted.getDestY() << endl;
             Square* start = &gameBoard.getBoard()[moveAttempted.getInitX()][moveAttempted.getInitY()]; 
             Piece* piece = start->getPiece();
 

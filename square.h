@@ -35,6 +35,8 @@ public:
     Square* setY(int row);
     Piece* getPiece();
     void removePiece();
+    void removePieceWithoutObservers();
+    void addPieceWithoutObservers(Piece *piece);
     void addPiece(Piece *piece);
     bool canPromote();
     void addDisplayObservers(Observer* o);

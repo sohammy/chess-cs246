@@ -144,7 +144,7 @@ void Game::play(Board& myBoard) {
                     }
                 }
 
-                for (int i = 0; i < myBoard.getBoard()[2].size(); ++i) { // TURNS OFF ALL 'ENPASSANTABLE SQUARES' FOR BLACK
+                for (unsigned int i = 0; i < myBoard.getBoard()[2].size(); ++i) { // TURNS OFF ALL 'ENPASSANTABLE SQUARES' FOR BLACK
                     myBoard.getBoard()[2][i].turnOffEnPassant();
                 }
             } 
@@ -187,12 +187,16 @@ void Game::play(Board& myBoard) {
                 } 
             }
 
-            for (int i = 0; i < myBoard.getBoard()[5].size(); ++i) { // TURNS OFF ALL 'ENPASSANTABLE SQUARES' FOR WHITE
+            for (unsigned int i = 0; i < myBoard.getBoard()[5].size(); ++i) { // TURNS OFF ALL 'ENPASSANTABLE SQUARES' FOR WHITE
                 myBoard.getBoard()[5][i].turnOffEnPassant();
             }
         
         }
-        whoseTurn = !whoseTurn;   
+        if (whoseTurn == true) {
+             whoseTurn = false;
+        } else {
+             whoseTurn = true;
+        }  
     }
     if (myBoard.whoWon(whoseTurn) == 1) {
         if (whoseTurn == 0) {
