@@ -106,6 +106,7 @@ void King::calculateMoves() {
         }
         ++index;
     }
+
 }
 
 char King::checkMate() {
@@ -136,8 +137,7 @@ char King::checkMate() {
     int numberOfAttackers = piecesCheckingKing.size();
 
     if (numberOfAttackers == 1) {
-        if(possibleMoves.size() == 0) { // If king can't move haha
-
+        if(possibleMoves.size() == 0) { // If the King CAN'T Move
             Piece* attackingPiece = piecesCheckingKing[0];
             vector<Move> ourTeamsMoves = getTeamsMoves(pieceColour);
             vector<Move> ourTeamsMovesWithoutKing;
@@ -179,4 +179,127 @@ char King::checkMate() {
     }
 
     return 'N';
+}
+
+bool King::canCastleShort() {
+    if (!hasMoved) {
+        if (getColour() == Colour::WHITE && position->getX() == 7 && position->getY() == 4) {
+            if (theBoard[7][5].getPiece() == nullptr && theBoard[7][6].getPiece() == nullptr && theBoard[7][7].getPiece() != nullptr) { // Checks for No Spaces in Between
+                if (theBoard[7][7].getPiece()->getPieceName() == 'R') { // Checks Rook is at the End
+                    if (theBoard[7][7].getPiece()->hasItMoved() == false) { // Checks that Rook hasn't Moved
+                        ////
+                        for (Piece* p : getTeamOfColour(Colour::BLACK)) {
+                            for (unsigned int i = 0; i < p->getMoves().size(); ++i) {
+                                if (p->getMoves()[i].getDestY() == 4 && p->getMoves()[i].getDestX() == 7) { // Is it in Check in Current Square
+                                    return false;
+                                } else if (p->getMoves()[i].getDestY() == 5 && p->getMoves()[i].getDestX() == 7) { // Checks if in Check in Space Between
+                                    return false;
+                                } else if (p->getMoves()[i].getDestY() == 6 && p->getMoves()[i].getDestX() == 7) { // Is it in Check in Ending Square
+                                    return false;
+                                }
+                            }
+                        }
+                        ////
+                        Move m {"e1", "g1", theBoard};
+                        possibleMoves.emplace_back(m);
+                        cout << "Can Castle!" << endl;
+                        return true; // NOT IN CHECK ANYWHERE IN THE PATH!
+                    }
+                    return false;
+                }
+                return false;
+            }
+            return false;
+        } 
+        
+        else if (getColour() == Colour::BLACK && position->getX() == 0 && position->getY() == 4) {
+            if (theBoard[0][5].getPiece() == nullptr && theBoard[0][6].getPiece() == nullptr && theBoard[0][7].getPiece() != nullptr) { // Checks for No Spaces in Between
+                if (theBoard[0][7].getPiece()->getPieceName() == 'r') { // Checks Rook is at the End
+                    if (theBoard[0][7].getPiece()->hasItMoved() == false) { // Checks that Rook hasn't moved
+                        ////
+                        for (Piece* p : getTeamOfColour(Colour::WHITE)) {
+                            for (unsigned int i = 0; i < p->getMoves().size(); ++i) {
+                                if (p->getMoves()[i].getDestY() == 4 && p->getMoves()[i].getDestX() == 0) { // Is it in Check in Current Square
+                                    return false;
+                                } else if (p->getMoves()[i].getDestY() == 5 && p->getMoves()[i].getDestX() == 0) { // Checks if in Check in Space Between
+                                    return false;
+                                } else if (p->getMoves()[i].getDestY() == 6 && p->getMoves()[i].getDestX() == 0) { // Is it in Check in Ending Square
+                                    return false;
+                                }
+                            }
+                        }
+                        ////
+                        Move m {"e8", "g8", theBoard};
+                        possibleMoves.emplace_back(m);
+                        return true; // NOT IN CHECK ANYWHERE IN THE PATH!
+                    }
+                }
+                return false;
+            }
+            return false;
+        }
+    }
+    return false;
+}
+
+bool King::canCastleLong() {
+    if (!hasMoved) {
+        if (getColour() == Colour::WHITE && position->getX() == 7 && position->getY() == 4) {
+            if (theBoard[7][3].getPiece() == nullptr && theBoard[7][2].getPiece() == nullptr && theBoard[7][1].getPiece() == nullptr && theBoard[7][0].getPiece() != nullptr) { // Checks for No Spaces in Between
+                if (theBoard[7][0].getPiece()->getPieceName() == 'R') { // Checks Rook is at the End
+                    if (theBoard[7][0].getPiece()->hasItMoved() == false) { // Checks that Rook hasn't Moved
+                        //////
+                        for (Piece* p : getTeamOfColour(Colour::BLACK)) {
+                            for (unsigned int i = 0; i < p->getMoves().size(); ++i) {
+                                if (p->getMoves()[i].getDestY() == 4 && p->getMoves()[i].getDestX() == 7) { // Is it in Check in Current Square
+                                    return false;
+                                } else if (p->getMoves()[i].getDestY() == 3 && p->getMoves()[i].getDestX() == 7) { // Checks if in Check in Space Between
+                                    return false;
+                                } else if (p->getMoves()[i].getDestY() == 2 && p->getMoves()[i].getDestX() == 7) { // Is it in Check in Ending Square
+                                    return false;
+                                }
+                            }
+                        }
+                        //////
+                        Move m {"e1", "c1", theBoard};
+                        possibleMoves.emplace_back(m);
+                        cout << "Can Castle!" << endl;
+                        return true; // NOT IN CHECK ANYWHERE IN THE PATH!
+                    }
+                    return false;
+                }
+                return false;
+            }
+            return false;
+        } 
+        
+        else if (getColour() == Colour::BLACK && position->getX() == 0 && position->getY() == 4) {
+            if (theBoard[0][3].getPiece() == nullptr && theBoard[0][2].getPiece() == nullptr && theBoard[0][1].getPiece() == nullptr && theBoard[0][0].getPiece() != nullptr) { // Checks for No Spaces in Between
+                if (theBoard[0][0].getPiece()->getPieceName() == 'r') { // Checks Rook is at the End
+                    if (theBoard[0][0].getPiece()->hasItMoved() == false) { // Checks that Rook hasn't moved
+                    ////
+                    for (Piece* p : getTeamOfColour(Colour::WHITE)) {
+                        for (unsigned int i = 0; i < p->getMoves().size(); ++i) {
+                            if (p->getMoves()[i].getDestY() == 4 && p->getMoves()[i].getDestX() == 0) { // Is it in Check in Current Square
+                                return false;
+                            } else if (p->getMoves()[i].getDestY() == 3 && p->getMoves()[i].getDestX() == 0) { // Checks if in Check in Space Between
+                                return false;
+                            } else if (p->getMoves()[i].getDestY() == 2 && p->getMoves()[i].getDestX() == 0) { // Is it in Check in Ending Square
+                                return false;
+                            }
+                        }
+                    }
+                    ////
+                        Move m {"e8", "c8", theBoard};
+                        possibleMoves.emplace_back(m);
+                        cout << "Can Castle!" << endl;
+                        return true; // NOT IN CHECK ANYWHERE IN THE PATH!
+                    }
+                }
+                return false;
+            }
+            return false;
+        }
+    }
+    return false;
 }

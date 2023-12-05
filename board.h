@@ -22,9 +22,10 @@ class Board {
     int moveCounter;
 
 public:
+    bool whiteLose;
+    bool blackLose;
     vector<unique_ptr<Piece>> availableWhites;
     vector<unique_ptr<Piece>> availableBlacks;
-
     unique_ptr<Piece> makePiece (char pieceChar);
 
     bool isMate();

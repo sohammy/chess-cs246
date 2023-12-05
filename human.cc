@@ -9,7 +9,17 @@ void Human::makeMove(Board& gameBoard, Colour team) { // add colour to this so t
     bool foundMove = false;
 
     while(!foundMove){
-        cin >> pieceSelected >> destination;
+        cin >> pieceSelected;
+        if (pieceSelected == "resign") {
+            if (team == Colour::BLACK) {
+                gameBoard.blackLose = true;
+                gameBoard.whiteLose = false;
+                break;
+            }
+            gameBoard.whiteLose = true;
+            break;
+        }
+        cin >> destination;
         if(pieceSelected.length() == 2 && 
         destination.length() == 2 &&
         pieceSelected[0] <= 'h' &&
@@ -21,7 +31,6 @@ void Human::makeMove(Board& gameBoard, Colour team) { // add colour to this so t
         destination[1] >= '1' &&
         destination[1] <= '8') {
             Move moveAttempted = Move(pieceSelected, destination, gameBoard.getBoard());
-            cout << moveAttempted.getInitX() << moveAttempted.getInitY() << moveAttempted.getDestX() << moveAttempted.getDestY() << endl;
             Square* start = &gameBoard.getBoard()[moveAttempted.getInitX()][moveAttempted.getInitY()]; 
             Piece* piece = start->getPiece();
 
@@ -45,6 +54,8 @@ void Human::makeMove(Board& gameBoard, Colour team) { // add colour to this so t
                         Move successfulMove = possibleMoves[successIndex];
                         Square* dest = successfulMove.getSquare();
                         bool enPassanting = false;
+                        bool canCastleLong = false;
+                        bool canCastleShort = false;
 
                         if(toupper(piece->getPieceName()) == 'P') {
                             if(piece->getY() != dest->getY()) {
@@ -56,6 +67,22 @@ void Human::makeMove(Board& gameBoard, Colour team) { // add colour to this so t
                                     gameBoard.getBoard()[piece->getX() - 1][piece->getY()].turnOnEnPassant();
                                 } else {
                                     gameBoard.getBoard()[piece->getX() + 1][piece->getY()].turnOnEnPassant();
+                                }
+                            }
+                        }
+
+                        if(toupper(piece->getPieceName()) == 'K') {
+                            if (piece->getY() - dest->getY() >= 0) {
+                                King* myKing = dynamic_cast<King*>(piece);
+                                if (myKing->canCastleLong()) {
+                                    canCastleLong = true;
+                                }
+                            }
+
+                            if (piece->getY() - dest->getY() <= 0) {
+                                King* myKing = dynamic_cast<King*>(piece);
+                                if (myKing->canCastleShort()) {
+                                    canCastleShort = true;
                                 }
                             }
                         }
@@ -77,11 +104,9 @@ void Human::makeMove(Board& gameBoard, Colour team) { // add colour to this so t
                             dest->removePiece();
                             dest->addPiece(opposingPiece);
                             if(team == WHITE) {
-                                cout << "There is a Piece There, We are Removing it" << endl;
                                 gameBoard.removePiece(dest->getX() + 1, dest->getY());
                                 gameBoard.getBoard()[dest->getX() + 1][dest->getY()].removePiece();
                             } else {
-                                cout << "There is a Piece There, We are Removing it" << endl;
                                 gameBoard.removePiece(dest->getX() - 1, dest->getY());
                                 gameBoard.getBoard()[dest->getX() - 1][dest->getY()].removePiece();
                             }
@@ -91,11 +116,50 @@ void Human::makeMove(Board& gameBoard, Colour team) { // add colour to this so t
                             dest->notifyDisplayObservers();
                             start->notifyDisplayObservers();
                             piece->calculateMoves();
-                        } else {
+                        } else if (canCastleLong) {
+                            piece->setSquare(dest);
+                            dest->addPiece(piece);
+                            start->removePiece();
+                            piece->pieceMoved();
+                        
+                            gameBoard.getBoard()[dest->getX()][dest->getY() - 2].getPiece()->setSquare(&gameBoard.getBoard()[dest->getX()][dest->getY() + 1]);
+                            gameBoard.getBoard()[dest->getX()][dest->getY() + 1].addPiece(gameBoard.getBoard()[dest->getX()][dest->getY() - 2].getPiece());
+                            gameBoard.getBoard()[dest->getX()][dest->getY() - 2].removePiece();
+                            gameBoard.getBoard()[dest->getX()][dest->getY() + 1].getPiece()->pieceMoved();
+
+                            dest->notifyDisplayObservers();
+                            start->notifyDisplayObservers();
+                            gameBoard.getBoard()[dest->getX()][dest->getY() + 1].notifyDisplayObservers();
+                            gameBoard.getBoard()[dest->getX()][dest->getY() - 2].notifyDisplayObservers();
+
+                            piece->calculateMoves();
+                            gameBoard.getBoard()[dest->getX()][dest->getY() + 1].getPiece()->calculateMoves();
+
+                        } else if (canCastleShort) {
+
+                            piece->setSquare(dest);
+                            dest->addPiece(piece);
+                            start->removePiece();
+                            piece->pieceMoved();
+                        
+                            gameBoard.getBoard()[dest->getX()][dest->getY() + 1].getPiece()->setSquare(&gameBoard.getBoard()[dest->getX()][dest->getY() - 1]);
+                            gameBoard.getBoard()[dest->getX()][dest->getY() - 1].addPiece(gameBoard.getBoard()[dest->getX()][dest->getY() + 1].getPiece());
+                            gameBoard.getBoard()[dest->getX()][dest->getY() + 1].removePiece();
+                            gameBoard.getBoard()[dest->getX()][dest->getY() - 1].getPiece()->pieceMoved();
+
+                            dest->notifyDisplayObservers();
+                            start->notifyDisplayObservers();
+                            gameBoard.getBoard()[dest->getX()][dest->getY() + 1].notifyDisplayObservers();
+                            gameBoard.getBoard()[dest->getX()][dest->getY() - 1].notifyDisplayObservers();
+
+                            piece->calculateMoves();
+                            gameBoard.getBoard()[dest->getX()][dest->getY() - 1].getPiece()->calculateMoves();
+
+                        }
+                        else {
                             dest->removePiece();
                             dest->addPiece(opposingPiece);
                             if(dest->getPiece() != nullptr) { 
-                                    cout << "There is a Piece There, We are Removing it" << endl;
                                     gameBoard.removePiece(dest->getX(), dest->getY());
                             }
                             dest->removePiece();

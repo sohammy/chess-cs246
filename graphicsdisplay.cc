@@ -46,7 +46,6 @@ void GraphicsDisplay::notify(Square* s) {
     } else if (s->getPiece()->getPieceName() == 'p') {
       dir += "p-";
     }
-
   }
 
     if ((s->getX() + s->getY())%2 == 0) {
