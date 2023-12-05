@@ -8,6 +8,7 @@ Move maxOfMoves(vector<Move> moves) {
         cout << index << endl;
         if(m.getValue() > max) {
             max = m.getValue();
+            cout << max << " current max value" << endl;
             largestIndex = index;
         }
         ++index;
@@ -30,3 +31,22 @@ Move minOfMoves(vector<Move> moves) {
 
     return moves[smallestIndex];
 }
+
+int getPieceValue(Piece* p) {
+    char pieceName = toupper(p->getPieceName());
+    if (pieceName == 'K') {
+        return 100;
+    } else if (pieceName == 'Q') {
+        return 12;
+    } else if (pieceName == 'R') {
+        return 6;
+    } else if (pieceName == 'B') {
+        return 4;
+    } else if (pieceName == 'N') {
+        return 3;
+    } else if (pieceName == 'P') {
+        return 1;
+    }
+    return 0;
+}
+

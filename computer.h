@@ -8,19 +8,18 @@
 using namespace std;
 
 class Computer : public Player {
-    Piece* attackPiece;
-    char killedPiece;
+    Piece* attacker;
+    Piece* defender;
     Square* startSquare;
-    Square* killedPieceSquare;
-    Square* attackPieceDest;
+    Square* destSquare;
 
     public:
         Computer();
-        void simulateMove(Board& gameBoard, Move m, Colour team);
+        bool simulateMove(Board& gameBoard, Move m, Colour team);
         void undoMove(Board& gameBoard, Move m, Colour team);
         void makeMove(Board& gameBoard, Colour team);
         virtual Move doMove(Board& gameBoard, Colour team) = 0;
-        virtual int teamValueCalc(vector<Piece*> pieces) = 0;
+        int teamValueCalc(Move m, Colour initialTeam);
         Move generateMove(Board& gameBoard, Colour team, int levels, Colour initialTeam);
         vector<Move> allMoves(Colour c, Board& gameBoard);
 };

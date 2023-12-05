@@ -49,6 +49,7 @@ class Piece : public Observer{
         vector<Move> getBlockedMoves() { return blockedMoves; }
         Colour getColour() { return pieceColour; }
         void pieceMoved() { hasMoved = true; }
+        void pieceUnMoved() { hasMoved = false; }
         bool hasItMoved() {return hasMoved;}
 
 };

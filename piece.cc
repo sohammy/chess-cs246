@@ -84,7 +84,7 @@ void Piece::movesInDir(Direction d, int n) {
                 possibleMoves.emplace_back(m);
                 theBoard[x][y].addPieceObservers(this);
                 if(n != 0) {
-                    if(y > 0) {
+                    if(y > 0 && theBoard[x][y].getPiece() != nullptr && toupper(theBoard[x][y].getPiece()->getPieceName()) == 'K') {
                         Move n = Move(position->getX(), position->getY(), x, y - 1, &theBoard[x][y-1], d);
                         blockedMoves.emplace_back(n);
                     }
@@ -108,7 +108,7 @@ void Piece::movesInDir(Direction d, int n) {
                 possibleMoves.emplace_back(m);
                 theBoard[x][y].addPieceObservers(this);
                 if(n != 0) {
-                    if(x < 7) {
+                    if(x < 7 && theBoard[x][y].getPiece() != nullptr && toupper(theBoard[x][y].getPiece()->getPieceName()) == 'K') {
                         Move n = Move(position->getX(), position->getY(), x + 1, y, &theBoard[x + 1][y], d);
                         blockedMoves.emplace_back(n);
                     }
@@ -132,7 +132,7 @@ void Piece::movesInDir(Direction d, int n) {
                 possibleMoves.emplace_back(m);
                 theBoard[x][y].addPieceObservers(this);
                 if(n != 0) {
-                    if(y < 7) {
+                    if(y < 7 && theBoard[x][y].getPiece() != nullptr && toupper(theBoard[x][y].getPiece()->getPieceName()) == 'K') {
                         Move n = Move(position->getX(), position->getY(), x, y + 1, &theBoard[x][y + 1], d);
                         blockedMoves.emplace_back(n);
                     }
@@ -156,7 +156,7 @@ void Piece::movesInDir(Direction d, int n) {
                 possibleMoves.emplace_back(m);
                 theBoard[x][y].addPieceObservers(this);
                 if(n != 0) {
-                    if(x > 0) {
+                    if(x > 0 && theBoard[x][y].getPiece() != nullptr && toupper(theBoard[x][y].getPiece()->getPieceName()) == 'K') {
                         Move n = Move(position->getX(), position->getY(), x - 1, y, &theBoard[x - 1][y], d);
                         blockedMoves.emplace_back(n);
                     }
@@ -181,7 +181,7 @@ void Piece::movesInDir(Direction d, int n) {
                 possibleMoves.emplace_back(m);
                 theBoard[x][y].addPieceObservers(this);
                 if(n != 0) {
-                    if(y > 0 && x < 7) {
+                    if(y > 0 && x < 7 && theBoard[x][y].getPiece() != nullptr && toupper(theBoard[x][y].getPiece()->getPieceName()) == 'K') {
                         Move n = Move(position->getX(), position->getY(), x + 1, y - 1, &theBoard[x + 1][y - 1], d);
                         blockedMoves.emplace_back(n);
                     }
@@ -206,7 +206,7 @@ void Piece::movesInDir(Direction d, int n) {
                 possibleMoves.emplace_back(m);
                 theBoard[x][y].addPieceObservers(this);
                 if(n != 0) {
-                    if(y > 0 && x > 0) {
+                    if(y > 0 && x > 0 && theBoard[x][y].getPiece() != nullptr && toupper(theBoard[x][y].getPiece()->getPieceName()) == 'K') {
                         Move n = Move(position->getX(), position->getY(), x - 1, y - 1, &theBoard[x - 1][y - 1], d);
                         blockedMoves.emplace_back(n);
                     }
@@ -231,7 +231,7 @@ void Piece::movesInDir(Direction d, int n) {
                 possibleMoves.emplace_back(m);
                 theBoard[x][y].addPieceObservers(this);
                 if(n != 0) {
-                    if(y < 7 && x < 7) {
+                    if(y < 7 && x < 7 && theBoard[x][y].getPiece() != nullptr && toupper(theBoard[x][y].getPiece()->getPieceName()) == 'K') {
                         Move n = Move(position->getX(), position->getY(), x + 1, y + 1, &theBoard[x + 1][y + 1], d);
                         blockedMoves.emplace_back(n);
                     }
@@ -256,7 +256,7 @@ void Piece::movesInDir(Direction d, int n) {
                 possibleMoves.emplace_back(m);
                 theBoard[x][y].addPieceObservers(this);
                 if(n != 0) {
-                    if(y < 7 && x > 0) {
+                    if(y < 7 && x > 0 && theBoard[x][y].getPiece() != nullptr && toupper(theBoard[x][y].getPiece()->getPieceName()) == 'K') {
                         Move n = Move(position->getX(), position->getY(), x - 1, y + 1, &theBoard[x - 1][y + 1], d);
                         blockedMoves.emplace_back(n);
                     }
