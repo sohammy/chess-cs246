@@ -20,7 +20,7 @@ class Game {
     unique_ptr<Player> black;
 
     std::shared_ptr<TextDisplay> td;
-    std::shared_ptr<GraphicsDisplay> gd;
+    // std::shared_ptr<GraphicsDisplay> gd;
 
     bool whoseTurn;
     double whiteScore = 0;

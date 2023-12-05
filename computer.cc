@@ -2,38 +2,102 @@
 
 Computer::Computer() {}
 
+//
+//
+//
 
 Colour getOtherTeam(Colour c) {
     if(c == WHITE) {
-        cout << "Other team is BLACK" << endl;
         return BLACK; 
     }
-    cout << "Other team is WHITE" << endl;
     return WHITE;
 }
 
+//
+//
+//
+
+int Computer::teamValueCalc(Board& gameBoard, Colour team) {
+    int sum = 0;
+    for(unsigned int i = 0; i < gameBoard.getBoard().size(); ++i) {
+        for(unsigned int j = 0; j < gameBoard.getBoard()[i].size(); ++j) {
+            if(gameBoard.getBoard()[i][j].getPiece() != nullptr) {
+                Piece* p = gameBoard.getBoard()[i][j].getPiece();
+                if(toupper(p->getPieceName()) == 'K') {
+                    if(p->getColour() == team) {
+                        sum += 1000;
+                    } else {
+                        sum -= 1000;
+                    }
+                } else if(toupper(p->getPieceName()) == 'Q') {
+                    if(p->getColour() == team) {
+                        sum += 100;
+                    } else {
+                        sum -= 100;
+                    }
+                } else if(toupper(p->getPieceName()) == 'B') {
+                    if(p->getColour() == team) {
+                        sum += 70;
+                    } else {
+                        sum -= 70;
+                    }
+                } else if(toupper(p->getPieceName()) == 'R') {
+                    if(p->getColour() == team) {
+                        sum += 50;
+                    } else {
+                        sum -= 50;
+                    }
+                } else if(toupper(p->getPieceName()) == 'N') {
+                    if(p->getColour() == team) {
+                        sum += 40;
+                    } else {
+                        sum -= 40;
+                    }
+                } else if(toupper(p->getPieceName()) == 'P') {
+                    if(p->getColour() == team) {
+                        sum += 10;
+                    } else {
+                        sum -= 10;
+                    }
+                } 
+            }
+        }
+    }
+    return sum;
+}
+
+//
+//
+//
 
 bool isValidMove(Move m) {
-    if(m.getDestX() <= 7 && m.getDestX() >= 0 && m.getDestY() <= 7 && m.getDestX() >=0
+    if(m.getDestX() <= 7 && m.getDestX() >= 0 && m.getDestY() <= 7 && m.getDestY() >=0
     && m.getInitX() <= 7 && m.getInitX() >= 0 && m.getInitY() <= 7 && m.getInitY() >=0) return true;
     return false;
 }
 
+//
+//
+//
 
 vector<Piece*> getAllPieces(Colour c, Board& gameBoard) {
     vector<Piece*> pieces;
-    if(c == WHITE) {
-        for(unsigned int i = 0; i < gameBoard.availableWhites.size() ; ++i) {
-            pieces.emplace_back(gameBoard.availableWhites[i].get());
+    for(unsigned int i = 0; i < gameBoard.getBoard().size() ; ++i) {
+        for(unsigned int j = 0; j < gameBoard.getBoard()[i].size() ; ++j) {
+            if(gameBoard.getBoard()[i][j].getPiece() != nullptr) {
+                Piece* p = gameBoard.getBoard()[i][j].getPiece();
+                if(p->getColour() == c) {
+                    pieces.emplace_back(p);
+                }
+            }
         }
-    } else {
-        for(unsigned int i = 0; i < gameBoard.availableBlacks.size() ; ++i) {
-            pieces.emplace_back(gameBoard.availableBlacks[i].get());
-        } 
     }
     return pieces;
 }
 
+//
+//
+//
 
 vector<Move> Computer::allMoves(Colour c, Board& gameBoard) {
     vector<Piece*> pieces = getAllPieces(c, gameBoard);
@@ -48,6 +112,9 @@ vector<Move> Computer::allMoves(Colour c, Board& gameBoard) {
     return allMoves;
 }
 
+//
+//
+//
 
 void Computer::simulateMove(Board& gameBoard, Move m, Colour team) {
     attackPiece = nullptr;
@@ -56,13 +123,9 @@ void Computer::simulateMove(Board& gameBoard, Move m, Colour team) {
     killedPieceSquare = nullptr;
     attackPieceDest = nullptr;
 
-    cout << "Trying to make this shit work lol" << endl;
-
         Square* start = &gameBoard.getBoard()[m.getInitX()][m.getInitY()];
         Piece* piece = start->getPiece();
-        // --> cout
-        cout << m.getInitX() << m.getInitY() << m.getDestX() << m.getDestY() << endl;
-        // --> cout
+
         Square *dest = m.getSquare();
         bool enPassanting = false;
 
@@ -78,14 +141,8 @@ void Computer::simulateMove(Board& gameBoard, Move m, Colour team) {
             }
             else if (abs(piece->getX() - dest->getX()) == 2){
                 if (team == WHITE){
-                    // --> cout
-                    cout << "Turning on white en passant" << endl; 
-                    // --> cout
                     gameBoard.getBoard()[piece->getX() - 1][piece->getY()].turnOnEnPassant();
                 } else {
-                    // --> cout
-                    cout << "Turning on black en passant" << endl;
-                    // --> cout
                     gameBoard.getBoard()[piece->getX() + 1][piece->getY()].turnOnEnPassant();
                 }
             }
@@ -102,16 +159,10 @@ void Computer::simulateMove(Board& gameBoard, Move m, Colour team) {
         dest->addPieceWithoutObservers(piece);
 
         if(toupper(piece->getPieceName()) != 'K' && gameBoard.isMate()) {
-            // --> cout
-            cout << "We made it into the check check" << endl;
-            // --> cout
             dest->removePieceWithoutObservers();
             dest->addPieceWithoutObservers(opposingPiece);
             start->addPieceWithoutObservers(piece);
         } else if(enPassanting) {
-            // --> cout
-            cout << "It's thinking we en passanting? that seems wrong" << endl;
-            // --> cout
             dest->removePieceWithoutObservers();
             dest->addPieceWithoutObservers(opposingPiece);
             if(team == WHITE) {
@@ -130,15 +181,9 @@ void Computer::simulateMove(Board& gameBoard, Move m, Colour team) {
             piece->pieceMoved();
             piece->calculateMoves();
         } else {
-            // --> cout
-            cout << "Trying a normal move, what will happen" << endl;
-            // --> cout
             dest->removePieceWithoutObservers();
             dest->addPieceWithoutObservers(opposingPiece);
             if(dest->getPiece() != nullptr) {
-                // --> cout
-                cout << "Taking a piece now" << endl;
-                // --> cout
                 this->killedPiece = dest->getPiece()->getPieceName();
                 this->killedPieceSquare = dest; 
                 gameBoard.removePiece(dest->getX(), dest->getY());
@@ -151,12 +196,14 @@ void Computer::simulateMove(Board& gameBoard, Move m, Colour team) {
 
 }
 
+//
+//
+//
 
 void Computer::undoMove(Board& gameBoard, Move m, Colour team) {
     Piece* pieceBack = nullptr;
     if(killedPiece != '0') {
-        unique_ptr<Piece> p = nullptr;
-        p = gameBoard.makePiece(killedPiece);
+        unique_ptr<Piece> p = gameBoard.makePiece(killedPiece);
         if(team == WHITE) {
             gameBoard.availableWhites.emplace_back(move(p));
             pieceBack = gameBoard.availableWhites.back().get();
@@ -176,42 +223,55 @@ void Computer::undoMove(Board& gameBoard, Move m, Colour team) {
         pieceBack->setSquare(killedPieceSquare);
         pieceBack->calculateMoves();
     }
+
     attackPiece->calculateMoves();
 }
 
+//
+//
+//
 
 Move Computer::generateMove(Board& gameBoard, Colour team, int levels, Colour initialTeam) {
     int level = levels - 1;
     Colour otherTeam = getOtherTeam(team);
+    if(team == WHITE) cout << "WHITE TEAM RIGHT NOW" << endl;
+    else cout << "BLACK TEAM RIGHT NOW" << endl;
 
     // Get all of team's moves
     vector<Move> teamMoves = allMoves(team, gameBoard);
-
-    cout << teamMoves.size() << endl;
     
-    // Change board locally
     int index = 0;
-    for(Move m : teamMoves) {
-        cout << "Move check number is " << index << endl; 
+
+    // Change board locally
+    for(Move& m : teamMoves) {
+        cout << "Index is currently " << index << " out of " << teamMoves.size() << " moves" << endl;
         if(isValidMove(m)) {
             simulateMove(gameBoard, m, team);
+            Piece* attack = attackPiece;
+            char killed = killedPiece;
+            Square* start = startSquare;
+            Square* killedSq = killedPieceSquare;
+            Square* attackDest = attackPieceDest;
 
             if(level == 0) {
                 vector<Piece*> initTeamPieces = getAllPieces(initialTeam, gameBoard);
                 vector<Piece*> otherTeamPieces = getAllPieces(initialTeam, gameBoard);
-                int score = teamValueCalc(initTeamPieces) - teamValueCalc(otherTeamPieces);
+                int score = teamValueCalc(gameBoard, initialTeam);
+                cout << "Score of this move is " << score << endl;
                 m.setValue(score);
-                cout << "Score is "<< m.getValue() << endl;
-                cout << "Made it past this part here" << endl;
             } else {
                 m.setValue(generateMove(gameBoard, otherTeam, level, initialTeam).getValue());
             }
+
+            attackPiece = attack;
+            killedPiece = killed;
+            startSquare = start;
+            killedPieceSquare = killedSq;
+            attackPieceDest = attackDest;
             undoMove(gameBoard, m, team);
-            cout << "MADE IT PAST UNDO HERE" << endl;
         }
         ++index;
-    }
-    
+    }    
     if(team != initialTeam) {
         return minOfMoves(teamMoves);
     } else {
@@ -219,15 +279,20 @@ Move Computer::generateMove(Board& gameBoard, Colour team, int levels, Colour in
     }
 }
 
+//
+//
+//
+
 void Computer::makeMove(Board& gameBoard, Colour team) {
     string shouldMove;
     cin >> shouldMove;
     if(shouldMove != "move") return;
         Move ourMove = doMove(gameBoard, team);
-        if(ourMove.getInitX() < 8 && ourMove.getInitY() < 8 && ourMove.getDestX() < 8 && ourMove.getDestY() < 8) {
             Square* start = &gameBoard.getBoard()[ourMove.getInitX()][ourMove.getInitY()]; 
             Piece* piece = start->getPiece();
+
             cout << ourMove.getInitX() << ourMove.getInitY() << ourMove.getDestX() << ourMove.getDestY() << endl;
+            
             Square *dest = ourMove.getSquare();
             bool enPassanting = false;
 
@@ -262,11 +327,9 @@ void Computer::makeMove(Board& gameBoard, Colour team) {
                 dest->removePiece();
                 dest->addPiece(opposingPiece);
                 if(team == WHITE) {
-                    cout << "There is a Piece There, We are Removing it" << endl;
                     gameBoard.removePiece(dest->getX() + 1, dest->getY());
                     gameBoard.getBoard()[dest->getX() + 1][dest->getY()].removePiece();
                 } else {
-                    cout << "There is a Piece There, We are Removing it" << endl;
                     gameBoard.removePiece(dest->getX() - 1, dest->getY());
                     gameBoard.getBoard()[dest->getX() - 1][dest->getY()].removePiece();
                 }
@@ -280,7 +343,6 @@ void Computer::makeMove(Board& gameBoard, Colour team) {
                 dest->removePiece();
                 dest->addPiece(opposingPiece);
                 if(dest->getPiece() != nullptr) { 
-                    cout << "There is a Piece There, We are Removing it" << endl;
                     gameBoard.removePiece(dest->getX(), dest->getY());
                 }
                 dest->removePiece();
@@ -291,6 +353,5 @@ void Computer::makeMove(Board& gameBoard, Colour team) {
                 start->notifyDisplayObservers();
                 piece->calculateMoves();
             }
-        }
 
 }

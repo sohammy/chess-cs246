@@ -130,14 +130,10 @@ char King::checkMate() {
         }
     }
 
-    cout << piecesCheckingKing.size() << checkingKingMoves.size() << endl;
-
     // Everything up to here is seeing what is dangerous to the King at the moment
 
     calculateMoves();
     int numberOfAttackers = piecesCheckingKing.size();
-
-    cout << numberOfAttackers << endl;
 
     if (numberOfAttackers == 1) {
         if(possibleMoves.size() == 0) { // If king can't move haha
