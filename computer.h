@@ -20,7 +20,7 @@ class Computer : public Player {
         void makeMove(Board& gameBoard, Colour team);
         virtual Move doMove(Board& gameBoard, Colour team) = 0;
         int teamValueCalc(Move m, Colour initialTeam);
-        Move generateMove(Board& gameBoard, Colour team, int levels, Colour initialTeam);
+        Move generateMove(Board& gameBoard, Colour team, int levels, Colour initialTeam, int alpha, int beta);
         vector<Move> allMoves(Colour c, Board& gameBoard);
 };
 

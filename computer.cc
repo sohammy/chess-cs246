@@ -15,9 +15,6 @@ Colour getOtherTeam(Colour c) {
     return WHITE;
 }
 
-//
-//
-//
 vector<Piece*> getAllPieces(Colour c, Board& gameBoard) {
     vector<Piece*> pieces;
     for(unsigned int i = 0; i < gameBoard.getBoard().size() ; ++i) {
@@ -32,10 +29,6 @@ vector<Piece*> getAllPieces(Colour c, Board& gameBoard) {
     }
     return pieces;
 }
-
-//
-//
-//
 
 vector<Move> Computer::allMoves(Colour c, Board& gameBoard) {
     vector<Piece*> pieces = getAllPieces(c, gameBoard);
@@ -64,7 +57,7 @@ int pawnEncouragementForPromotion(Board& gameBoard, Colour team) {
                     sum += 2;
                 }
                 if(p->getX() == 0) {
-                    sum += 3;
+                    sum += 7;
                 }
             }
         }
@@ -78,7 +71,7 @@ int pawnEncouragementForPromotion(Board& gameBoard, Colour team) {
                     sum += 2;
                 }
                 if(p->getX() == 7) {
-                    sum += 3;
+                    sum += 7;
                 }
             }
         }
@@ -227,7 +220,7 @@ void Computer::undoMove(Board& gameBoard, Move m, Colour team) {
 
 // generateMove(Board, Colour, int, Colour) is a recursive function that implements the minimax algorithm
 // in order to find the best move for a computer player
-Move Computer::generateMove(Board& gameBoard, Colour team, int levels, Colour initialTeam) {
+Move Computer::generateMove(Board& gameBoard, Colour team, int levels, Colour initialTeam, int alpha, int beta) {
     int level = levels - 1;
     Colour otherTeam = getOtherTeam(team);
 
@@ -236,31 +229,50 @@ Move Computer::generateMove(Board& gameBoard, Colour team, int levels, Colour in
     vector<Move> legalMoves;
 
     // Change board locally
-    for(Move m : teamMoves) {
-        if(isValidMove(m)) {
+    for (const Move& m : teamMoves) {
+        if (isValidMove(m)) {
             bool possible = simulateMove(gameBoard, m, team);
-            if(possible) {
+
+            if (possible) {
                 Square* start = startSquare;
                 Square* dest = destSquare;
                 Piece* att = attacker;
                 Piece* def = defender;
-                if(level == 0) {
-                    Move newMove = Move(m, evaluateCurrentPosition(gameBoard, initialTeam));
-                    legalMoves.emplace_back(newMove);
+
+                int moveValue;
+
+                if (level == 0) {
+                    moveValue = evaluateCurrentPosition(gameBoard, initialTeam);
                 } else {
-                    Move newMove = Move(m, generateMove(gameBoard, otherTeam, level, initialTeam).getValue());
-                    legalMoves.emplace_back(newMove);
+                    moveValue = generateMove(gameBoard, otherTeam, level, initialTeam, alpha, beta).getValue();
                 }
+
+                Move newMove(m, moveValue);
+                legalMoves.emplace_back(newMove);
+
                 startSquare = start;
                 destSquare = dest;
                 attacker = att;
                 defender = def;
+
                 undoMove(gameBoard, m, team);
+
+                // Alpha-beta pruning
+                if (team != initialTeam) {
+                    beta = min(beta, moveValue);
+                } else {
+                    alpha = max(alpha, moveValue);
+                }
+
+                if (beta <= alpha) {
+                    break;  // Beta cutoff for minimizing player or alpha cutoff for maximizing player
+                }
             }
         }
     }
-    if(legalMoves.size() != 0) {
-        if(team != initialTeam) {
+
+    if (!legalMoves.empty()) {
+        if (team != initialTeam) {
             return minOfMoves(legalMoves);
         } else {
             return maxOfMoves(legalMoves);
