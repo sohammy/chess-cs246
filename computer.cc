@@ -121,14 +121,23 @@ int piecesOnBoardValue(Board& gameBoard, Colour team) {
     return materialBalance;
 }
 
+int bonusForPuttingKingInCheck(Board& gameBoard, Colour team) {
+    Colour other = getOtherTeam(team);
+    if(gameBoard.isMate(other)) {
+        return 75;
+    }
+    return 0;
+}
+
 //
 //
 int evaluateMove(Board& gameBoard, Colour team) {
     int materialScore = piecesOnBoardValue(gameBoard, team);
     int pieceAcitivityScore = bonusForMovingToMiddle(gameBoard, team);
     int pawnPromotionBonus = pawnEncouragementForPromotion(gameBoard, team);
+    int bonusForOtherKingInCheck = bonusForPuttingKingInCheck(gameBoard, team);
 
-    int overallEvaluation = materialScore + pieceAcitivityScore + pawnPromotionBonus;
+    int overallEvaluation = materialScore + pieceAcitivityScore + pawnPromotionBonus + bonusForOtherKingInCheck;
 
     return overallEvaluation;
 }

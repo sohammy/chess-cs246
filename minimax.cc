@@ -37,7 +37,7 @@ int getPieceValue(Piece* p) {
     if (pieceName == 'K') {
         return 100;
     } else if (pieceName == 'Q') {
-        return 12;
+        return 20;
     } else if (pieceName == 'R') {
         return 6;
     } else if (pieceName == 'B') {
