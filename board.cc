@@ -170,6 +170,8 @@ void Board::setup(bool& whoseTurn, TextDisplay* myTD) {
     clearBoard();
     availableWhites.clear();
     availableBlacks.clear();
+    whiteLose = false;
+    blackLose = false;
 
     theBoard.resize(BOARDSIZE); // Resizes the Board to be an 8x8 Grid
     for (int i = 0; i < BOARDSIZE; ++i) {

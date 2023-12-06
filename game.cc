@@ -274,8 +274,13 @@ void Game::gameStart() {
     } else if (input == "setup") {
         myBoard.setup(whoseTurn, td.get());
         play(myBoard);
-    } else {
+    } else if (input == "q" || input == "quit" || cin.eof()) {
         cout << "Thanks for Playing!" << endl;
+        cout << "Final Score:" << endl;
+        cout << "White Score: " << whiteScore << endl;
+        cout << "Black Score: " << blackScore << endl;
+    } else {
+        cout << "Not a Valid Input" << endl;
     }
 }
 
