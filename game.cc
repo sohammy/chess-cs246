@@ -62,8 +62,8 @@ void Game::play(Board& myBoard) {
             white = make_unique<StageFour>();
             validWhite = true;
         } else if (whitePlayer == "COMPUTER[5]") {
-            black = make_unique<StageFive>();
-            validBlack = true;
+            white = make_unique<StageFive>();
+            validWhite = true;
         }
 
         if (blackPlayer == "HUMAN") {
