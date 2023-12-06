@@ -82,6 +82,4 @@ class Piece : public Observer{
 
 };
 
-
 #endif
- 

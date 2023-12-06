@@ -34,17 +34,17 @@ void GraphicsDisplay::notify(Square* s) {
     } else if (s->getPiece()->getPieceName() == 'P') {
       dir += "P-";
     } else if (s->getPiece()->getPieceName() == 'k') {
-      dir += "k-";
+      dir += "BLACKk-";
     } else if (s->getPiece()->getPieceName() == 'q') {
-      dir += "q-";
+      dir += "BLACKq-";
     } else if (s->getPiece()->getPieceName() == 'r') {
-      dir += "r-";
+      dir += "BLACKr-";
     } else if (s->getPiece()->getPieceName() == 'n') {
-      dir += "n-";
+      dir += "BLACKn-";
     } else if (s->getPiece()->getPieceName() == 'b') {
-      dir += "b-";
+      dir += "BLACKb-";
     } else if (s->getPiece()->getPieceName() == 'p') {
-      dir += "p-";
+      dir += "BLACKp-";
     }
   }
 
