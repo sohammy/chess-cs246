@@ -4,9 +4,6 @@ const int SCOREFORFAILEDBRANCHES = -100000;
 
 Computer::Computer() {}
 
-//
-//
-//
 
 Colour getOtherTeam(Colour c) {
     if(c == WHITE) {
@@ -79,19 +76,21 @@ int pawnEncouragementForPromotion(Board& gameBoard, Colour team) {
     return sum;
 }
 
+
 int pointsForDistanceToCenter(Piece* p) {
     // This way we don't just spam pawns in the middle of the board
-    if(abs(3-p->getX()) <= 1 && abs(3-p->getY()) <= 1 && toupper(p->getPieceName()) != 'P') {
+    if(abs(3-p->getX()) <= 1 && abs(4-p->getY()) <= 1) {
         return 5;
-    } else if (abs(3-p->getX()) == 2 && abs(3-p->getY()) == 2 && toupper(p->getPieceName()) != 'P') {
+    } else if (abs(3-p->getX()) <= 2 && abs(4-p->getY()) <= 2) {
         return 3;
     } else if (abs(3-p->getX()) <= 1) {
         return 1;
-    } else if (abs(3-p->getY()) <= 1) {
+    } else if (abs(4-p->getY()) <= 1) {
         return 1;
     }
     return 0;
 }
+
 
 int bonusForMovingToMiddle( Board& gameBoard, Colour team) {
     int pieceActivityScore = 0;
@@ -107,6 +106,7 @@ int bonusForMovingToMiddle( Board& gameBoard, Colour team) {
     return pieceActivityScore;
 }
 
+
 int piecesOnBoardValue(Board& gameBoard, Colour team) {
     int materialBalance = 0;
     for (vector<Square>& vctr : gameBoard.getBoard()) {
@@ -121,6 +121,7 @@ int piecesOnBoardValue(Board& gameBoard, Colour team) {
     return materialBalance;
 }
 
+
 int bonusForPuttingKingInCheck(Board& gameBoard, Colour team) {
     Colour other = getOtherTeam(team);
     if(gameBoard.isMate(other)) {
@@ -129,8 +130,7 @@ int bonusForPuttingKingInCheck(Board& gameBoard, Colour team) {
     return 0;
 }
 
-//
-//
+
 int evaluateMove(Board& gameBoard, Colour team) {
     int materialScore = piecesOnBoardValue(gameBoard, team);
     int pieceAcitivityScore = bonusForMovingToMiddle(gameBoard, team);
@@ -143,8 +143,6 @@ int evaluateMove(Board& gameBoard, Colour team) {
 }
 
 
-//
-//
 bool isValidMove(Move m) {
     if(m.getDestX() <= 7 && m.getDestX() >= 0 && m.getDestY() <= 7 && m.getDestY() >=0
     && m.getInitX() <= 7 && m.getInitX() >= 0 && m.getInitY() <= 7 && m.getInitY() >=0) return true;
@@ -349,7 +347,7 @@ void Computer::makeMove(Board &gameBoard, Colour team) {
 
                     start->removePiece();
                     dest->removePiece();
-                    dest->addPiece(piece);
+                    dest->addPieceWithoutObservers(piece);
 
                     if (toupper(piece->getPieceName()) != 'K' && gameBoard.isMate()) {
                         dest->removePiece();
@@ -357,8 +355,8 @@ void Computer::makeMove(Board &gameBoard, Colour team) {
                         start->addPiece(piece);
                         foundMove = false;
                     } else {
-                        dest->removePiece();
-                        dest->addPiece(opposingPiece);
+                        dest->removePieceWithoutObservers();
+                        dest->addPieceWithoutObservers(opposingPiece);
                         if (dest->getPiece() != nullptr) {
                             gameBoard.removePiece(dest->getX(), dest->getY());
                         }

@@ -1,4 +1,5 @@
 #include "game.h"
+#include "minimax.h"
 
 using namespace std;
 
@@ -28,7 +29,7 @@ void Game::setTurn(char c) {
 }
 
 void Game::play(Board& myBoard) {
-    //gd = make_shared<GraphicsDisplay>(8); // GRAPHICS DISPLAY
+    gd = make_shared<GraphicsDisplay>(8); // GRAPHICS DISPLAY
     
     string whitePlayer;
     string blackPlayer;
@@ -107,7 +108,7 @@ void Game::play(Board& myBoard) {
     for(int x = 0; x < boardSize; ++x) {
         for(int y = 0; y < boardSize; ++y) {
             myBoard.getBoard()[x][y].addDisplayObservers(td.get());
-            //myBoard.getBoard()[x][y].addDisplayObservers(gd.get()); // GRAPHICS DISPLAY
+            myBoard.getBoard()[x][y].addDisplayObservers(gd.get()); // GRAPHICS DISPLAY
             myBoard.getBoard()[x][y].notifyDisplayObservers();
         }
     }
@@ -131,7 +132,11 @@ void Game::play(Board& myBoard) {
 
                         while(myBoard.getBoard()[0][i].getPiece() == nullptr) {
                             char newPiece;
-                            cin >> newPiece;
+                            if(whitePlayer != "HUMAN") {
+                                newPiece = autoChoosePromotionPiece();
+                            } else {
+                                cin >> newPiece;
+                            }
                             newPiece = toupper(newPiece);
                             if (newPiece == 'Q' || newPiece == 'R' || newPiece == 'B' || newPiece == 'N') {
                                 unique_ptr<Piece> p = nullptr;
@@ -172,7 +177,11 @@ void Game::play(Board& myBoard) {
                         
                         while(myBoard.getBoard()[7][i].getPiece() == nullptr) {
                             char newPiece;
-                            cin >> newPiece;
+                            if(blackPlayer != "HUMAN") {
+                                newPiece = autoChoosePromotionPiece();
+                            } else {
+                                cin >> newPiece;
+                            }
                             newPiece = tolower(newPiece);
                             if (newPiece == 'q' || newPiece == 'r' || newPiece == 'b' || newPiece == 'n') {
                                 unique_ptr<Piece> p = nullptr;
