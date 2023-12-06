@@ -13,4 +13,6 @@ Move minOfMoves(vector<Move> moves);
 // Returns the Pre-Determined Value for Piece, p
 int getPieceValue(Piece* p);
 
+char autoChoosePromotionPiece();
+
 #endif

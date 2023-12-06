@@ -1,14 +1,13 @@
 #include "minimax.h"
+#include <cstdlib>
 
 Move maxOfMoves(vector<Move> moves) {
     int max = 0;
     int index = 0;
     int largestIndex = 0;
     for(Move m : moves) {
-        cout << index << endl;
         if(m.getValue() > max) {
             max = m.getValue();
-            cout << max << " current max value" << endl;
             largestIndex = index;
         }
         ++index;
@@ -37,7 +36,7 @@ int getPieceValue(Piece* p) {
     if (pieceName == 'K') {
         return 100;
     } else if (pieceName == 'Q') {
-        return 12;
+        return 20;
     } else if (pieceName == 'R') {
         return 6;
     } else if (pieceName == 'B') {
@@ -48,5 +47,13 @@ int getPieceValue(Piece* p) {
         return 1;
     }
     return 0;
+}
+
+char autoChoosePromotionPiece() {
+    int index = std::rand() % 10 + 1;
+    if(index < 3) {
+        return 'N';
+    }
+    return 'Q';
 }
 
