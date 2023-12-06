@@ -316,6 +316,7 @@ void Computer::makeMove(Board &gameBoard, Colour team) {
     bool foundMove = false;
 
     while (!foundMove) {
+        cout << "Loading move..." << endl;
         Move moveAttempted = doMove(gameBoard, team);
         Square *start = &gameBoard.getBoard()[moveAttempted.getInitX()][moveAttempted.getInitY()];
         Piece *piece = start->getPiece();
@@ -349,7 +350,7 @@ void Computer::makeMove(Board &gameBoard, Colour team) {
                     dest->removePiece();
                     dest->addPieceWithoutObservers(piece);
 
-                    if (toupper(piece->getPieceName()) != 'K' && gameBoard.isMate()) {
+                    if (toupper(piece->getPieceName()) != 'K' && gameBoard.isMate(team)) {
                         dest->removePiece();
                         dest->addPiece(opposingPiece);
                         start->addPiece(piece);
