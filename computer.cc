@@ -143,9 +143,6 @@ bool isValidMove(Move m) {
 }
 
 
-// simulateMove(Board, Move, Colour) makes a move behind the scenes and is used to 
-// determine the quality of a move, if this function returns false, then we shouldn't
-// generate a tree starting from this move
 bool Computer::simulateMove(Board& gameBoard, Move m, Colour team) {
     attacker = nullptr;
     defender = nullptr;
@@ -204,8 +201,7 @@ bool Computer::simulateMove(Board& gameBoard, Move m, Colour team) {
     return false;
 }
 
-// undoMove(Board, Move, Colour) is used to reset the board back to it's initial state, assuming
-// that simulate moves was successful
+
 void Computer::undoMove(Board& gameBoard, Move m, Colour team) {
     attacker->pieceUnMoved();
     attacker->setSquare(startSquare);
@@ -219,8 +215,7 @@ void Computer::undoMove(Board& gameBoard, Move m, Colour team) {
     }
 }
 
-// generateMove(Board, Colour, int, Colour) is a recursive function that implements the minimax algorithm
-// in order to find the best move for a computer player
+
 Move Computer::generateMove(Board& gameBoard, Colour team, int levels, Colour initialTeam, int alpha, int beta) {
     int level = levels - 1;
     Colour otherTeam = getOtherTeam(team);

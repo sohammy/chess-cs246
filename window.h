@@ -17,12 +17,13 @@ class Xwindow {
 
   enum {White=0, Black, Red, Green, Blue, Purple}; // Available colours.
 
-  // Draws a rectangle
+  // Draws a Rectangle
   void fillRectangle(int x, int y, int width, int height, int colour=Black);
 
-  // Draws a string
+  // Draws a String
   void drawString(int x, int y, std::string msg);
 
+  // Draws a Piece
   void drawPiece(const char* fileName, int xCoord, int yCoord);
 
 };

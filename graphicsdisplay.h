@@ -13,6 +13,7 @@ class GraphicsDisplay: public Observer {
  public:
   GraphicsDisplay(int n);
 
+  // Function gets called whenever a Square is changed/updated
   void notify(Square* s) override;
 
   ~GraphicsDisplay();

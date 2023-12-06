@@ -28,7 +28,7 @@ void Game::setTurn(char c) {
 }
 
 void Game::play(Board& myBoard) {
-    //gd = make_shared<GraphicsDisplay>(8); // GRAPHICS DISPLAY
+    gd = make_shared<GraphicsDisplay>(8); // GRAPHICS DISPLAY
     
     string whitePlayer;
     string blackPlayer;
@@ -107,7 +107,7 @@ void Game::play(Board& myBoard) {
     for(int x = 0; x < boardSize; ++x) {
         for(int y = 0; y < boardSize; ++y) {
             myBoard.getBoard()[x][y].addDisplayObservers(td.get());
-            //myBoard.getBoard()[x][y].addDisplayObservers(gd.get()); // GRAPHICS DISPLAY
+            myBoard.getBoard()[x][y].addDisplayObservers(gd.get()); // GRAPHICS DISPLAY
             myBoard.getBoard()[x][y].notifyDisplayObservers();
         }
     }
@@ -160,7 +160,7 @@ void Game::play(Board& myBoard) {
             black->makeMove(myBoard, BLACK); // getMove() should take in user input, only does move once 'move' is given as input (as per instructions)
             myBoard.incrMoveCounter();
 
-            for (unsigned int i = 0; i < myBoard.getBoard().size(); ++i) { // NEW
+            for (unsigned int i = 0; i < myBoard.getBoard().size(); ++i) {
                 if (myBoard.getBoard()[7][i].getPiece() != nullptr) {
                     if (myBoard.getBoard()[7][i].getPiece()->getPieceName() == 'p') {
                         cout << "You can Promote your Pawn!" << endl;

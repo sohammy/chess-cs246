@@ -10,7 +10,7 @@ class Knight : public Piece {
         // Constructor
         Knight (vector<vector<Square>>& board, char pieceType);
 
-        // function that updates the Piece's vector of possible moves it can make,
+        // Function that updates the Piece's vector of possible moves it can make,
         // given its location and surrounding pieces.
         void calculateMoves() override;
 };

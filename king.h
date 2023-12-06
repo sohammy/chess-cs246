@@ -13,13 +13,17 @@ class King : public Piece {
     // Vector of Moves the King can make (With exceptions)
     vector<Move> movesIncludingNonLegal(int x, int y);
 
-    // function that updates the Piece's vector of possible moves it can make,
+    // Function that updates the Piece's vector of possible moves it can make,
     // given its location and surrounding pieces.
     void calculateMoves() override;
 
+    // Returns whether a King is in Check(C), Checkmate(M), Not in Check(N)
     char checkMate();
 
+    // Checks whether a King can Castle on the Short Side (Right-Side)
     bool canCastleShort();
+
+    // Checks whether a King can Castle on the Long Side (Left-Side)
     bool canCastleLong();
 };
 
